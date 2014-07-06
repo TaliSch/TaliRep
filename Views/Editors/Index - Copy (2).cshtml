@@ -1,0 +1,324 @@
+﻿@{
+    ViewBag.Title = "post editor";
+}
+
+<style>
+    textarea {
+        width: 100%;
+        min-width:100%;
+        max-width:100% !important;
+        height: 400px;
+        min-height:90% !important;
+        max-height:100% !important;
+       -webkit-box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        box-sizing:border-box;
+        border-style:solid;
+        border-width:thick;
+        border-color:red;
+        background-color:yellow;
+        resize:none;
+
+    }
+
+    .editable {
+        width:100%;
+        height:400px;
+        border-style:solid;
+        border-width:thick;
+    }
+    #editor-container {
+        border: thick solid red;
+         width:100%;
+        height:500px;
+    }
+    #editor-commands-container {
+        border: thick solid green;
+        width:100%;
+        height:100px;
+    }
+    #id5 {
+        font-size:16px;
+    }
+
+</style>
+<script>
+    
+    //$.Class.extend('SpanTree',
+    //{
+    //    init: function( from1, length, from2, id ) {
+    //        // saves name on the monster instance
+    //        this.from1 = from1;
+    //        this.length = length;
+    //        this.from2 = from2;// from2 length is a constant:7
+    //        this.id = id;
+    //        this.children=[];
+    //    }
+    //});
+    //function SortSpantrees(o1, o2){
+    //    return o1.from2 - o2.from2;
+       
+    //}
+
+
+    //$.Class.extend('SpanIndexesCalculator',
+    //{
+    //    init: function () {
+    //        this.indexes = [];
+    //        this.length2=7;//"</span>"
+    //    },
+    //    from from1 to to1
+    //    Add: function(from, to, spanText) { 
+    //        // 1. calculate [from,to] in the html
+    //        //$(this.indexses).each(
+    //        var sum = 0;
+    //        var calculatedFrom = from;
+    //        var calculatedTo = to;
+    //        for (var i = 0; i < this.indexes.length ; i++) {
+    //            var spanIndexes = his.indexes[i];
+    //            if (spanIndexes.from1 < from || spanIndexes.from1 < to) {
+    //                calculatedFrom += spanIndexes.length;
+    //                calculatedTo += spanIndexes.length;
+    //            }
+    //        }
+    //        // find out which parent contains all/part of the selection
+            
+
+    //        // calculate new indexes for the rest of the elements
+
+    //        // keep the array sorted TODO:list
+    //        this.indexes.sort(function(a, b) {
+    //            return a.from1-b.from1;
+    //        });
+    //    }
+
+
+    //});
+
+    
+    $(document).ready(function () {
+        var currId = 0;
+        var prefix = '<span>';
+        var sufix = '</span>';
+
+        function createPrefixStyle(style) {
+            return "<span style=\'" + style + '\'>';
+        }
+
+        // $('.editable').contentEditable = true;
+        //tree with indexes (textfrom-textto) and styles
+        $('#chooseColor').change(function () {
+            //event.preventDefault();
+            var chosenColor = $(this).val();//[0].atrr('value');
+            //alert(chosenColor);
+            //getSel();
+            //alert('onclick');
+            changeHtml('color:' + chosenColor);
+        })
+        
+        
+
+        //function getSelectionParents() {
+        //    var parents = [];
+        //    var selection = window.getSelection();
+        //    var parentStart = selection.getRangeAt(0).commonAncestorContainer;
+        //    parentStart.
+        //    var parentEnd = $(selection[selection.].focusNode.parentElement);
+        //    if (parentStart 
+        //}
+
+        function appendStye(styleAttr) {
+            range = document.createRange();
+            newNode = document.createElement("p");
+            newNode.appendChild(document.createTextNode("New Node Inserted Here"));
+            range.selectNode(document.getElementsByTagName("div").item(0));
+            range.insertNode(newNode);
+        }
+        
+        function containsNode(nodeToFind, node) {
+            var found = false;
+            if (node == nodeToFind)
+                return true;
+            var children = node.childNodes;
+        
+            for (var i = 0; i < children.length ; i++) {
+                if (containsNode(nodeToFind, children.item(i))) {
+                    found = true;
+                    break;
+                }
+            }
+
+            return found;
+
+        }
+        function clean(node) {
+            // look for redundant span elements.
+            // i.e.: span1 span2 span 3 www span3 span2 span1 : merge the style into span1 www span2
+            // insert span3 style into span2 style into span1 style.
+        }
+        
+
+        function changeHtml(style) {
+            //alert(style);
+           
+           
+            var selection = window.getSelection();//$.Range.current();//   
+            var startNode = selection.anchorNode;
+            //alert(startNode.textContent);
+            var endNode = selection.focusNode;
+
+             var startOffset = selection.anchorOffset;
+        //    alert("startOffset="+startOffset);
+            var endOffset = selection.focusOffset;
+        //    alert("endoffset="+endOffset);
+            if (startNode == endNode) {
+                alert('same');
+                var newString = prefix + startNode.textContent.substring(0, startOffset) +
+                    prefixStyle + startNode.textContent.substring(startOffset, endOffset) + sufix +
+                    startNode.textContent.substring(endOffset, startNode.textContent.length) + sufix;
+                alert(newString);
+                var $newNode = $(newString);
+                startNode.textContent = "###" + currId++;
+                //alert(startNode.textContent);
+                $(startNode).replaceWith($newNode);
+            }
+            
+            if (startNode != endNode) {
+                alert('different');
+                var parentNode = selection.getRangeAt(0).commonAncestorContainer;
+               // alert(containsNode(startNode, parentNode));
+                //var children = parentNode.childNodes;
+                //alert(children.length);
+                //for (var i = 0; i < children.length ; i++) {
+                //    var child = children.item(i);
+                //    child.
+                //}
+
+                if (startOffset < startNode.textContent.length) {
+                    var newHtml = prefix + startNode.textContent.substring(0, startOffset) +
+                        prefixStyle + startNode.textContent.substring(startOffset, startNode.textContent.length) + sufix + sufix;
+                    alert(newHtml);
+                    var $newNode = $(newHtml);
+                    startNode.textContent = "###" + currId++;
+                    $(startNode).replaceWith($newNode);
+                }
+
+                if (endOffset > 0) {
+                    var newEndHtml = prefix + prefixStyle + endNode.textContent.substring(0, endOffset) + sufix +
+                        endNode.textContent.substring(endOffset, endNode.textContent.length) + sufix;
+                    alert(newEndHtml);
+                    endNode.textContent = "$$$" + currId++;
+                    var $newEndNode = $(newEndHtml);
+                    $(endNode).replaceWith($newEndNode);
+                }
+
+                var startNext = startNode.nextSibling;
+                while (startNext && startNext != endNode) {
+                    setStyle(startNext, style);
+                    startNext = startNext.nextSibling;
+                }
+
+                //alret(document.getElementById("user_post").outerHTML);
+
+            }
+        }
+
+        function setStartEndStyle(startNode, startOffset, endNode, endOffset) {
+            alert('same');
+            var newString = prefix + startNode.textContent.substring(0, startOffset) +
+                prefixStyle + startNode.textContent.substring(startOffset, endOffset) + sufix +
+                startNode.textContent.substring(endOffset, startNode.textContent.length) + sufix;
+            alert(newString);
+            var $newNode = $(newString);
+            startNode.textContent = "###" + currId++;
+            //alert(startNode.textContent);
+            $(startNode).replaceWith($newNode);
+        }
+
+        function setStartStyle(startNode, startOffset) {
+            if (startOffset < startNode.textContent.length) {
+                var newHtml = prefix + startNode.textContent.substring(0, startOffset) +
+                    createPrefixStyle + startNode.textContent.substring(startOffset, startNode.textContent.length) + sufix + sufix;
+                alert(newHtml);
+                var $newNode = $(newHtml);
+                startNode.textContent = "###" + currId++;
+                $(startNode).replaceWith($newNode);
+            }
+        }
+
+        function setEndStyle(endNode, endOffset) {
+            if (endOffset > 0) {
+                var newEndHtml = prefix + prefixStyle + endNode.textContent.substring(0, endOffset) + sufix +
+                    endNode.textContent.substring(endOffset, endNode.textContent.length) + sufix;
+                alert(newEndHtml);
+                endNode.textContent = "$$$" + currId++;
+                var $newEndNode = $(newEndHtml);
+                $(endNode).replaceWith($newEndNode);
+            }
+        }
+
+        function setTreeStyle(startNode, endNode, style) {
+
+        }
+
+        function setSiblingStyle(node, endNode, style) {
+            var startNext = node.nextSibling;
+            while (startNext && !containsNode(endNode, startNext)) {
+                setStyle(startNext, style);
+                startNext = startNext.nextSibling;
+            }
+        }
+
+        function setStyle(node, style) {
+            var prefix = '<span>';
+            var prefixStyle = "<span style=\'" + style + '\'>';
+            //  alert(prefix);
+            var sufix = '</span>';
+
+            node.outerHTML = prefixStyle + node.outerHTML + sufix;
+                   
+            //alert(newHtml);
+            //var $newNode = $(newHtml);
+            //node.innerHTML = "###" + currId++;
+            //$(node).replaceWith($newNode);
+        }
+
+
+
+        function getSelectionParentElement() {
+            var parentEl = null, sel;
+            if (window.getSelection) {
+                sel = window.getSelection();
+                if (sel.rangeCount) {
+                    parentEl = sel.getRangeAt(0).commonAncestorContainer;
+                    if (parentEl.nodeType != 1) {
+                        parentEl = parentEl.parentNode;
+                    }
+                }
+            } else if ((sel = document.selection) && sel.type != "Control") {
+                parentEl = sel.createRange().parentElement();
+            }
+            return parentEl;
+        }
+    })
+</script>
+<h2>Post Editor</h2>
+
+<div id="editor-container">
+<div id ="editor-commands-container">
+    <div class="button">
+        <input type="color" tabindex="6" id="chooseColor"/>
+    </div>
+</div>
+<div class="editor-field">
+    <input type="text" id ="headerInput" value="header"/>
+</div>
+    <p>
+    <span>ttttttttttttttttttttttttttttttttttttttt<span id="id4" style='color:red'>the<span id="id5" style='color:yellow'>re</span>blabla</span>yyy</span>
+        </p>
+@*<div class="wrapper">*@
+    <div id="user_post" class="editable" contenteditable="true"></div>
+   
+@*</div>*@
+</div>
+
