@@ -38,3 +38,5 @@ C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlog
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\bin\System.Web.Mvc.dll
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\bin\System.Web.Mvc.xml
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.csprojResolveAssemblyReference.cache
+C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\bin\EntityFramework.dll
+C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\bin\EntityFramework.xml
