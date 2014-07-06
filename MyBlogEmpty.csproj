@@ -198,10 +198,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\_Index.cshtml" />
     <Content Include="Views\Editors\Create.cshtml" />
     <Content Include="Views\Editors\Index.cshtml" />
-    <Content Include="Views\Editors\__Index.cshtml" />
     <Content Include="Views\Editors\Edit.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
