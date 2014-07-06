@@ -1,35 +1,16 @@
-﻿@model IEnumerable<MyBlogEmpty.Models.Post>
-@{
-    ViewBag.Title = "Posts Manager";
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@*<script type="text/javascript" charset="utf-8">
+    $().ready(function () {
+        location.href = "/Editors/Index";
+    })
+    </script>*@
 
-<h2>Posts Manager</h2>
-@Html.ActionLink("Create New", "Create")
-
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Last Saved
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date) @Html.DisplayFor(modelItem => item.Date.TimeOfDay)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-</table>
-
+<h2>Blog</h2>
+@*git push origin master*@
+<p>
+    <a href="/Editors">Admin</a>
+    
+</p>
