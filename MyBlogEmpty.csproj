@@ -180,8 +180,6 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Scripts\PostsCreate.js" />
-    <Content Include="Scripts\PostsEdit.js" />
     <Content Include="Scripts\PostsEditor.js" />
     <Content Include="Scripts\PostsIndex.js" />
     <Content Include="Views\Home\Index.cshtml">
@@ -212,6 +210,8 @@
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\EditorLayout.cshtml" />
+    <Content Include="Scripts\lz-string-1.3.3.min.js" />
+    <Content Include="Scripts\lz-string-1.3.3.js" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

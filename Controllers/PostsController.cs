@@ -62,6 +62,7 @@ namespace MyBlogEmpty.Controllers
                 if (dbPostData != null && dbPost != null)
                 {
                     dbPost.Name = dbPostData.Name = postData.Name;
+                    dbPost.Date = DateTime.Now;
                     dbPostData.Data = postData.Data;
                     db.Entry(dbPostData).State = System.Data.EntityState.Modified;
                     db.Entry(dbPost).State = System.Data.EntityState.Modified;

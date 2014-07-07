@@ -4,12 +4,18 @@ $().ready(function () {
         event.preventDefault();
         var data = $("#editor").val();
         var name = $("#name").val();
+        alert("before compress");
+        var compressedData = LZString.compress(data);
+        alert("after compress");
+        alert(compressedData);
+        
+
         $.ajax({
             url: '/Posts/Create',
             type: 'POST',
             dataType: 'Json',
             //contentType: 'Json',
-            data: { ID: "0", Data: data, Name: name },
+            data: { ID: "0", Data: compressedData, Name: name },
             timeout: 5000,
 
             success: function (data, textStatus, jqXHR) {
