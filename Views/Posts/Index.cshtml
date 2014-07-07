@@ -26,7 +26,8 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date) @Html.DisplayFor(modelItem => item.Date.TimeOfDay)
+            @{var dateStr = item.Date.ToString("g");} 
+            @dateStr
         </td>
         <td>
             @{var id = item.ID; var name = item.Name; }

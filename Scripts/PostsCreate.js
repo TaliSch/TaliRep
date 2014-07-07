@@ -1,6 +1,6 @@
 ﻿
 $().ready(function () {
-    $("#createForm").submit(function (event) {
+    $("#CreateForm").submit(function (event) {      
         event.preventDefault();
         var data = $("#editor").val();
         var name = $("#name").val();

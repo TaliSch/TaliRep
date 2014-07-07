@@ -1,4 +1,5 @@
-﻿$().ready(function () {
+﻿
+$().ready(function () {
     $("#name").trigger("oninvalid");
     var opts = {
         absoluteURLs: false,

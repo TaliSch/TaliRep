@@ -1,5 +1,5 @@
 ﻿$().ready(function () {
-    $("#editForm").submit(function (event) {
+    $("#EditForm").submit(function (event) {
         event.preventDefault();
         var data = $("#editor").val();
         var name = $("#name").val();
