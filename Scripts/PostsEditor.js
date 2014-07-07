@@ -12,7 +12,6 @@
 })
 
 function invalidName() {
-    alert('here');
     if ($('#name').val() == '') {       
         //$(this).css("background-color", "red");
         $('#name').css("border", "3px solid red");
