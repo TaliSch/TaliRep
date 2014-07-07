@@ -4,6 +4,9 @@
 }
 
 <h2>Posts Manager</h2>
+
+<script src="@Url.Content("~/Scripts/PostsIndex.js")" type="text/javascript"></script>
+
 @Html.ActionLink("Create New", "Create")
 
 <table>
@@ -26,8 +29,9 @@
             @Html.DisplayFor(modelItem => item.Date) @Html.DisplayFor(modelItem => item.Date.TimeOfDay)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @{var id = item.ID; var name = item.Name; }
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) | <input type="button" value="Delete"  id="@id" name="@name"/>
+           @* @Html.ActionLink("Delete", "Delete", new { id=item.ID }) *@
         </td>
     </tr>
 }

@@ -98,7 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\EditorsController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -111,6 +111,9 @@
     <Content Include="App_Data\DbPosts_log.ldf">
       <DependentUpon>DbPosts.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\elrte-inner.css" />
+    <Content Include="Content\elrte.full.css" />
+    <Content Include="Content\elrte.min.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -177,6 +180,10 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\PostsCreate.js" />
+    <Content Include="Scripts\PostsEdit.js" />
+    <Content Include="Scripts\PostsEditor.js" />
+    <Content Include="Scripts\PostsIndex.js" />
     <Content Include="Views\Home\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -201,9 +208,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Editors\Create.cshtml" />
-    <Content Include="Views\Editors\Index.cshtml" />
-    <Content Include="Views\Editors\Edit.cshtml" />
+    <Content Include="Views\Posts\Create.cshtml" />
+    <Content Include="Views\Posts\Index.cshtml" />
+    <Content Include="Views\Posts\Edit.cshtml" />
+    <Content Include="Views\Posts\EditorLayout.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

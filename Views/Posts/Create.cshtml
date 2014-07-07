@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Posts/EditorLayout.cshtml";
+}
+
+
+<script src="@Url.Content("~/Scripts/PostsCreate.js")" type="text/javascript"></script>
+
+		
+@*<form method="post" action="http://elrte.org/release/shared/post.php">
+				<div id="editor">
+                    </div>
+			</form>*@
+<form method ="post" action="@Url.Action("Save")" id="createForm">
+  
+    <p>
+        <label>Name</label> <input type="text" id = "name" required="required" oninvalid="invalidName()" oninput ="invalidName()"/>
+     </p>
+    <textarea id = "editor" name="editor"></textarea>
+       
+    
+    @*@Html.TextBoxFor(postData => postData.Name, new { id = "name"});
+    @Html.TextAreaFor(postData => postData.Data, new { id = "editor"});*@
+@*<textarea id="editor" name="editor"></textarea>*@
+@*<div id="myelFinder"></div>*@
+    </form>
+
+

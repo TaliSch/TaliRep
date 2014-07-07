@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyBlogEmpty.Controllers
 {
-    public class EditorsController : Controller
+    public class PostsController : Controller
     {
         private PostDBContext db = new PostDBContext();
         //
@@ -72,6 +72,34 @@ namespace MyBlogEmpty.Controllers
             }
             else
                 rv = false;
+            return Json(rv ? true : false);
+        }
+
+        //public ActionResult Delete(int id = 0)
+        //{
+        //    PostData postData = db.PostDatas.Find(id);
+        //    if (postData == null)
+        //        return HttpNotFound();
+        //    return View(postData);  
+        //}
+
+        //
+        // POST: /Default1/Delete/5
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            bool rv;
+            PostData postData = db.PostDatas.Find(id);
+            Post post = db.Posts.Find(id);
+            if (post == null || postData == null)
+                rv = false;
+            else
+            {
+                db.PostDatas.Remove(postData);
+                db.Posts.Remove(post);
+            }
+            rv = db.SaveChanges() == 2;
             return Json(rv ? true : false);
         }
     }
