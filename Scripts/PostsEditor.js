@@ -1,7 +1,7 @@
 ﻿
 $().ready(function () {
     var compressed = $("#editor").val();
-    var decompressed = LZString.decompress(compressed);
+    var decompressed = LZString.decompressFromBase64(compressed);
     if (decompressed)
         $("#editor").val(decompressed);
 
@@ -37,7 +37,7 @@ $().ready(function () {
     })
 
     function postData(id, name, data, url) {
-        var compressedData = LZString.compress(data);
+        var compressedData = LZString.compressToBase64(data);
         
         $.ajax({
             url: url,
