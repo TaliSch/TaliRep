@@ -9,7 +9,7 @@ namespace MyBlogEmpty.Controllers
 {
     public class HomeController : Controller
     {
-        
+        private PostDBContext db = new PostDBContext();
         // GET: /Home/
 
         public ActionResult Index()
@@ -17,7 +17,11 @@ namespace MyBlogEmpty.Controllers
             return View();
         }
 
-        
+        [HttpPost]
+        public ActionResult Index(int from, int to)
+        {
+            return Json(db.PostDatas);
+        }
 
     }
 }
