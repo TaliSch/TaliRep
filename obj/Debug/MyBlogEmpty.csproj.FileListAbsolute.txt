@@ -40,3 +40,4 @@ C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\bin\System.Web.M
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\bin\EntityFramework.dll
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\bin\EntityFramework.xml
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\bin\System.Web.Providers.dll
+C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.csprojResolveAssemblyReference.cache

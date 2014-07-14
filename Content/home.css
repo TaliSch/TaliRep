@@ -1,0 +1,25 @@
+﻿.post {
+    width: 220px;
+    height: 150px;
+    max-height:150px;
+    padding: 10px;
+    border: 1px solid gray;
+    margin: 0px;
+}
+    .post tr {
+        max-height:150px;
+        height:150px;
+        break-inside:avoid-column;
+        overflow:scroll;
+        padding: 0px;
+        margin: 0px;
+    }
+    .post td {
+        max-height:150px;
+        height:150px;
+        break-inside:avoid-column;
+        overflow:scroll;
+        padding: 0px;
+        margin: 0px;
+    }
+    
