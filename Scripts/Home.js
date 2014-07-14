@@ -19,27 +19,29 @@ function loadNextItems(from, to) {
                 // alert(data[i].Data);
                 var post = LZString.decompressFromBase64(data[i].Data);
                
-                var maxHeight = calculateHeigth("<p>22</p>");               
-               
-                var lines = post.split("</p>", 1000);
-           
-                var parts = splitPost(lines, maxHeight);
-                //alert(parts);
-                var partsHtml = "";
-                var links = "";
-                var postId = "post" + i.toString();
-                $.each(parts, function (index, value) {
-                    var divId = "divId" + index.toString();
-                    var div = '<div id="' + divId + '">' + value + '</div>';
-                  
-                    partsHtml = partsHtml.concat(div);
-                    if (parts.length > 1) {                        
-                        links = links.concat('<a href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',' + '\'' + postId + '\'' + ');return false;">' + index + '</a> ');
-                    }
-                });
-             
-                $("#posts").append('<table class="post" id="' + postId + '"<tr><td>' + partsHtml + links + '</td></tr></table>');
-                choosePage('divId0', postId);
+                if (post != null) {
+                    var maxHeight = calculateHeigth("<p>22</p>");
+
+                    var lines = post.split("</p>", 1000);
+
+                    var parts = splitPost(lines, maxHeight);
+                    //alert(parts);
+                    var partsHtml = "";
+                    var links = "";
+                    var postId = "post" + i.toString();
+                    $.each(parts, function (index, value) {
+                        var divId = "divId" + index.toString();
+                        var div = '<div id="' + divId + '">' + value + '</div>';
+
+                        partsHtml = partsHtml.concat(div);
+                        if (parts.length > 1) {
+                            links = links.concat('<a href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',' + '\'' + postId + '\'' + ');return false;">' + index + '</a> ');
+                        }
+                    });
+
+                    $("#posts").append('<table class="post" id="' + postId + '"<tr><td>' + partsHtml + links + '</td></tr></table>');
+                    choosePage('divId0', postId);
+                }
                
             }
           
