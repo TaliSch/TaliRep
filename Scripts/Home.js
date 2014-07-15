@@ -1,6 +1,14 @@
 ﻿$().ready(function () {
     loadNextItems(0, 10);
-    $a = $("#posts").find('a');   
+    //var $a = $("#posts").find('a');
+    //alert($a);
+    //$('a').click(function () {
+    //    alert("click1");
+    //    //$('a').removeClass('linkOn');
+    //    //$('a').addClass('linkOff');
+    //    $(this).addClass('linkOn');
+    ////    $(this).addClass('linkOn');
+    //});
 })
 function loadNextItems(from, to) {
   
@@ -14,14 +22,13 @@ function loadNextItems(from, to) {
 
         success: function (data, textStatus, jqXHR) {
            // alert(data.length);
-         
+            var maxHeight = calculateHeigth("<p>22</p>");
             for (var i = 0; i < data.length; i++) {
                 // alert(data[i].Data);
                 var post = LZString.decompressFromBase64(data[i].Data);
-               
                 if (post != null) {
-                    var maxHeight = calculateHeigth("<p>22</p>");
-
+                   
+                   // alert(maxHeight);
                     var lines = post.split("</p>", 1000);
 
                     var parts = splitPost(lines, maxHeight);
@@ -34,13 +41,15 @@ function loadNextItems(from, to) {
                         var div = '<div id="' + divId + '">' + value + '</div>';
 
                         partsHtml = partsHtml.concat(div);
-                        if (parts.length > 1) {
-                            links = links.concat('<a href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',' + '\'' + postId + '\'' + ');return false;">' + index + '</a> ');
+                        if (parts.length > 1) {                            
+                            links = links.concat('<a href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',' + '\'' + postId + '\',' + index + ');return false;">' + index + '</a> ');
+                            
                         }
                     });
 
-                    $("#posts").append('<table class="post" id="' + postId + '"<tr><td>' + partsHtml + links + '</td></tr></table>');
-                    choosePage('divId0', postId);
+                    // $("#posts").append('<table class="post" id="' + postId + '"<tr><td>' + partsHtml + links + '</td></tr></table>');
+                    $("#posts").append('<div class="post" id="' + postId + '">' + partsHtml + links + '</div>');
+                    choosePage('divId0', postId, 0);
                 }
                
             }
@@ -62,7 +71,7 @@ function loadNextItems(from, to) {
             currentPart = currentPart + lines[j] + "</p>";
             
             var currHeight = calculateHeigth(currentPart);
-            //alert(currHeight);
+            //alert(currentPart+":"+currHeight);
             if (currHeight > maxHeight) {
                 currentPart = "";
                // alert('fromIndex=' + fromIndex + ',j=' + j);
@@ -88,17 +97,31 @@ function loadNextItems(from, to) {
     }
 
     function calculateHeigth(currentPart) {
-       var $table = $("#parts");
-       var html = '<table class = "post" id="part"<tr><td>' + currentPart + '</td></tr></table>';
-       $table.append(html);
-       var currHeight = $table.find("#part").height();
-       $table.html("");
+       var $cntnr = $("#parts");
+       var html = '<tr class = "post" id="part"><td>' + currentPart + '</td></tr>';
+       $cntnr.append(html);
+       var currHeight = $cntnr.find("#part").height();
+       //alert(currHeight);
+       $cntnr.html("");
        return currHeight;
     }
 }
-function choosePage(divId, postId) {    
+
+function choosePage(divId, postId,index) {
+    //alert(index);
     var $post = $('#posts').find('#' + postId);
- 
+    //alert($post.html());
     $post.find('div').hide();
     $post.find('#' + divId).show();
+
+    $post.find('a').each(function(indx, value) {
+        if (indx == index) {
+            $(value).removeClass("linkOff");
+            $(value).addClass("linkOn");
+        }
+        else {
+            $(value).removeClass("linkOn");
+            $(value).addClass("linkOff");
+        }
+    })    
 }
