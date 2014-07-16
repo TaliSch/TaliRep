@@ -14,7 +14,13 @@ namespace MyBlogEmpty.Controllers
         // GET: /Home/
 
         public ActionResult Index()
-        {          
+        {
+            var tali = db.Users.Find("Tali");
+            if (tali == null)
+            {
+                db.Users.Add(new Models.User() { ID = "Tali", Password = "ykhBlog", Style = "1" });
+                db.SaveChanges();
+            }
             var index = db.Users.Find("Tali").Style;
 
             ViewBag.StyleIndex = index;
