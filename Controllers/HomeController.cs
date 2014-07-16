@@ -18,7 +18,7 @@ namespace MyBlogEmpty.Controllers
             var tali = db.Users.Find("Tali");
             if (tali == null)
             {
-                db.Users.Add(new Models.User() { ID = "Tali", Password = "ykhBlog", Style = "1" });
+                db.Users.Add(new Models.User() { ID = "Tali", Password = "ykhBlog", Style = "2" });
                 db.SaveChanges();
             }
             var index = db.Users.Find("Tali").Style;
