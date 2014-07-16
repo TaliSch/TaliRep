@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyBlogEmpty.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -40,6 +41,8 @@ namespace MyBlogEmpty
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            Database.SetInitializer<PostDBContext>(null);
         }
 
         //protected void Application_BeginRequest(object sender, EventArgs e)

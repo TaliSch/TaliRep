@@ -1,14 +1,11 @@
 ﻿$().ready(function () {
+    
     loadNextItems(0, 10);
-    //var $a = $("#posts").find('a');
-    //alert($a);
-    //$('a').click(function () {
-    //    alert("click1");
-    //    //$('a').removeClass('linkOn');
-    //    //$('a').addClass('linkOff');
-    //    $(this).addClass('linkOn');
-    ////    $(this).addClass('linkOn');
-    //});
+    $("input[name=style]:radio").on("click", function () {
+        var value = $("input[name=style]:checked").val();
+        setStyle(value);
+    });
+    
 })
 function loadNextItems(from, to) {
   
@@ -27,29 +24,10 @@ function loadNextItems(from, to) {
                 // alert(data[i].Data);
                 var post = LZString.decompressFromBase64(data[i].Data);
                 if (post != null) {
-                   
-                   // alert(maxHeight);
-                    var lines = post.split("</p>", 1000);
-
-                    var parts = splitPost(lines, maxHeight);
-                    //alert(parts);
-                    var partsHtml = "";
-                    var links = "";
                     var postId = "post" + i.toString();
-                    $.each(parts, function (index, value) {
-                        var divId = "divId" + index.toString();
-                        var div = '<div id="' + divId + '">' + value + '</div>';
-
-                        partsHtml = partsHtml.concat(div);
-                        if (parts.length > 1) {                            
-                            links = links.concat('<a href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',' + '\'' + postId + '\',' + index + ');return false;">' + index + '</a> ');
-                            
-                        }
-                    });
-
-                    // $("#posts").append('<table class="post" id="' + postId + '"<tr><td>' + partsHtml + links + '</td></tr></table>');
-                    $("#posts").append('<div class="post" id="' + postId + '">' + partsHtml + links + '</div>');
-                    choosePage('divId0', postId, 0);
+                    displayPost(post, postId, maxHeight);
+                   // alert(maxHeight);
+                    
                 }
                
             }
@@ -61,7 +39,29 @@ function loadNextItems(from, to) {
         }
     });
 
-    
+    function displayPost(post, postId, maxHeight) {
+        var lines = post.split("</p>", 1000);
+
+        var parts = splitPost(lines, maxHeight);
+        //alert(parts);
+        var partsHtml = "";
+        var links = "";
+        
+        $.each(parts, function (index, value) {
+            var divId = "divId" + index.toString();
+            var div = '<div id="' + divId + '">' + value + '</div>';
+
+            partsHtml = partsHtml.concat(div);
+            if (parts.length > 1) {
+                links = links.concat('<a href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',' + '\'' + postId + '\',' + index + ');return false;">' + index + '</a> ');
+
+            }
+        });
+
+        // $("#posts").append('<table class="post" id="' + postId + '"<tr><td>' + partsHtml + links + '</td></tr></table>');
+        $("#posts").append('<div class="post" id="' + postId + '">' + partsHtml + links + '</div>');
+        choosePage('divId0', postId, 0);
+    }
     function splitPost(lines, maxHeight) {
         var parts = [];
               
@@ -124,4 +124,26 @@ function choosePage(divId, postId,index) {
             $(value).addClass("linkOff");
         }
     })    
+}
+
+function setStyle(index) {
+    var success = false;
+    $.ajax({
+        url: 'Home/Style',
+        type: 'POST',
+        dataType: 'Json',
+        //contentType: 'Json',
+        data: { styleIndex: index },
+        timeout: 5000,
+        success: function (data, textStatus, jqXHR) {
+            success = data;
+        }
+    }).done(function (html) {
+        if (success) {
+            location.reload();
+        }
+    });
+    //var url = '@Url.Content("' + "~/Content/home"+index+".css" + ')"';
+    //$("link").attr("href", url);
+   
 }

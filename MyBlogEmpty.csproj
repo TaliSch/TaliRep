@@ -100,10 +100,14 @@
   <ItemGroup>
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CustomConfigs\GeneralSettings.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\PostsDBContext.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +115,9 @@
     <Content Include="App_Data\DbPosts_log.ldf">
       <DependentUpon>DbPosts.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\home.css" />
+    <Content Include="Content\home1.css" />
+    <Content Include="Content\home2.css" />
+    <Content Include="Content\home3.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -299,7 +305,6 @@
     <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.woff" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>

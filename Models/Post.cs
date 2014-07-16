@@ -28,9 +28,4 @@ namespace MyBlogEmpty.Models
         public string Data { get; set; }
     }
 
-    public class PostDBContext : DbContext
-    {
-        public DbSet<Post> Posts { get; set; }
-        public DbSet<PostData> PostDatas { get; set; }
-    }
 }
