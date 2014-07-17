@@ -22,7 +22,7 @@ namespace MyBlogEmpty.Controllers
             //    db.SaveChanges();
             //}
             //var index = db.Users.Find("Tali").Style;
-            var index = "1";
+            var index = "2";
             ViewBag.StyleIndex = index;
             if (db.PostDatas != null)
                 return View(db.PostDatas);
