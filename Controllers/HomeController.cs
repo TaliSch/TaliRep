@@ -30,11 +30,18 @@ namespace MyBlogEmpty.Controllers
         [HttpPost]
         public ActionResult Index(int from, int to)
         {
-            //var index = db.Users.Find("Tali").Style;
-            var index = "1";
-            ViewBag.StyleIndex = index;
-            if (db.PostDatas != null)
-                return Json(db.PostDatas);
+            try
+            {
+                //var index = db.Users.Find("Tali").Style;
+                var index = "1";
+                ViewBag.StyleIndex = index;
+                if (db.PostDatas != null)
+                    return Json(db.PostDatas);
+                return Json(new List<PostData>());
+            }
+            catch (Exception)
+            {
+            }
             return Json(new List<PostData>());
         }
 
