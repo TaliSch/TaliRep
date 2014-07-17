@@ -15,14 +15,14 @@ namespace MyBlogEmpty.Controllers
 
         public ActionResult Index()
         {
-            //var tali = db.Users.Find("Tali");
-            //if (tali == null)
-            //{
-            //    db.Users.Add(new Models.User() { ID = "Tali", Password = "ykhBlog", Style = "2" });
-            //    db.SaveChanges();
-            //}
-            //var index = db.Users.Find("Tali").Style;
-            var index = "2";
+            var tali = db.Users.Find("Tali");
+            if (tali == null)
+            {
+                db.Users.Add(new Models.User() { ID = "Tali", Password = "ykhBlog", Style = "2" });
+                db.SaveChanges();
+            }
+            var index = db.Users.Find("Tali").Style;
+            //var index = "2";
             ViewBag.StyleIndex = index;
             if (db.PostDatas != null)
                 return View(db.PostDatas);
@@ -34,8 +34,8 @@ namespace MyBlogEmpty.Controllers
         {
             try
             {
-                //var index = db.Users.Find("Tali").Style;
-                var index = "1";
+                var index = db.Users.Find("Tali").Style;
+                //var index = "1";
                 ViewBag.StyleIndex = index;
                 if (db.PostDatas != null)
                     return Json(db.PostDatas);

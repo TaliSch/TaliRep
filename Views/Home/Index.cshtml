@@ -31,9 +31,10 @@
     <label>3</label><input id="style3" type="radio" name="style" value="3" @checkedStr3/>
 </p>
 
-<form id="posts_hidden" hidden>    
+<form id="posts_hidden" hidden>  
     @foreach (var item in Model) {       
         @*<p>@item.Data</p>*@
+        
         @Html.TextBoxFor(modelItem => item.Data)
     }
 

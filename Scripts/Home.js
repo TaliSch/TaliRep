@@ -2,7 +2,7 @@
 $().ready(function () {
     maxHeight = calculateHeigth("<p>22</p>");
     //loadNextItems(0, 10);
-    var $items = $("#item_Data");
+    var $items = $("#posts_hidden").find('input');
     loadPosts($items);
     $("input[name=style]:radio").on("click", function () {
         var value = $("input[name=style]:checked").val();
@@ -11,10 +11,11 @@ $().ready(function () {
     
 })
 
-function loadPosts(items) {    
+function loadPosts(items) {
+    
     $.each(items, function (index, value) {
         var post = LZString.decompressFromBase64($(value).val());
-       
+        
         if (post != null) {
             var postId = "post" + index.toString();
             displayPost(post, postId, maxHeight);

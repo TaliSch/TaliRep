@@ -17,6 +17,5 @@ namespace MyBlogEmpty.Models
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<PostsDBContext, Configuration>());
         }
-
     }
 }
