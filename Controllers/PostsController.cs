@@ -10,7 +10,7 @@ namespace MyBlogEmpty.Controllers
 {
     public class PostsController : Controller
     {
-        private BlogDBContext db = new BlogDBContext();
+        private PostsDBContext db = new PostsDBContext();
         //
         // GET: /Editor/
 

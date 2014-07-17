@@ -42,7 +42,7 @@ namespace MyBlogEmpty
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            Database.SetInitializer<BlogDBContext>(null);
+            Database.SetInitializer<PostsDBContext>(null);
         }
 
         //protected void Application_BeginRequest(object sender, EventArgs e)

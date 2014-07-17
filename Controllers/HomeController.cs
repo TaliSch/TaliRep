@@ -10,7 +10,7 @@ namespace MyBlogEmpty.Controllers
 {
     public class HomeController : Controller
     {
-        private BlogDBContext db = new BlogDBContext();
+        private PostsDBContext db = new PostsDBContext();
         // GET: /Home/
 
         public ActionResult Index()
