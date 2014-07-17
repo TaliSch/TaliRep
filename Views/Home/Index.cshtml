@@ -3,13 +3,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script type="text/javascript" charset="utf-8">
-    //$().ready(function () {
+@*<script type="text/javascript" charset="utf-8">
+    $().ready(function () {
         location.href = "/Posts/Index";
-    //})
-    </script>
-@*<script src="@Url.Content("~/Scripts/Home.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/lz-string-1.3.3.js")"></script>*@
+    })
+    </script>*@
+<script src="@Url.Content("~/Scripts/Home.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/lz-string-1.3.3.js")"></script>
 @{var styleIndex = ViewBag.StyleIndex; var url = "~/Content/home" + styleIndex + ".css";  var absoluteUrl = Url.Content(url); }
 <link rel="stylesheet" type="text/css" href="@absoluteUrl"/>
 
