@@ -35,6 +35,8 @@ function loadNextItems(from, to) {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert("Failed To Load");
+            alert(textStatus);
+            alert(errorThrown);
             
         }
     });
