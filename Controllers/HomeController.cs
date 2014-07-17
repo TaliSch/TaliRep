@@ -24,7 +24,9 @@ namespace MyBlogEmpty.Controllers
             //var index = db.Users.Find("Tali").Style;
             var index = "2";
             ViewBag.StyleIndex = index;
-            return View(db.PostDatas.ToList());
+            if (db.PostDatas != null)
+                return View(db.PostDatas);
+            return View(new List<PostData>());
         }
 
         [HttpPost]
