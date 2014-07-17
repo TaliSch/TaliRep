@@ -15,14 +15,14 @@ namespace MyBlogEmpty.Controllers
 
         public ActionResult Index()
         {
-            //var tali = db.Users.Find("Tali");
-            //if (tali == null)
-            //{
-            //    db.Users.Add(new Models.User() { ID = "Tali", Password = "ykhBlog", Style = "2" });
-            //    db.SaveChanges();
-            //}
-            //var index = db.Users.Find("Tali").Style;
-            var index = "1";
+            var tali = db.Users.Find("Tali");
+            if (tali == null)
+            {
+                db.Users.Add(new Models.User() { ID = "Tali", Password = "ykhBlog", Style = "2" });
+                db.SaveChanges();
+            }
+            var index = db.Users.Find("Tali").Style;
+           
             ViewBag.StyleIndex = index;
             return View();
         }
@@ -30,8 +30,8 @@ namespace MyBlogEmpty.Controllers
         [HttpPost]
         public ActionResult Index(int from, int to)
         {
-            //var index = db.Users.Find("Tali").Style;
-            var index = "1";
+            var index = db.Users.Find("Tali").Style;
+            //var index = "1";
             ViewBag.StyleIndex = index;
             return Json(db.PostDatas);
         }
