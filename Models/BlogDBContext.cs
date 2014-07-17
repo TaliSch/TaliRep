@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MyBlogEmpty.Models
 {
-    public class PostDBContext : DbContext
+    public class BlogDBContext : DbContext
     {
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostData> PostDatas { get; set; }
