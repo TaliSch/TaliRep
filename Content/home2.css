@@ -18,6 +18,20 @@
         margin:1em 0em 0em 0em;
     }
 
+    .adminFixed .adminSection {
+        display:none;
+    }
+
+    .adminFixed button {
+        /*float:left;*/
+        background-color:#68c9e8;
+        color:white;
+    }
+
+    .adminFixed .hiddenLogin {
+        display:none;
+    }
+
 .blogHeader {
     background-color:#5EAE9E;/*#68c9e8; login*/
     text-align:center;

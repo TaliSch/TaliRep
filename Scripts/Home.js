@@ -1,5 +1,8 @@
 ﻿var contentMaxHeight = 0;
+var password = "";
 $().ready(function () {
+    //$(".hiddenLogin").hide();
+
     contentMaxHeight = calculateContentHeight("<p>22</p>");
     //loadNextItems(0, 10);
     var $items = $("#posts_hidden").find('.post');
@@ -8,7 +11,47 @@ $().ready(function () {
         var value = $("input[name=style]:checked").val();
         setStyle(value);
     });
+    $("#loginButton").click(function () {
+        var $loginButton = $("#loginButton");
+        $loginButton.hide();
+        $(".hiddenLogin").show();
+    })
+
+    var $input = $(".hiddenLogin").find("input");
+
+    $("#passwordButton").click(function () {
+        alert(password);
+        login(password);
+        password = "";
+        $input.val("");
+    })
     
+    $input.keypress(function (event) {
+        var key = event.which;
+        
+        if ((key >= 31 && key < 40) ||
+             (key >= 48 && key < 57) ||
+             (key >= 65 && key < 90) ||
+             (key >= 97 && key < 122) ||
+                 (key == 8) || (key == 0)) {
+           
+            event.preventDefault();
+            if (key != 0) {
+                var val = $input.val();
+                if (key == 8) {
+                    if (password.length > 0) {
+                        password = password.slice(0, password.length - 1);
+                        $input.val(val.slice(0, val.length - 1));
+                    }
+                }
+                else {
+                    password = password.concat(String.fromCharCode(key));
+                    $input.val(val.concat("*"));
+                }
+            }
+        }
+        
+    })
 })
 
 function loadPosts(items) {
@@ -163,4 +206,27 @@ function setStyle(index) {
     //var url = '@Url.Content("' + "~/Content/home"+index+".css" + ')"';
     //$("link").attr("href", url);
    
+}
+
+function login(password) {
+    
+    $.ajax({
+        url: 'Home/Login',
+        type: 'POST',
+        dataType: 'Json',
+        //contentType: 'Json',
+        data: { password: password },
+        timeout: 5000,
+
+        success: function (data, textStatus, jqXHR) {
+            if (data) {
+                $(".hiddenLogin").hide();
+                $("#loginButton").hide();
+                $(".adminSection").show();
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("Failed To connect " + textStatus + ' ' + errorThrown);
+        }
+    });
 }
