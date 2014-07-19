@@ -77,6 +77,7 @@ function displayPost(postId, title, date, content, contentMaxHeight) {
 
     // $("#posts").append('<table class="post" id="' + postId + '"<tr><td>' + partsHtml + links + '</td></tr></table>');
     $("#posts").append('<div class="post" id="' + postId + '">' + headerHtml + partsHtml + links + '</div>');
+    $("#posts").append('<hr>');
     choosePage('divId0', postId, 0);
 }
 function splitPost(headerHtml, lines, contentMaxHeight) {

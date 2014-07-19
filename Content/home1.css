@@ -1,23 +1,30 @@
 ﻿
 #posts {
-    position: absolute;
-    top: 50%;
+    /*position: absolute;
+    top: 1em;
     left: 50%;
-    margin: -11.5em 0 0 -22.5em;
+    margin: -11.5em 0 0 -12.5em;*/
+    
+    
     border: 1px solid gray;
 }
 
 .post {
-    width: 220px;
-    height: 150px;
-    max-height:150px;
+    position:relative;
+    width: 50%;
+    left:25%;
+    height: 15em;
+    max-height:15em;
     padding: 10px;
     border: 1px solid gray;
     margin: 0px;
     
 }
+hr {
+    display:none;
+}
 
-#blogHeader {
+header {
     display:none;
 }  
 

@@ -17,7 +17,7 @@
 
 
 <header>  
-    <label id="blogHeader">
+    <label>
         @Model.Preferences.Title  
     </label>  
 </header>
@@ -47,7 +47,7 @@ update database*@
         <div class="post">
         @*<p>@item.Data</p>*@
         <input class="postTitle" value= "@item.Title" type="text" />
-             @{var dateStr = item.Date.ToString("d");}
+             @{var dateStr = item.Date.ToString("m")+", "+item.Date.Year.ToString();}
         <input class="postDate" value= "@dateStr" type="text" />
         <input class ="postContent" value="@item.Content" type="text" />
         </div>
@@ -55,7 +55,7 @@ update database*@
 
 </form>
 <form id="posts">
-    <label>start</label>
+    @*<label>start</label>*@
 
 </form>
 <form id="parts">
