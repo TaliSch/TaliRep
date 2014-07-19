@@ -5,30 +5,32 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using MyBlogEmpty.ViewModels;
 
 namespace MyBlogEmpty.Controllers
 {
-    public class PostsController : Controller
+    public class AdminController : Controller
     {
-        private PostsDBContext db = new PostsDBContext();
+        private BlogDBContext db = new BlogDBContext();
         //
         // GET: /Editor/
 
         public ActionResult Index()
         {
-            return View(db.Posts.ToList());
+            var postDatas = db.Posts.Select(i=>new PostData() { ID = i.ID, Date = i.Date, Title = i.Title});
+            var userPreferences = db.UserPreferences.Find("Tali");
+            return View(new AdminViewModel() { Preferences = userPreferences, PostDatas = postDatas });
         }
         [HttpPost]
-        public ActionResult Create(PostData postData)
+        public ActionResult Create(Post post)
         {
             bool rv;
             if (ModelState.IsValid)
             {
-                DateTime date = DateTime.Now;
-                Post post = new Post() { ID = postData.ID, Date = date, Name = postData.Name };
-                db.PostDatas.Add(postData);
+                post.Date = DateTime.Now;
                 db.Posts.Add(post);
-                rv = db.SaveChanges() == 2;
+                rv = db.SaveChanges() == 1;
             }
             else
                 rv = false;
@@ -44,29 +46,28 @@ namespace MyBlogEmpty.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            PostData postData = db.PostDatas.Find(id);
-            if (postData == null)
+            Post post = db.Posts.Find(id);
+            if (post == null)
                 return HttpNotFound();
-            return View(postData);           
+            return View(post);           
         }
 
         [HttpPost]
-        public ActionResult Edit(PostData postData)
+        public ActionResult Edit(Post post)
         {
             bool rv;
             if (ModelState.IsValid)
             {
-                PostData dbPostData = db.PostDatas.Find(postData.ID);
-                Post dbPost = db.Posts.Find(postData.ID);                
+                Post dbPost = db.Posts.Find(post.ID);                
 
-                if (dbPostData != null && dbPost != null)
+                if (dbPost != null)
                 {
-                    dbPost.Name = dbPostData.Name = postData.Name;
+                    dbPost.Title = post.Title;
                     dbPost.Date = DateTime.Now;
-                    dbPostData.Data = postData.Data;
-                    db.Entry(dbPostData).State = System.Data.EntityState.Modified;
-                    db.Entry(dbPost).State = System.Data.EntityState.Modified;
-                    rv = db.SaveChanges() == 2;
+                    dbPost.Content = post.Content;
+                    db.Entry(dbPost).State = EntityState.Modified;
+                    
+                    rv = db.SaveChanges() == 1;
                 }
                 else
                     rv = false;
@@ -91,13 +92,12 @@ namespace MyBlogEmpty.Controllers
         public ActionResult Delete(int id)
         {
             bool rv;
-            PostData postData = db.PostDatas.Find(id);
             Post post = db.Posts.Find(id);
-            if (post == null || postData == null)
+            
+            if (post == null)
                 rv = false;
             else
-            {
-                db.PostDatas.Remove(postData);
+            {                
                 db.Posts.Remove(post);
             }
             rv = db.SaveChanges() == 2;

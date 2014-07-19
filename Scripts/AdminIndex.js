@@ -8,7 +8,7 @@
         //alert(name);
         if (confirm("Are you sure you want to delete " + name + "?"))
             $.ajax({
-                url: '/Posts/Delete',
+                url: '/Admin/Delete',
                 type: 'POST',
                 dataType: 'Json',
                 //contentType: 'Json',
@@ -17,7 +17,7 @@
 
                 success: function (data, textStatus, jqXHR) {
                     if (data) {
-                        location.href = "/Posts/Index";
+                        location.href = "/Admin/Index";
                     }
                     else
                         alert("Failed To Delete");

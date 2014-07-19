@@ -16,7 +16,31 @@
     margin: 0px;
     
 }
-    
+
+#blogHeader {
+    display:none;
+}  
+
+.postHeader {
+    /*height:4em;
+    max-height:4em;*/
+    text-align:center;
+}
+    .postHeader #postTitle {
+        color: red;
+        font-family: Tahoma, Arial, "Verdana", "Sans-serif";
+        font-size: 3.5em;
+        text-align: center;
+    }
+
+    .postHeader #postDate {
+        color: navy;
+        font-family: Tahoma, Arial, "Verdana", "Sans-serif";
+        font-size: 1.5em;
+        text-align: center;
+    }
+       
+   
 
 .linkOn {
     color:black;
@@ -24,3 +48,5 @@
 .linkOff {
     color:red;
 }
+
+

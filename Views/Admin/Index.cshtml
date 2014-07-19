@@ -1,11 +1,11 @@
-﻿@model IEnumerable<MyBlogEmpty.Models.Post>
+﻿@model MyBlogEmpty.ViewModels.AdminViewModel
 @{
     ViewBag.Title = "Posts Manager";
 }
 
 <h2>Posts Manager</h2>
 
-<script src="@Url.Content("~/Scripts/PostsIndex.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/AdminIndex.js")" type="text/javascript"></script>
 
 @Html.ActionLink("Create New", "Create")
 
@@ -20,18 +20,20 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    
+@foreach (var item in Model.PostDatas)
+{
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
             @{var dateStr = item.Date.ToString("g");} 
             @dateStr
         </td>
         <td>
-            @{var id = item.ID; var name = item.Name; }
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) | <input type="button" value="Delete"  id="@id" name="@name"/>
+            @{var id = item.ID; var title = item.Title; }
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) | <input type="button" value="Delete" id="@id" name="@title"/>
            @* @Html.ActionLink("Delete", "Delete", new { id=item.ID }) *@
         </td>
     </tr>

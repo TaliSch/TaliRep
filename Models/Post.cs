@@ -11,21 +11,11 @@ namespace MyBlogEmpty.Models
     {
         public int ID { get; set; }
         [Required]
-        [Display(Name="Name")]
-        public string Name { get; set; }
+        [Display(Name = "Title")]
+        public string Title { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Last Saved")]
         public DateTime Date { get; set; }
+        public string Content { get; set; }
     }
-
-    public class PostData
-    {
-        public int ID { get; set; }
-        [Required]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
-        [Required]
-        public string Data { get; set; }
-    }
-
 }

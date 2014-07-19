@@ -74,7 +74,7 @@ $().ready(function () {
     if (decompressed)
         $("#editor").val(decompressed);
 
-    $("#name").trigger("oninvalid");
+    $("#title").trigger("oninvalid");
     //var opts = {
     //    absoluteURLs: false,
     //    cssClass: 'el-rte',
@@ -87,37 +87,37 @@ $().ready(function () {
 
     $("#EditForm").submit(function (event) {
         event.preventDefault();
-        var data = tinymce.activeEditor.getContent();
-        var name = $("#name").val();
+        var content = tinymce.activeEditor.getContent();
+        var title = $("#title").val();
         var id = $("#id-hidden").val();
-        var url = '/Posts/Edit';
-        postData(id, name, data, url);
+        var url = '/Admin/Edit';
+        postData(id, title, content, url);
     })
 
     $("#CreateForm").submit(function (event) {       
         event.preventDefault();
-        var data = tinymce.activeEditor.getContent();        
-        var name = $("#name").val();
+        var content = tinymce.activeEditor.getContent();
+        var title = $("#title").val();
         var id = 0;
-        var url = '/Posts/Create';
+        var url = '/Admin/Create';
        
-        postData(id, name, data, url);
+        postData(id, title, content, url);
     })
 })
 
-    function postData(id, name, data, url) {
-        var compressedData = LZString.compressToBase64(data);
+function postData(id, title, content, url) {
+        var compressedData = LZString.compressToBase64(content);
         $.ajax({
             url: url,
             type: 'POST',
             dataType: 'Json',
             //contentType: 'Json',
-            data: { ID: id, Data: compressedData, Name: name },
+            data: { ID: id, Content: compressedData, Title: title },
             timeout: 5000,
 
             success: function (data, textStatus, jqXHR) {
                 if (data) {
-                    location.href = "/Posts/Index";
+                    location.href = "/Admin/Index";
                 }
                 else
                     alert("Failed To Save");
@@ -157,10 +157,10 @@ $().ready(function () {
 
 
 function invalidName() {
-    if ($('#name').val() == '') {       
+    if ($('#title').val() == '') {       
         //$(this).css("background-color", "red");
-        $('#name').css("border", "3px solid red");
+        $('#title').css("border", "3px solid red");
     }
     else
-        $('#name').css("border", "3px solid gray");
+        $('#title').css("border", "3px solid gray");
 }

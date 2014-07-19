@@ -8,12 +8,26 @@ using System.Data.Entity;
 
 namespace MyBlogEmpty.Models
 {
-    public class User
+    public class UserCredentials
     {
+        [Required]
+        [MaxLength(10)]
         public string ID { get; set; }
         [Required]
+        [MaxLength(10)]
         public string Password { get; set; }
+    }
+
+    public class UserPreferences
+    {
+        [Required]
+        [MaxLength(10)]
+        public string ID { get; set; }
         [Required]
         public string Style { get; set; }
+        //[Required]
+        public string Name { get; set; }
+        //[Required]
+        public string Title { get; set; }
     }
 }

@@ -7,15 +7,17 @@ using System.Web;
 
 namespace MyBlogEmpty.Models
 {
-    public class PostsDBContext : DbContext
+    public class BlogDBContext : DbContext
     {
         public DbSet<Post> Posts { get; set; }
-        public DbSet<PostData> PostDatas { get; set; }
-        public DbSet<User> Users { get; set; }
+
+        public DbSet<UserPreferences> UserPreferences { get; set; }
+
+        public DbSet<UserCredentials> UserCredentials { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<PostsDBContext, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlogDBContext, Configuration>());
         }
     }
 }

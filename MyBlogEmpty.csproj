@@ -98,7 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="CustomConfigs\GeneralSettings.cs" />
     <Compile Include="Global.asax.cs">
@@ -108,11 +108,21 @@
     <Compile Include="Migrations\201407171259560_Initial.Designer.cs">
       <DependentUpon>201407171259560_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201407180526402_Initial1.cs" />
+    <Compile Include="Migrations\201407180526402_Initial1.Designer.cs">
+      <DependentUpon>201407180526402_Initial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407190721089_Initial2.cs" />
+    <Compile Include="Migrations\201407190721089_Initial2.Designer.cs">
+      <DependentUpon>201407190721089_Initial2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\PostsDBContext.cs" />
+    <Compile Include="Models\BlogDBContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\home1.css" />
@@ -185,8 +195,8 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Scripts\PostsEditor.js" />
-    <Content Include="Scripts\PostsIndex.js" />
+    <Content Include="Scripts\AdminEditor.js" />
+    <Content Include="Scripts\AdminIndex.js" />
     <Content Include="Scripts\tinymce\changelog.txt" />
     <Content Include="Scripts\tinymce\js\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\js\tinymce\license.txt" />
@@ -286,10 +296,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Posts\Create.cshtml" />
-    <Content Include="Views\Posts\Index.cshtml" />
-    <Content Include="Views\Posts\Edit.cshtml" />
-    <Content Include="Views\Posts\EditorLayout.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Admin\EditorLayout.cshtml" />
     <Content Include="Scripts\lz-string-1.3.3.min.js" />
     <Content Include="Scripts\lz-string-1.3.3.js" />
     <Content Include="Scripts\tinymce\js\tinymce\langs\readme.md" />
@@ -316,6 +326,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201407171259560_Initial.resx">
       <DependentUpon>201407171259560_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407180526402_Initial1.resx">
+      <DependentUpon>201407180526402_Initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407190721089_Initial2.resx">
+      <DependentUpon>201407190721089_Initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

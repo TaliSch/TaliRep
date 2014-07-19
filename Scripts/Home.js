@@ -1,8 +1,8 @@
-﻿var maxHeight = 0;
+﻿var contentMaxHeight = 0;
 $().ready(function () {
-    maxHeight = calculateHeigth("<p>22</p>");
+    contentMaxHeight = calculateContentHeight("<p>22</p>");
     //loadNextItems(0, 10);
-    var $items = $("#posts_hidden").find('input');
+    var $items = $("#posts_hidden").find('.post');
     loadPosts($items);
     $("input[name=style]:radio").on("click", function () {
         var value = $("input[name=style]:checked").val();
@@ -14,12 +14,19 @@ $().ready(function () {
 function loadPosts(items) {
     
     $.each(items, function (index, value) {
-        var post = LZString.decompressFromBase64($(value).val());
+        var $value = $(value);
+        var $title = $($value.find(".postTitle"));
+        var $date = $($value.find(".postDate"));
+        var $content = $($value.find(".postContent"));        
+               
+        var title = $title.val();
+        var date = $date.val();
+        var content = LZString.decompressFromBase64($content.val());
+       
+        var postId = "post" + index.toString();        
+
+        displayPost(postId, title, date, content, contentMaxHeight);
         
-        if (post != null) {
-            var postId = "post" + index.toString();
-            displayPost(post, postId, maxHeight);
-        }
     })
 }
 function loadNextItems(from, to) {  
@@ -32,20 +39,10 @@ function loadNextItems(from, to) {
         timeout: 5000,
 
         success: function (data, textStatus, jqXHR) {
-           // alert(data.length);
-            loadPosts(data);
-            //for (var i = 0; i < data.length; i++) {
-            //    // alert(data[i].Data);
-            //    var post = LZString.decompressFromBase64(data[i].Data);
-            //    if (post != null) {
-            //        var postId = "post" + i.toString();
-            //        displayPost(post, postId, maxHeight);
-            //       // alert(maxHeight);
-                    
-            //    }
-               
-            //}
-          
+            $.each(items, function (index, value) {
+                var postId = "post" + index.toString();
+                displayPost(postId, value.Title, value.Date, value.Content, contentMaxHeight);
+            })
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert("Failed To Load");
@@ -54,13 +51,16 @@ function loadNextItems(from, to) {
             
         }
     });
-
-    
 }
-function displayPost(post, postId, maxHeight) {
-    var lines = post.split("</p>", 1000);
 
-    var parts = splitPost(lines, maxHeight);
+// todo; change height if too short
+function displayPost(postId, title, date, content, contentMaxHeight) {
+
+    var headerHtml = "<p class='postHeader'><label id='postTitle'>" + title + "</label></p><p class='postHeader'><label id='postDate'>" + date + "</label></p>";
+   
+    var lines = content.split("</p>", 1000);
+    
+    var parts = splitPost(headerHtml, lines, contentMaxHeight);
     //alert(parts);
     var partsHtml = "";
     var links = "";
@@ -72,15 +72,14 @@ function displayPost(post, postId, maxHeight) {
         partsHtml = partsHtml.concat(div);
         if (parts.length > 1) {
             links = links.concat('<a href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',' + '\'' + postId + '\',' + index + ');return false;">' + index + '</a> ');
-
         }
     });
 
     // $("#posts").append('<table class="post" id="' + postId + '"<tr><td>' + partsHtml + links + '</td></tr></table>');
-    $("#posts").append('<div class="post" id="' + postId + '">' + partsHtml + links + '</div>');
+    $("#posts").append('<div class="post" id="' + postId + '">' + headerHtml + partsHtml + links + '</div>');
     choosePage('divId0', postId, 0);
 }
-function splitPost(lines, maxHeight) {
+function splitPost(headerHtml, lines, contentMaxHeight) {
     var parts = [];
 
     var currentPart = "";
@@ -88,9 +87,9 @@ function splitPost(lines, maxHeight) {
     for (var j = 0; j < lines.length - 1 ; j++) {
         currentPart = currentPart + lines[j] + "</p>";
 
-        var currHeight = calculateHeigth(currentPart);
+        var currHeight = calculateContentHeight(headerHtml + currentPart);
         //alert(currentPart+":"+currHeight);
-        if (currHeight > maxHeight) {
+        if (currHeight > contentMaxHeight) {
             currentPart = "";
             // alert('fromIndex=' + fromIndex + ',j=' + j);
             if (fromIndex < j) {
@@ -114,7 +113,7 @@ function splitPost(lines, maxHeight) {
     return parts;
 }
 
-function calculateHeigth(currentPart) {
+function calculateContentHeight(currentPart) {
     var $cntnr = $("#parts");
     var html = '<tr class = "post" id="part"><td>' + currentPart + '</td></tr>';
     $cntnr.append(html);

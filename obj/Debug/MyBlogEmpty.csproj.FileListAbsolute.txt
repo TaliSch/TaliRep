@@ -43,3 +43,5 @@ C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\bin\System.Web.P
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.csprojResolveAssemblyReference.cache
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.Migrations.Initial.resources
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.csproj.GenerateResource.Cache
+C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.Migrations.Initial1.resources
+C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.Migrations.Initial2.resources

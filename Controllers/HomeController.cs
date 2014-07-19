@@ -1,4 +1,5 @@
 ﻿using MyBlogEmpty.Models;
+using MyBlogEmpty.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,23 +11,30 @@ namespace MyBlogEmpty.Controllers
 {
     public class HomeController : Controller
     {
-        private PostsDBContext db = new PostsDBContext();
+        private BlogDBContext db = new BlogDBContext();
         // GET: /Home/
 
         public ActionResult Index()
         {
-            var tali = db.Users.Find("Tali");
-            if (tali == null)
+            var taliP = db.UserPreferences.Find("Tali");
+            if (taliP == null)
             {
-                db.Users.Add(new Models.User() { ID = "Tali", Password = "ykhBlog", Style = "2" });
+                var taliC = new Models.UserCredentials() { ID = "Tali", Password = "ykhBlog"};
+                taliP = new Models.UserPreferences() { ID = "Tali", Style = "2", Name = "Tali's Blog", Title = "Tali's Blog" };
+                db.UserCredentials.Add(taliC);
+                db.UserPreferences.Add(taliP);
                 db.SaveChanges();
             }
-            var index = db.Users.Find("Tali").Style;
-            //var index = "2";
-            ViewBag.StyleIndex = index;
-            if (db.PostDatas != null)
-                return View(db.PostDatas);
-            return View(new List<PostData>());
+            else if (string.IsNullOrEmpty(taliP.Title))
+            {
+                taliP.Title = taliP.Name = "Tali's Blog";
+                db.Entry(taliP).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            var count = Math.Min(db.Posts.Count(), 10);
+            
+            return View(new HomeViewModel() { Posts = db.Posts.Take(count), Preferences = (UserPreferences)taliP });
         }
 
         [HttpPost]
@@ -34,23 +42,21 @@ namespace MyBlogEmpty.Controllers
         {
             try
             {
-                var index = db.Users.Find("Tali").Style;
+                var index = db.UserPreferences.Find("Tali").Style;
                 //var index = "1";
-                ViewBag.StyleIndex = index;
-                if (db.PostDatas != null)
-                    return Json(db.PostDatas);
-                return Json(new List<PostData>());
+                var count = Math.Min(db.Posts.Count() - from, to - from + 1);
+                return Json(db.Posts.Skip(from).Take(count));
             }
             catch (Exception)
             {
             }
-            return Json(new List<PostData>());
+            return Json(new List<Post>());
         }
 
         [HttpPost]
         public ActionResult Style(string styleIndex)
         {
-            var user = db.Users.Find("Tali");
+            var user = db.UserPreferences.Find("Tali");
             user.Style = styleIndex;
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
@@ -58,5 +64,11 @@ namespace MyBlogEmpty.Controllers
             return Json(true);
         }
 
+        [HttpPost]
+        public ActionResult Login(string password)
+        {
+            var tali = db.UserCredentials.Find("Tali");
+            return Json(tali.Password == password);
+        }
     }
 }
