@@ -1,32 +1,39 @@
 ﻿
+.adminFixed {
+    position:fixed;
+    top:0em;
+    left:0em;
+    background-color: white;
+    text-align:center;
+    vertical-align:central;
+    width:100%;
+    z-index: 999;
+    /*height:4em;*/
+}
+
+
+.adminFixed hr {
+        color:#DBEADC;
+        background-color:#DBEADC;
+        height:3px;
+        margin:1em 0em 0em 0em;
+        display:normal;
+    }
+
+blogHeader {
+    display:none;
+}  
+
 #posts {
     /*position: absolute;
     top: 1em;
     left: 50%;
     margin: -11.5em 0 0 -12.5em;*/
-    
-    
-    border: 1px solid gray;
-}
-
-.post {
     position:relative;
-    width: 50%;
-    left:25%;
-    height: 15em;
-    max-height:15em;
-    padding: 10px;
+    top:3.5em;
     border: 1px solid gray;
-    margin: 0px;
-    
-}
-hr {
-    display:none;
 }
 
-header {
-    display:none;
-}  
 
 .postHeader {
     /*height:4em;
@@ -47,7 +54,21 @@ header {
         text-align: center;
     }
        
-   
+  
+.post {
+    position:relative;
+    width: 50%;
+    left:25%;
+    height: 15em;
+    max-height:15em;
+    padding: 10px;
+    border: 1px solid gray;
+    /*margin: 0px;*/
+    margin: 1em 0em 0em 0em;
+}
+#posts hr{
+    display:none;
+} 
 
 .linkOn {
     color:black;

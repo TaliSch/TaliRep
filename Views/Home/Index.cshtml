@@ -14,9 +14,26 @@
 @{var url = "~/Content/home" + Model.Preferences.Style + ".css"; var absoluteUrl = Url.Content(url); }
 <link rel="stylesheet" type="text/css" href="@absoluteUrl"/>
 
+<header class="adminFixed">
+    <label>Password:</label><input type="text"/><button id="loginButton">Login</button>
+    <div class="adminSection">
+        <a href="/Admin">Admin</a>
+        @{var checkedStr1= (Model.Preferences.Style=="1") ? "checked=checked" : "";
+          var checkedStr2 = (Model.Preferences.Style == "2") ? "checked=checked" : "";
+          var checkedStr3 = (Model.Preferences.Style == "3") ? "checked=checked" : ""; 
+          }
+        <label id="changeStyle">Change Style</label>
+        <label>1</label><input id="style1" type="radio" name="style" value="1" @checkedStr1/>
+     
+        <label>2</label><input id="style2" type="radio" name="style" value="2" @checkedStr2/>
+     
+        <label>3</label><input id="style3" type="radio" name="style" value="3" @checkedStr3/>
+        <hr />
+    </div>
+</header>
 
 
-<header>  
+<header class="blogHeader">  
     <label>
         @Model.Preferences.Title  
     </label>  
@@ -28,19 +45,7 @@ add-migration Initial
 AutomaticMigrationDataLossAllowed = true;
 update database*@
 
-<form>
-    <label>Password</label><input type="text"/><button>Login</button>
-    <a href="/Admin">Admin</a>
-    @{var checkedStr1= (Model.Preferences.Style=="1") ? "checked=checked" : "";
-      var checkedStr2 = (Model.Preferences.Style == "2") ? "checked=checked" : "";
-      var checkedStr3 = (Model.Preferences.Style == "3") ? "checked=checked" : ""; 
-      }
-    <label>1</label><input id="style1" type="radio" name="style" value="1" @checkedStr1/>
-     
-    <label>2</label><input id="style2" type="radio" name="style" value="2" @checkedStr2/>
-     
-    <label>3</label><input id="style3" type="radio" name="style" value="3" @checkedStr3/>
-</form>
+
 
 <form id="posts_hidden" hidden>  
     @foreach (var item in Model.Posts) {       
@@ -55,10 +60,8 @@ update database*@
 
 </form>
 <form id="posts">
-    @*<label>start</label>*@
-
 </form>
+<button id="olderPosts">Older Posts</button>
 <form id="parts">
-  
-
 </form>
+    
