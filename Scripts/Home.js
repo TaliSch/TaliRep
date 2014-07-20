@@ -20,20 +20,36 @@ $().ready(function () {
     var $input = $(".hiddenLogin").find("input");
 
     $("#passwordButton").click(function () {
-        alert(password);
+        //alert(password);
         login(password);
         password = "";
         $input.val("");
     })
-    
+
+    $input.click(function (event) {
+        event.preventDefault();
+        var inputLen = $input.val().length;
+        var caretPos = getCaretPosition($input);
+        if (caretPos != inputLen) {
+            setCaretToPos($input.get(0),inputLen);
+        }
+    })
+
+    $input.select(function (event) {
+        
+        event.preventDefault();
+        resetInputSelection($input.get(0));
+        
+    })
+    // todo: prevent focus
     $input.keypress(function (event) {
         var key = event.which;
-        
-        if ((key >= 31 && key < 40) ||
-             (key >= 48 && key < 57) ||
-             (key >= 65 && key < 90) ||
-             (key >= 97 && key < 122) ||
-                 (key == 8) || (key == 0)) {
+        //alert(key);
+        //if ((key >= 31 && key < 40) ||
+        //     (key >= 48 && key < 57) ||
+        //     (key >= 65 && key < 90) ||
+        //     (key >= 97 && key < 122) ||
+        //         (key == 8) || (key == 0)) {
            
             event.preventDefault();
             if (key != 0) {
@@ -49,7 +65,7 @@ $().ready(function () {
                     $input.val(val.concat("*"));
                 }
             }
-        }
+        //}
         
     })
 })
@@ -229,4 +245,64 @@ function login(password) {
             alert("Failed To connect " + textStatus + ' ' + errorThrown);
         }
     });
+}
+
+function resetInputSelection(input) {
+    var inputLen = $(input).val().length;
+    if (getCaretPosition(input) != inputLen) {
+        if (document.selection) {
+            document.selection.empty();
+        }
+        else {
+            input.selectionStart = inputLen;
+        }
+    }
+}
+
+function setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+        input.focus();
+        input.setSelectionRange(selectionStart, selectionEnd);
+    }
+    else if (input.createTextRange) {
+        var range = input.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', selectionEnd);
+        range.moveStart('character', selectionStart);
+        range.select();
+    }
+}
+
+function setCaretToPos(input, pos) {
+    setSelectionRange(input, pos, pos);
+}
+
+function getCaretPosition(input) {
+
+    // Initialize
+    var carPos = 0;
+
+    // IE Support
+    if (document.selection) {
+
+        // Set focus on the element
+        input.focus();
+
+        // To get cursor position, get empty selection range
+        var range = document.selection.createRange();
+
+        // Move selection start to 0 position
+        range.moveStart('character', -input.value.length);
+
+        // The caret position is selection length
+        carPos = range.text.length;
+    }
+
+        // Firefox support
+    else if (input.selectionStart || input.selectionStart == '0')
+        carPos = input.selectionStart;
+
+
+    // Return results
+    return (carPos);
 }
