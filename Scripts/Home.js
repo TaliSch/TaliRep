@@ -17,7 +17,7 @@ $().ready(function () {
         $(".hiddenLogin").show();
     })
 
-    var $input = $(".hiddenLogin").find("input");
+    var $input = $(".hiddenLogin").find("input:text");
 
     $("#passwordButton").click(function () {
         //alert(password);

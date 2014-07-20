@@ -22,14 +22,30 @@
         display:none;
     }
 
+        .adminFixed .adminSection * {
+            margin: 1em 0em 0em 0em;
+        }
+
     .adminFixed button {
         /*float:left;*/
-        background-color:#68c9e8;
+        border: 1px solid #009999;/*//#96d1f8;*/
+        /*ackground-color:#68c9e8;*/
+        background-color:#009999;
         color:white;
+        /*border-radius: 0.3em;*/
+       
     }
 
-    .adminFixed .hiddenLogin {
+    .adminFixed #loginButton {
+        margin : 1em 0em 0em 0em;
+    }
+
+    .hiddenLogin {
         display:none;
+    }
+
+    .hiddenLogin *{
+        margin : 1em 0em 0em 0em;
     }
 
 .blogHeader {
