@@ -1,5 +1,5 @@
 ﻿var contentMaxHeight = 0;
-var password = "";
+//var password = "";
 $().ready(function () {
     //$(".hiddenLogin").hide();
 
@@ -17,57 +17,58 @@ $().ready(function () {
         $(".hiddenLogin").show();
     })
 
-    var $input = $(".hiddenLogin").find("input:text");
+    var $password = $(".hiddenLogin").find("input:password");
 
     $("#passwordButton").click(function () {
+        
         //alert(password);
-        login(password);
-        password = "";
-        $input.val("");
+        login($password.val());
+        //password = "";
+        //$input.val("");
     })
 
-    $input.click(function (event) {
-        event.preventDefault();
-        var inputLen = $input.val().length;
-        var caretPos = getCaretPosition($input);
-        if (caretPos != inputLen) {
-            setCaretToPos($input.get(0),inputLen);
-        }
-    })
+    //$input.click(function (event) {
+    //    event.preventDefault();
+    //    var inputLen = $input.val().length;
+    //    var caretPos = getCaretPosition($input);
+    //    if (caretPos != inputLen) {
+    //        setCaretToPos($input.get(0),inputLen);
+    //    }
+    //})
 
-    $input.select(function (event) {
+    //$input.select(function (event) {
         
-        event.preventDefault();
-        resetInputSelection($input.get(0));
+    //    event.preventDefault();
+    //    resetInputSelection($input.get(0));
         
-    })
-    // todo: prevent focus
-    $input.keypress(function (event) {
-        var key = event.which;
-        //alert(key);
-        //if ((key >= 31 && key < 40) ||
-        //     (key >= 48 && key < 57) ||
-        //     (key >= 65 && key < 90) ||
-        //     (key >= 97 && key < 122) ||
-        //         (key == 8) || (key == 0)) {
+    //})
+    //// todo: prevent focus
+    //$input.keypress(function (event) {
+    //    var key = event.which;
+    //    //alert(key);
+    //    //if ((key >= 31 && key < 40) ||
+    //    //     (key >= 48 && key < 57) ||
+    //    //     (key >= 65 && key < 90) ||
+    //    //     (key >= 97 && key < 122) ||
+    //    //         (key == 8) || (key == 0)) {
            
-            event.preventDefault();
-            if (key != 0) {
-                var val = $input.val();
-                if (key == 8) {
-                    if (password.length > 0) {
-                        password = password.slice(0, password.length - 1);
-                        $input.val(val.slice(0, val.length - 1));
-                    }
-                }
-                else {
-                    password = password.concat(String.fromCharCode(key));
-                    $input.val(val.concat("*"));
-                }
-            }
-        //}
+    //        event.preventDefault();
+    //        if (key != 0) {
+    //            var val = $input.val();
+    //            if (key == 8) {
+    //                if (password.length > 0) {
+    //                    password = password.slice(0, password.length - 1);
+    //                    $input.val(val.slice(0, val.length - 1));
+    //                }
+    //            }
+    //            else {
+    //                password = password.concat(String.fromCharCode(key));
+    //                $input.val(val.concat("*"));
+    //            }
+    //        }
+    //    //}
         
-    })
+    //})
 })
 
 function loadPosts(items) {
@@ -240,13 +241,14 @@ function login(password) {
                 $("#loginButton").hide();
                 $(".adminSection").show();
             }
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert("Failed To connect " + textStatus + ' ' + errorThrown);
         }
     });
 }
-
+/*
 function resetInputSelection(input) {
     var inputLen = $(input).val().length;
     if (getCaretPosition(input) != inputLen) {
@@ -272,7 +274,8 @@ function setSelectionRange(input, selectionStart, selectionEnd) {
         range.select();
     }
 }
-
+*/
+/*
 function setCaretToPos(input, pos) {
     setSelectionRange(input, pos, pos);
 }
@@ -306,3 +309,4 @@ function getCaretPosition(input) {
     // Return results
     return (carPos);
 }
+*/
