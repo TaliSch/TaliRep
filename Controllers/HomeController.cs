@@ -98,26 +98,28 @@ namespace MyBlogEmpty.Controllers
         }
 
        
-        List<Post> GetNextItems(int count)
+        IEnumerable<Post> GetNextItems(int count)
         {
-            List<Post> rv = new List<Post>();
+            IEnumerable<Post> rv = new List<Post>();
             var postsLen = db.Posts.Count();
 
             int to = Math.Min(NextPosSession, postsLen-1);// including
             int from = Math.Max(0, to - count + 1); // including
 
-            int index = 0;
-            foreach (Post post in db.Posts)
-            {
-                if (index >= to)
-                    break;
-                if (index >= from)
-                    rv.Add(post);
-            }
+            rv = db.Posts.OrderByDescending(item => item.Date).Skip(from).Take(to - from + 1);
 
-            NextPosSession = from - rv.Count();
+            //int index = 0;
+            //foreach (Post post in db.Posts)
+            //{
+            //    if (index >= to)
+            //        break;
+            //    if (index >= from)
+            //        rv.Add(post);
+            //}
 
-            rv.Reverse();
+            //NextPosSession = from - rv.Count();
+
+            //rv.Reverse();
 
             return (rv);
         }
