@@ -62,6 +62,7 @@ function loadPosts(items) {
         
     })
 }
+
 function loadNextItems() {  
     $.ajax({
         url: 'Home/NextIndex',
@@ -158,7 +159,7 @@ function calculateContentHeight(part, headerHtml) {
  
     var links = '<a class="pageLink" href="#">' + '1' + '</a> ';
 
-    var $newPost = $('<table><tr class="post" id="newpostId"><td>' + headerHtml + div + links + '</td></tr></div>');
+    var $newPost = $('<table><tr class="fakePost" id="newpostId"><td>' + headerHtml + div + links + '</td></tr></div>');
 
     // append the paragraph to the containetr
 

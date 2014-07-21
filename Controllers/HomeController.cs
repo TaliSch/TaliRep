@@ -13,14 +13,28 @@ namespace MyBlogEmpty.Controllers
     {
         private BlogDBContext db = new BlogDBContext();
         // GET: /Home/
-        
+        bool AdminSession
+        {
+            get
+            {
+                if (Session["admin"] == null)
+                    Session["admin"] = false;
+                return (bool)Session["admin"];
+            }
+            set { Session["admin"] = value; }
+        }
+
+        int NextPosSession
+        {
+            get { return (int)Session["nextPos"]; }
+            set { Session["nextPos"] = value; }
+        }
         
         public ActionResult Index()
         {
-            if (Session["admin"] == null)
-                Session["admin"] = false;
+            NextPosSession = db.Posts.Count() - 1;
            // var admin = (bool)Session["admin"];
-            ViewBag.Admin = (bool)Session["admin"];
+            ViewBag.Admin = AdminSession;
            
             var taliP = db.UserPreferences.Find("Tali");
             if (taliP == null)
@@ -39,8 +53,11 @@ namespace MyBlogEmpty.Controllers
             }
 
             var count = Math.Min(db.Posts.Count(), 10);
-            IncNextPos(count);
-            return View(new HomeViewModel() { Posts = db.Posts.Take(count), Preferences = (UserPreferences)taliP });
+            var from = db.Posts.Count() - count;
+            //SetNextPos(from);
+            var posts = GetNextItems(10);
+           
+            return View(new HomeViewModel() { Posts = posts, Preferences = (UserPreferences)taliP });
         }
 
         [HttpPost]
@@ -48,27 +65,7 @@ namespace MyBlogEmpty.Controllers
         {
             try
             {
-                int from = (int)Session["nextPos"];
-                int to = from + 10;
-                
-                //var index = "1";
-                var count = Math.Min(db.Posts.Count() - from+1, to - from + 1);
-                to = from + count;
-
-                List<Post> nextItems = new List<Post>();
-
-                int index = 0;
-                foreach(Post post in db.Posts)
-                {
-                    if (index  >= to)
-                        break;
-                    if (index >= from)
-                        nextItems.Add(post);
-                }
-
-                IncNextPos(count);
-
-                return Json(nextItems);
+                return Json(GetNextItems(10));
                 
                //return Json(db.Posts.Where((item,i)=>i>=from && i< from+count));
 
@@ -96,21 +93,34 @@ namespace MyBlogEmpty.Controllers
         {
             var tali = db.UserCredentials.Find("Tali");
             bool correct = (tali.Password == password);
-            Session["admin"] = correct;
+            AdminSession = correct;
             return Json(correct);
         }
 
-        void IncNextPos(int by)
+       
+        List<Post> GetNextItems(int count)
         {
-            var nextPos = Session["nextPos"];
-            if (nextPos == null)
+            List<Post> rv = new List<Post>();
+            var postsLen = db.Posts.Count();
+
+            int to = Math.Min(NextPosSession, postsLen-1);// including
+            int from = Math.Max(0, to - count + 1); // including
+
+            int index = 0;
+            foreach (Post post in db.Posts)
             {
-                Session["nextPos"] = by;
+                if (index >= to)
+                    break;
+                if (index >= from)
+                    rv.Add(post);
             }
-            else
-            {
-                Session["nextPos"] = (int)nextPos + by;
-            }
+
+            NextPosSession = from - rv.Count();
+
+            rv.Reverse();
+
+            return (rv);
         }
+
     }
 }

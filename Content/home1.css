@@ -78,6 +78,18 @@ blogHeader {
     position:relative;
     width: 50%;
     left:25%;
+    /*height: 15em;
+    max-height:15em;*/
+    padding: 10px;
+    border: 1px solid gray;
+    /*margin: 0px;*/
+    margin: 1em 0em 0em 0em;
+}
+
+.fakePost {
+    position:relative;
+    width: 50%;
+    left:25%;
     height: 15em;
     max-height:15em;
     padding: 10px;
@@ -85,6 +97,7 @@ blogHeader {
     /*margin: 0px;*/
     margin: 1em 0em 0em 0em;
 }
+
 #posts hr{
     display:none;
 } 
@@ -96,4 +109,20 @@ blogHeader {
     color:red;
 }
 
+
+#olderPosts {
+    text-align:center;
+    vertical-align:bottom;
+    padding:0px;
+    margin:1em 0em 0em 0em
+    
+}
+    #olderPosts button {
+        /*border: 1px solid red;         
+        background-color: red;
+        color: white;*/
+    }
+        #olderPosts button:hover {
+            /*background-color: #990033;*/
+        }
 
