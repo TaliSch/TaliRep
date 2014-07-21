@@ -23,12 +23,13 @@
           var checkedStr2 = (Model.Preferences.Style == "2") ? "checked=checked" : "";
           var checkedStr3 = (Model.Preferences.Style == "3") ? "checked=checked" : ""; 
           }
-        <label id="changeStyle">Change Style</label>
+        <label id="changeStyle"> | Change Style</label>
         <label>1</label><input id="style1" type="radio" name="style" value="1" @checkedStr1/>
      
         <label>2</label><input id="style2" type="radio" name="style" value="2" @checkedStr2/>
      
         <label>3</label><input id="style3" type="radio" name="style" value="3" @checkedStr3/>
+        <button id="signOutButton">Sign Out</button>
         <hr />
     </div>
 </header>
@@ -46,23 +47,28 @@ add-migration Initial
 AutomaticMigrationDataLossAllowed = true;
 update database*@
 
-
-
-<form id="posts_hidden" hidden>  
-    @foreach (var item in Model.Posts) {       
-        <div class="post">
-        @*<p>@item.Data</p>*@
+@{var checkedStr = (ViewBag.Admin) ? "checked=checked" : "";}
+<input type="checkbox" id="AdminState" hidden @checkedStr/>
+<form id="posts">  
+    @{var postIndex = 0; }
+    @{string postId = ""; }
+    
+    @foreach (var item in Model.Posts) {
+        { postId = "postId" + postIndex.ToString(); postIndex++; } 
+        <div class="post" id="@postId">
+        
         <input class="postTitle" value= "@item.Title" type="text" />
              @{var dateStr = item.Date.ToString("m")+", "+item.Date.Year.ToString();}
         <input class="postDate" value= "@dateStr" type="text" />
         <input class ="postContent" value="@item.Content" type="text" />
         </div>
+        
     }
+    End
+</form>
+<div id="olderPosts"><button>Older Posts</button></div>
+<div id="parts">
+</div>
 
-</form>
-<form id="posts">
-</form>
-<button id="olderPosts">Older Posts</button>
-<form id="parts">
-</form>
-    
+
+

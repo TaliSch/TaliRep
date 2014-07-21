@@ -13,9 +13,15 @@ namespace MyBlogEmpty.Controllers
     {
         private BlogDBContext db = new BlogDBContext();
         // GET: /Home/
-
+        
+        
         public ActionResult Index()
         {
+            if (Session["admin"] == null)
+                Session["admin"] = false;
+           // var admin = (bool)Session["admin"];
+            ViewBag.Admin = (bool)Session["admin"];
+           
             var taliP = db.UserPreferences.Find("Tali");
             if (taliP == null)
             {
@@ -33,18 +39,24 @@ namespace MyBlogEmpty.Controllers
             }
 
             var count = Math.Min(db.Posts.Count(), 10);
-            
+            IncNextPos(count);
             return View(new HomeViewModel() { Posts = db.Posts.Take(count), Preferences = (UserPreferences)taliP });
         }
 
         [HttpPost]
-        public ActionResult Index(int from, int to)
+        public ActionResult NextIndex()
         {
             try
             {
+
+                int from = (int)Session["nextPos"];
+                int to = from + 10;
                 var index = db.UserPreferences.Find("Tali").Style;
                 //var index = "1";
                 var count = Math.Min(db.Posts.Count() - from, to - from + 1);
+
+                IncNextPos(count);
+
                 return Json(db.Posts.Skip(from).Take(count));
             }
             catch (Exception)
@@ -68,7 +80,22 @@ namespace MyBlogEmpty.Controllers
         public ActionResult Login(string password)
         {
             var tali = db.UserCredentials.Find("Tali");
-            return Json(tali.Password == password);
+            bool correct = (tali.Password == password);
+            Session["admin"] = correct;
+            return Json(correct);
+        }
+
+        void IncNextPos(int by)
+        {
+            var nextPos = Session["nextPos"];
+            if (nextPos == null)
+            {
+                Session["nextPos"] = by;
+            }
+            else
+            {
+                Session["nextPos"] = (int)nextPos + by;
+            }
         }
     }
 }

@@ -1,23 +1,12 @@
 ﻿var contentMaxHeight = 0;
-
 //var password = "";
 $().ready(function () {
     //$(".hiddenLogin").hide();
 
     contentMaxHeight = calculateContentHeight("<p>22</p>");
     //loadNextItems(0, 10);
-    var $items = $("#posts").find('.post');
+    var $items = $("#posts_hidden").find('.post');
     loadPosts($items);
-
-    //var $olderPosts = $("#olderPosts");
-    //var $olderPostsBtn = $($olderPosts.find('button')[0]);
-    //alert($olderPostsBtn.html());
-    //$olderPostsBtn.click(function () {
-    //    alert("olderPosts");
-    //    loadNextItems();
-    //})
-
-    //$olderPostsBtn.trigger("click");
     $("input[name=style]:radio").on("click", function () {
         var value = $("input[name=style]:checked").val();
         setStyle(value);
@@ -30,20 +19,56 @@ $().ready(function () {
 
     var $password = $(".hiddenLogin").find("input:password");
 
-    $("#passwordButton").click(function () {    
+    $("#passwordButton").click(function () {
+        
+        //alert(password);
         login($password.val());
+        //password = "";
+        //$input.val("");
     })
 
-    $("#signOutButton").click(function () {
-        changeAdminState(false);
-    })
+    //$input.click(function (event) {
+    //    event.preventDefault();
+    //    var inputLen = $input.val().length;
+    //    var caretPos = getCaretPosition($input);
+    //    if (caretPos != inputLen) {
+    //        setCaretToPos($input.get(0),inputLen);
+    //    }
+    //})
 
-    var $adminState = $("#AdminState");
-    changeAdminState($adminState.attr('checked'));
-    $("#AdminState").change(function () {       
-        changeAdminState($adminState.attr('checked'));
-    })
-    //$olderPostsBtn.trigger("click");
+    //$input.select(function (event) {
+        
+    //    event.preventDefault();
+    //    resetInputSelection($input.get(0));
+        
+    //})
+    //// todo: prevent focus
+    //$input.keypress(function (event) {
+    //    var key = event.which;
+    //    //alert(key);
+    //    //if ((key >= 31 && key < 40) ||
+    //    //     (key >= 48 && key < 57) ||
+    //    //     (key >= 65 && key < 90) ||
+    //    //     (key >= 97 && key < 122) ||
+    //    //         (key == 8) || (key == 0)) {
+           
+    //        event.preventDefault();
+    //        if (key != 0) {
+    //            var val = $input.val();
+    //            if (key == 8) {
+    //                if (password.length > 0) {
+    //                    password = password.slice(0, password.length - 1);
+    //                    $input.val(val.slice(0, val.length - 1));
+    //                }
+    //            }
+    //            else {
+    //                password = password.concat(String.fromCharCode(key));
+    //                $input.val(val.concat("*"));
+    //            }
+    //        }
+    //    //}
+        
+    //})
 })
 
 function loadPosts(items) {
@@ -58,19 +83,19 @@ function loadPosts(items) {
         var date = $date.val();
         var content = LZString.decompressFromBase64($content.val());
        
-        var postId = $value.attr("id");//"post" + index.toString();
-   
+        var postId = "post" + index.toString();        
+
         displayPost(postId, title, date, content, contentMaxHeight);
         
     })
 }
-function loadNextItems() {  
+function loadNextItems(from, to) {  
     $.ajax({
-        url: 'Home/NextIndex',
+        url: 'Home/Index',
         type: 'POST',
         dataType: 'Json',
         //contentType: 'Json',
-        //data: { From: from, To: to },
+        data: { From: from, To: to },
         timeout: 5000,
 
         success: function (data, textStatus, jqXHR) {
@@ -91,10 +116,10 @@ function loadNextItems() {
 // todo; change height if too short
 function displayPost(postId, title, date, content, contentMaxHeight) {
 
-    var headerHtml = "<div class='postHeader'><p><label id='postTitle'>" + title + "</label></p><p><label id='postDate'>" + date + "</label></p></div>";
-    //var re='/<p>|<h>|<h\d>/'
+    var headerHtml = "<p class='postHeader'><label id='postTitle'>" + title + "</label></p><p class='postHeader'><label id='postDate'>" + date + "</label></p>";
+   
     var lines = content.split("</p>", 1000);
-    
+    alert(lines);
     var parts = splitPost(headerHtml, lines, contentMaxHeight);
     //alert(parts);
     var partsHtml = "";
@@ -102,23 +127,18 @@ function displayPost(postId, title, date, content, contentMaxHeight) {
 
     $.each(parts, function (index, value) {
         var divId = "divId" + index.toString();
-        var div = '<div class="part" id="' + divId + '">' + value + '</div>';
+        var div = '<div id="' + divId + '">' + value + '</div>';
 
         partsHtml = partsHtml.concat(div);
         if (parts.length > 1) {
             links = links.concat('<a class="pageLink" href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',' + '\'' + postId + '\',' + index + ');return false;">' + index + '</a> ');
         }
     });
-    //alert(jQuery.parseJSON("#"+postId)
-    //alert($(postId).html());
-    var $post = $("#" + postId);
 
-    var $newPost = $('<div class="post" id="new' + postId + '">' + headerHtml + partsHtml + links + '</div>');
- 
-    $post.replaceWith($newPost);
-    $newPost.append('<hr>');
-    choosePage($newPost, 'divId0', 0);
-
+    // $("#posts").append('<table class="post" id="' + postId + '"<tr><td>' + partsHtml + links + '</td></tr></table>');
+    $("#posts").append('<div class="post" id="' + postId + '">' + headerHtml + partsHtml + links + '</div>');
+    $("#posts").append('<hr>');
+    choosePage('divId0', postId, 0);
 }
 function splitPost(headerHtml, lines, contentMaxHeight) {
     var parts = [];
@@ -164,12 +184,11 @@ function calculateContentHeight(currentPart) {
     return currHeight;
 }
 
-function choosePage(post, divId, index) {
+function choosePage(divId, postId,index) {
     //alert(index);
+    var $post = $('#posts').find('#' + postId);
     //alert($post.html());
-    var $post = $(post);
-
-    $post.find('.part').hide();
+    $post.find('div').hide();
     $post.find('#' + divId).show();
 
     $post.find('.pageLink').each(function (indx, value) {
@@ -229,17 +248,65 @@ function login(password) {
         }
     });
 }
-
-function changeAdminState(state) {
-    if (state) {
-        $(".hiddenLogin").hide();
-        $("#loginButton").hide();
-        $(".adminSection").show();
-    }
-    else {
-        $(".hiddenLogin").hide();
-        $("#loginButton").show();
-        $(".adminSection").hide();
-
+/*
+function resetInputSelection(input) {
+    var inputLen = $(input).val().length;
+    if (getCaretPosition(input) != inputLen) {
+        if (document.selection) {
+            document.selection.empty();
+        }
+        else {
+            input.selectionStart = inputLen;
+        }
     }
 }
+
+function setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+        input.focus();
+        input.setSelectionRange(selectionStart, selectionEnd);
+    }
+    else if (input.createTextRange) {
+        var range = input.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', selectionEnd);
+        range.moveStart('character', selectionStart);
+        range.select();
+    }
+}
+*/
+/*
+function setCaretToPos(input, pos) {
+    setSelectionRange(input, pos, pos);
+}
+
+function getCaretPosition(input) {
+
+    // Initialize
+    var carPos = 0;
+
+    // IE Support
+    if (document.selection) {
+
+        // Set focus on the element
+        input.focus();
+
+        // To get cursor position, get empty selection range
+        var range = document.selection.createRange();
+
+        // Move selection start to 0 position
+        range.moveStart('character', -input.value.length);
+
+        // The caret position is selection length
+        carPos = range.text.length;
+    }
+
+        // Firefox support
+    else if (input.selectionStart || input.selectionStart == '0')
+        carPos = input.selectionStart;
+
+
+    // Return results
+    return (carPos);
+}
+*/

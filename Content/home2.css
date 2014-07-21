@@ -26,6 +26,11 @@
             margin: 1em 0em 0em 0em;
         }
 
+        .adminFixed .adminSection label {
+            color: #009999;
+            font-weight:600;
+        }
+
     .adminFixed button {
         /*float:left;*/
         border: 1px solid #009999;/*//#96d1f8;*/
@@ -35,6 +40,9 @@
         /*border-radius: 0.3em;*/
        
     }
+        .adminFixed button:hover {
+            background-color: #006666;
+        }
 
     .adminFixed #loginButton {
         margin : 1em 0em 0em 0em;
@@ -90,7 +98,7 @@
     height:25em;
     max-height:25em;
     font-family: Tahoma, Arial, "Verdana", "Sans-serif";
-    color: #999;
+    color: #808080;
     background-color:white;
 }
 
@@ -128,10 +136,24 @@
          color:lightgray;
         }
 
-
+.pageLink {
+    vertical-align:bottom;
+}
 .linkOn {
     color:black;
 }
 .linkOff {
     color:red;
 }
+#olderPosts {
+    /*text-align:center;*/
+    /*vertical-align:bottom;*/
+}
+    #olderPosts button {
+        border: 1px solid red;         
+        background-color: red;
+        color: white;
+    }
+        #olderPosts button:hover {
+            background-color: #990033;
+        }
