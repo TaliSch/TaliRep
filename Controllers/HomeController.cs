@@ -48,16 +48,31 @@ namespace MyBlogEmpty.Controllers
         {
             try
             {
-
                 int from = (int)Session["nextPos"];
                 int to = from + 10;
-                var index = db.UserPreferences.Find("Tali").Style;
+                
                 //var index = "1";
-                var count = Math.Min(db.Posts.Count() - from, to - from + 1);
+                var count = Math.Min(db.Posts.Count() - from+1, to - from + 1);
+                to = from + count;
+
+                List<Post> nextItems = new List<Post>();
+
+                int index = 0;
+                foreach(Post post in db.Posts)
+                {
+                    if (index  >= to)
+                        break;
+                    if (index >= from)
+                        nextItems.Add(post);
+                }
 
                 IncNextPos(count);
 
-                return Json(db.Posts.Skip(from).Take(count));
+                return Json(nextItems);
+                
+               //return Json(db.Posts.Where((item,i)=>i>=from && i< from+count));
+
+                //return Json(db.Posts.Skip(from).Take(count));
             }
             catch (Exception)
             {

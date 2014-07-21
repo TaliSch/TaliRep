@@ -82,6 +82,7 @@
  #posts {
     width: 80%;
     padding: 0px;
+    margin:0px;
     /*border: 1px solid gray;*/
     position: relative;
     top: 6em;
@@ -106,7 +107,7 @@
     color:lightgray;
     background-color:lightgray /*#DBEADC*/;
     height:1.5px;
-    margin: 3em -4em 3em -4em;
+    margin: 1em -4em 1em -4em;
     border:none;
 }
 
@@ -146,8 +147,11 @@
     color:red;
 }
 #olderPosts {
-    /*text-align:center;*/
-    /*vertical-align:bottom;*/
+    text-align:center;
+    vertical-align:bottom;
+    padding:0px;
+    margin:1em 0em 0em 0em
+    
 }
     #olderPosts button {
         border: 1px solid red;         

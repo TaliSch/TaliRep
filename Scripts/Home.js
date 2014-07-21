@@ -2,20 +2,19 @@
 
 //var password = "";
 $().ready(function () {
-    //$(".hiddenLogin").hide();
-
-    contentMaxHeight = calculateContentHeight("<p>22</p>");
-    //loadNextItems(0, 10);
+    contentMaxHeight = calculateContentHeight("<p>22</p>","");
+    //alert("contentMaxHeight="+contentMaxHeight);
+    
     var $items = $("#posts").find('.post');
     loadPosts($items);
 
-    //var $olderPosts = $("#olderPosts");
-    //var $olderPostsBtn = $($olderPosts.find('button')[0]);
-    //alert($olderPostsBtn.html());
-    //$olderPostsBtn.click(function () {
-    //    alert("olderPosts");
-    //    loadNextItems();
-    //})
+    var $olderPosts = $("#olderPosts");
+    var $olderPostsBtn = $($olderPosts.find('button'));
+    
+    $olderPostsBtn.click(function () {
+       
+        loadNextItems();
+    })
 
     //$olderPostsBtn.trigger("click");
     $("input[name=style]:radio").on("click", function () {
@@ -47,7 +46,6 @@ $().ready(function () {
 })
 
 function loadPosts(items) {
-    
     $.each(items, function (index, value) {
         var $value = $(value);
         var $title = $($value.find(".postTitle"));
@@ -74,7 +72,7 @@ function loadNextItems() {
         timeout: 5000,
 
         success: function (data, textStatus, jqXHR) {
-            $.each(items, function (index, value) {
+            $.each(data, function (index, value) {
                 var postId = "post" + index.toString();
                 displayPost(postId, value.Title, value.Date, value.Content, contentMaxHeight);
             })
@@ -90,47 +88,48 @@ function loadNextItems() {
 
 // todo; change height if too short
 function displayPost(postId, title, date, content, contentMaxHeight) {
-
-    var headerHtml = "<div class='postHeader'><p><label id='postTitle'>" + title + "</label></p><p><label id='postDate'>" + date + "</label></p></div>";
+    //var headerHtml = "<p><label class='postHeader' id='postTitle'>" + title + "</label></p><p><label class='postHeader' id='postDate'>" + date + "</label></p>";
+    var headerHtml = "<p class='postHeader'><label id='postTitle'>" + title + "</label></p><p class='postHeader'><label id='postDate'>" + date + "</label></p>";
+    
     //var re='/<p>|<h>|<h\d>/'
     var lines = content.split("</p>", 1000);
     
     var parts = splitPost(headerHtml, lines, contentMaxHeight);
-    //alert(parts);
+    
     var partsHtml = "";
     var links = "";
-
+    var newPostId = "new"+postId;
     $.each(parts, function (index, value) {
         var divId = "divId" + index.toString();
         var div = '<div class="part" id="' + divId + '">' + value + '</div>';
 
         partsHtml = partsHtml.concat(div);
         if (parts.length > 1) {
-            links = links.concat('<a class="pageLink" href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',' + '\'' + postId + '\',' + index + ');return false;">' + index + '</a> ');
+            links = links.concat('<a class="pageLink" href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',\'' + newPostId + '\',' + index + ');return false;">' + index + '</a> ');
         }
     });
-    //alert(jQuery.parseJSON("#"+postId)
-    //alert($(postId).html());
+   
     var $post = $("#" + postId);
 
-    var $newPost = $('<div class="post" id="new' + postId + '">' + headerHtml + partsHtml + links + '</div>');
+    var $newPost = $('<div class="post" id="' + newPostId + '">' + headerHtml + partsHtml + links + '</div>');
  
     $post.replaceWith($newPost);
     $newPost.append('<hr>');
-    choosePage($newPost, 'divId0', 0);
+    choosePage('divId0', newPostId, 0);
 
 }
+
 function splitPost(headerHtml, lines, contentMaxHeight) {
     var parts = [];
-
     var currentPart = "";
     var fromIndex = 0;
     for (var j = 0; j < lines.length - 1 ; j++) {
-        currentPart = currentPart + lines[j] + "</p>";
+        currentPart += lines[j] + "</p>";
 
-        var currHeight = calculateContentHeight(headerHtml + currentPart);
-        //alert(currentPart+":"+currHeight);
+        var currHeight = calculateContentHeight(currentPart, headerHtml);
+        //alert("line " + j + ": currHeight=" + currHeight);
         if (currHeight > contentMaxHeight) {
+            //alert("line " + j + ": currHeight=" + currHeight);
             currentPart = "";
             // alert('fromIndex=' + fromIndex + ',j=' + j);
             if (fromIndex < j) {
@@ -143,9 +142,6 @@ function splitPost(headerHtml, lines, contentMaxHeight) {
 
             currentPart = lines[j] + "</p>";
         }
-
-        // alert(lines[j]);
-        // create div per part, with hide
     }
     if (currentPart != "") {
         parts.push(currentPart);
@@ -154,24 +150,38 @@ function splitPost(headerHtml, lines, contentMaxHeight) {
     return parts;
 }
 
-function calculateContentHeight(currentPart) {
+function calculateContentHeight(part, headerHtml) {
     var $cntnr = $("#parts");
-    var html = '<tr class = "post" id="part"><td>' + currentPart + '</td></tr>';
-    $cntnr.append(html);
-    var currHeight = $cntnr.find("#part").height();
-    //alert(currHeight);
+
+    // create the html paragraph
+    var div = '<div class="part" id="divId">' + part + '</div>';
+ 
+    var links = '<a class="pageLink" href="#">' + '1' + '</a> ';
+
+    var $newPost = $('<table><tr class="post" id="newpostId"><td>' + headerHtml + div + links + '</td></tr></div>');
+
+    // append the paragraph to the containetr
+
+    $cntnr.append($newPost);
+
+    // find out the height
+    var currHeight = $cntnr.height();
+
+    // clear the container
+
     $cntnr.html("");
+
     return currHeight;
 }
 
-function choosePage(post, divId, index) {
+function choosePage(divId, postId, index) {
     //alert(index);
     //alert($post.html());
-    var $post = $(post);
+    var $post = $("#"+postId);
 
     $post.find('.part').hide();
     $post.find('#' + divId).show();
-
+    
     $post.find('.pageLink').each(function (indx, value) {
         if (indx == index) {
             $(value).removeClass("linkOff");

@@ -49,26 +49,27 @@ update database*@
 
 @{var checkedStr = (ViewBag.Admin) ? "checked=checked" : "";}
 <input type="checkbox" id="AdminState" hidden @checkedStr/>
-<form id="posts">  
+<div id="posts">  
     @{var postIndex = 0; }
     @{string postId = ""; }
     
     @foreach (var item in Model.Posts) {
         { postId = "postId" + postIndex.ToString(); postIndex++; } 
         <div class="post" id="@postId">
-        
-        <input class="postTitle" value= "@item.Title" type="text" />
-             @{var dateStr = item.Date.ToString("m")+", "+item.Date.Year.ToString();}
-        <input class="postDate" value= "@dateStr" type="text" />
-        <input class ="postContent" value="@item.Content" type="text" />
+            <input class="postTitle" value= "@item.Title" type="text" />
+                 @{var dateStr = item.Date.ToString("m")+", "+item.Date.Year.ToString();}
+            <input class="postDate" value= "@dateStr" type="text" />
+            <input class ="postContent" value="@item.Content" type="text" />
         </div>
-        
     }
     End
-</form>
-<div id="olderPosts"><button>Older Posts</button></div>
+    <div id="olderPosts"><button>Older Posts</button></div>
+</div>
+
 <div id="parts">
 </div>
+
+
 
 
 
