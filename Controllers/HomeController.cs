@@ -108,19 +108,6 @@ namespace MyBlogEmpty.Controllers
 
             rv = db.Posts.OrderByDescending(item => item.Date).Skip(from).Take(to - from + 1);
 
-            //int index = 0;
-            //foreach (Post post in db.Posts)
-            //{
-            //    if (index >= to)
-            //        break;
-            //    if (index >= from)
-            //        rv.Add(post);
-            //}
-
-            //NextPosSession = from - rv.Count();
-
-            //rv.Reverse();
-
             return (rv);
         }
 

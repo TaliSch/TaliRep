@@ -16,6 +16,17 @@ namespace MyBlogEmpty.Controllers
         //
         // GET: /Editor/
 
+        bool AdminSession
+        {
+            get
+            {
+                if (Session["admin"] == null)
+                    Session["admin"] = false;
+                return (bool)Session["admin"];
+            }
+            set { Session["admin"] = value; }
+        }
+
         public ActionResult Index()
         {
             var postDatas = db.Posts.Select(i=>new PostData() { ID = i.ID, Date = i.Date, Title = i.Title});
@@ -102,6 +113,14 @@ namespace MyBlogEmpty.Controllers
             }
             rv = db.SaveChanges() == 2;
             return Json(rv ? true : false);
+        }
+
+        [HttpPost]
+        public ActionResult SignOut()
+        {            
+            AdminSession = false;
+            
+            return Json(true);
         }
     }
 }

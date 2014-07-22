@@ -4,13 +4,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Posts Manager</h2>
-
 <script src="@Url.Content("~/Scripts/AdminIndex.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/Admin.css")" rel="stylesheet" type="text/css" />
 
-@Html.ActionLink("Create New", "Create")
+<button  id="home">Home</button> <button id="signOut">Sign Out</button>
 
-<table>
+<h2 class="enabled">Posts Manager</h2>
+
+ @*<a id="createNew" href="/Admin/Create" class="button">Create New</a>*@
+<button id="createNew">CreateNew</button>
+
+@*<button id="createNew">Create New</button>*@
+
+
+<table class ="enabled">
     <tr>
         <th>
             Name
@@ -34,8 +41,8 @@
         </td>
         <td>
             @{var id = item.ID; var title = item.Title; }
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) | <input type="button" value="Delete" id="@id" name="@title"/>
-           @* @Html.ActionLink("Delete", "Delete", new { id=item.ID }) *@
+            <button name="@id" class ="edit">Edit</button> | <button name ="@id" class="delete"></button> @*<input class="delete" type="button" value=" " id ="@id" name="@title"/>*@    
+            @*@Html.ActionLink("Edit","Edit",new { id=item.ID }, new { id="edit"}) *@       
         </td>
     </tr>
 }

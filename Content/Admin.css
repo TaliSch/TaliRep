@@ -1,0 +1,108 @@
+﻿
+/*border: 4px outset;*/
+/*a {
+    
+    padding: 1.1px 5px 1.1px 5px;
+    text-decoration: none;
+    border-radius:2px;
+}
+a .disabled {
+        background-color: #808080;
+    }*/
+
+table .enabled, h3 .enabled {
+    color:#003333;
+}
+
+    table .disabled, h3 .disabled {
+        color:#808080;
+    }
+
+button {
+    border-radius: 2px;
+}
+    button:disabled {
+        background-color: #808080;
+    }
+    button:disabled:hover {
+        background-color: #808080;
+    }
+ 
+#home {
+        border: 1px solid #DD75DD;         
+        background-color: #DD75DD;
+        color: white;
+    }
+        #home:hover {
+            background-color: #D54FD5;
+        }
+
+        /*#home:disabled {
+        background-color: #808080;*/
+    
+
+#signOut {
+        border: 1px solid #BC2EBC;         
+        background-color: #BC2EBC;
+        color: white;
+    }
+    #signOut:hover {
+        background-color: #872187;
+    }
+    #signOut:disabled {
+        background-color: #808080;
+    }
+
+.delete {
+        border: 1px solid #669933;         
+        background-color: #669933;
+        color: white;
+    }
+    .delete:before {
+        content: "Delete";
+    }
+    /*.delete:disabled {
+        background-color: #808080;
+    }*/
+
+.deleteSure{
+        border: 1px solid red;         
+        background-color: red;
+        color: white;
+    }
+    .deleteSure:hover {
+        background-color: #990033;
+    }
+    .deleteSure:before {
+        content: " Sure? ";
+    }
+    /*.deleteSure:disabled {
+        background-color: #808080;
+    }*/
+
+#createNew {
+    border: 1px solid #8678E9;
+    color:white;
+    background : #8678E9;
+}
+    #createNew:hover {
+        background-color: #6755E3;
+    }
+
+    #createNew:disabled {
+        background-color: #808080;
+    }
+
+.edit {
+    border: 1px solid #6CA870;
+    color:white;
+    background : #6CA870;
+    /*border-radius:2px;*/
+}
+    .edit:hover {
+        background-color: #59955C;
+    }
+    /*#edit .disabled {
+        background-color: #808080;
+    }*/
+
