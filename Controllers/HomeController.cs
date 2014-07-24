@@ -33,7 +33,7 @@ namespace MyBlogEmpty.Controllers
         public ActionResult Index()
         {
             
-            NextPosSession = db.Posts.Count() - 1;
+            NextPosSession = 0;
            // var admin = (bool)Session["admin"];
             ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
            
@@ -66,11 +66,7 @@ namespace MyBlogEmpty.Controllers
         {
             try
             {
-                return Json(GetNextItems(10));
-                
-               //return Json(db.Posts.Where((item,i)=>i>=from && i< from+count));
-
-                //return Json(db.Posts.Skip(from).Take(count));
+                return Json(GetNextItems(10));               
             }
             catch (Exception)
             {
@@ -112,14 +108,15 @@ namespace MyBlogEmpty.Controllers
             IEnumerable<Post> rv = new List<Post>();
             var postsLen = db.Posts.Count();
 
-            int to = Math.Min(NextPosSession, postsLen-1);// including
-            int from = Math.Max(0, to - count + 1); // including
+            int from = NextPosSession;// including
+            int to = Math.Min(postsLen-1, from+count-1); // including
 
-            if (to > 0 && to - from + 1 > 0)
+            if (from < postsLen && from <=  to)
             {
-                rv = db.Posts.OrderByDescending(item => item.Date).Skip(from).Take(to - from + 1);
+                var posts = db.Posts.OrderByDescending(item => item.Date);
+                rv = posts.Skip(from).Take(to - from + 1);
 
-                NextPosSession -= (to - from + 1);
+                NextPosSession += (to - from + 1);
             }
 
             return (rv);

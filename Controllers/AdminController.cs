@@ -31,7 +31,7 @@ namespace MyBlogEmpty.Controllers
         public ActionResult Index()
         {
             ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
-            var postDatas = db.Posts.Select(i=>new PostData() { ID = i.ID, Date = i.Date, Title = i.Title});
+            var postDatas = db.Posts.OrderByDescending(item=>item.Date).Select(i=>new PostData() { ID = i.ID, Date = i.Date, Title = i.Title});
             var userPreferences = db.UserPreferences.Find("Tali");
             return View(new AdminViewModel() { Preferences = userPreferences, PostDatas = postDatas });
         }
@@ -60,6 +60,7 @@ namespace MyBlogEmpty.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
             Post post = db.Posts.Find(id);
             if (post == null)
                 return HttpNotFound();

@@ -4,17 +4,7 @@
     $("#home").click(function () {
         location.href = '/';
     })//unbinf
-
-    //$("#signOut").click(function () {
-    //    $.ajax({
-    //        url: '/Admin/SignOut',
-    //        type: 'POST',
-    //        success: function () {
-    //            enabbeDisable(true);
-    //            $("#signOut").hide();
-    //        }
-    //    });
-    //})
+    
     $(".login").on("signOutCompleted",function () {       
         enabbeDisable(true);
     })

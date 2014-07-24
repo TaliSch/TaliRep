@@ -1,5 +1,5 @@
 ﻿var contentMaxHeight = 0;
-
+var postsCount = 0;
 //var password = "";
 $().ready(function () {
     contentMaxHeight = calculateContentHeight("<p>22</p>","");
@@ -51,6 +51,8 @@ function loadPosts(items) {
         displayPost(postId, title, date, content, contentMaxHeight);
         
     })
+
+    postsCount += items.length;
 }
 
 function loadNextItems() {  
@@ -64,9 +66,17 @@ function loadNextItems() {
 
         success: function (data, textStatus, jqXHR) {
             $.each(data, function (index, value) {
-                var postId = "post" + index.toString();
-                displayPost(postId, value.Title, value.Date, value.Content, contentMaxHeight);
+                var postId = "post" + String(postsCount + index);                
+                var content = LZString.decompressFromBase64(value.Content);                
+               
+                var date = new Date(Number(value.Date.substring(6,value.Date.length-2)));                
+                var strDate = date.toDateString();
+                // todo: the same in index get
+                strDate = strDate.substring(4, strDate.length);
+                 
+                displayPost(postId, value.Title, strDate, content, contentMaxHeight);
             })
+            postsCount += data.length;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert("Failed To Load");
@@ -105,8 +115,15 @@ function displayPost(postId, title, date, content, contentMaxHeight) {
     var $post = $("#" + postId);
 
     var $newPost = $('<div class="post" id="' + newPostId + '">' + headerHtml + partsHtml + links + '</div>');
- 
-    $post.replaceWith($newPost);
+
+    if ($post.get(0) == undefined) {
+        $("#olderPosts").before($newPost);       
+    }
+
+    else {
+        $post.replaceWith($newPost);        
+    }
+
     $newPost.append('<hr>');
     choosePage('divId0', newPostId, 0);
 
@@ -249,7 +266,7 @@ function changeAdminState(state) {
 
 function FixTitle(title) {
     title = title.replace("\n", "<br>");
-    var startIndex = 0, endIndex = title.length - 1;
+    var startIndex = 0, endIndex = title.length;
     if (title.charAt(0) == '"') {
         startIndex = 1;
     }
