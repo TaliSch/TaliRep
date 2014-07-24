@@ -2,18 +2,22 @@
 @{
     ViewBag.Title = "Posts Manager";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.LoginStarter = "signOut";
+    ViewBag.LoginViewname = "Admin";
 }
 
 <script src="@Url.Content("~/Scripts/AdminIndex.js")" type="text/javascript"></script>
 <link href="@Url.Content("~/Content/Admin.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/login.js")" type="text/javascript"></script>
 
-<button  id="home">Home</button> <button id="signOut">Sign Out</button>
+<button  id="home">Home</button> @Html.Partial("login")
 
-<h2 class="enabled">Posts Manager</h2>
+<header class="enabled">Posts Manager</header>
 
  @*<a id="createNew" href="/Admin/Create" class="button">Create New</a>*@
+<p>
 <button id="createNew">CreateNew</button>
-
+</p>
 @*<button id="createNew">Create New</button>*@
 
 
@@ -41,8 +45,9 @@
         </td>
         <td>
             @{var id = item.ID; var title = item.Title; }
-            <button name="@id" class ="edit">Edit</button> | <button name ="@id" class="delete"></button> @*<input class="delete" type="button" value=" " id ="@id" name="@title"/>*@    
-            @*@Html.ActionLink("Edit","Edit",new { id=item.ID }, new { id="edit"}) *@       
+            <div id="@id">
+            <button name="@id" class ="edit">Edit</button> | <button name ="@id" class="delete">Delete</button> <span hidden class="deleteSure"><button class="sure">Sure?</button><button name ="@id" class="cancel">Cancel</button></span>
+           </div>     
         </td>
     </tr>
 }

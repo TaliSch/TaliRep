@@ -1,21 +1,26 @@
 ﻿$().ready(function () {
+    LoginInit();
+
     $("#home").click(function () {
         location.href = '/';
     })//unbinf
 
-    $("#signOut").click(function () {
-        $.ajax({
-            url: '/Admin/SignOut',
-            type: 'POST',
-            success: function () {
-                $('button').prop("disabled", true);
-                 
-                $('table').attr("class", "disabled");
-                $('h3').attr("class", "disabled");
-                
-                $("#home").prop("disabled", false);
-            }
-        });
+    //$("#signOut").click(function () {
+    //    $.ajax({
+    //        url: '/Admin/SignOut',
+    //        type: 'POST',
+    //        success: function () {
+    //            enabbeDisable(true);
+    //            $("#signOut").hide();
+    //        }
+    //    });
+    //})
+    $(".login").on("signOutCompleted",function () {       
+        enabbeDisable(true);
+    })
+
+    $(".login").on("signInCompleted", function () {
+        enabbeDisable(false);
     })
 
     $("#createNew").click(function () {
@@ -23,18 +28,39 @@
     })
 
     $(".edit").click(function () {
-        location.href = "/Admin/Edit/" + this.name;
+        var $this = $(this);
+        var parent = $this.parent();
+        var id = parent.get(0).id;
+       
+        location.href = "/Admin/Edit/" + id;
     })
 
     $(".delete").click(function () {        
-        var $this = $(this);        
-        $this.removeClass("delete").addClass("deleteSure");               
+        var $this = $(this);
+        var parent = $this.parent();
+        var id = parent.get(0).id;
+
+        $this.hide();
+
+        parent.find('.deleteSure').prop("hidden", false);        
+        
     })
 
-    $(".deleteSure").click(function() {       
-        var $this = $(this[0]);
-        var id = $this.id;
+    $(".cancel").click(function () {
+        var $this = $(this);
+        var parent = $this.parent().parent();
+        var id = parent.get(0).id;
 
+        parent.find('.deleteSure').prop("hidden", true);        
+    })
+
+    $(".sure").click(function () {
+        
+        var $this = $(this);
+        var parent = $this.parent().parent();        
+        var id = parent.get(0).id;
+
+        alert(id);
         $.ajax({
             url: '/Admin/Delete',
             type: 'POST',
@@ -44,18 +70,35 @@
             timeout: 5000,
 
             success: function (data, textStatus, jqXHR) {
+                alert(data);
                 if (data) {
+                    parent.find('.deleteSure').prop("hidden", true);
                     location.href = "/Admin/Index";
                 }
-                else
+                else {
                     alert("Failed To Delete");
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert("Failed To Send Delete");
-                alert(textStatus);
-                alert(errorThrown);
+                alert("Failed To Send Delete," + textStatus + ","+errorThrown);
             }
-        });
-        $this.removeClass("deleteSure").addClass("delete");       
+        });        
     })
+
+    function enabbeDisable(disabled) {
+        var className = disabled ? "disabled" : "enabled";
+
+        $('.cancel').prop("disabled", disabled);
+        $('.edit').prop("disabled", disabled);
+        $('.delete').prop("disabled", disabled);
+        $('.sure').prop("disabled", disabled);
+        $('#createNew').prop("disabled", disabled);
+
+        $('table').attr("class", className);
+        $('header').attr("class", className);
+        $('td').attr("class", className);
+        $('th').attr("class", className);
+
+        $("#home").prop("disabled", false);      
+    }
 })

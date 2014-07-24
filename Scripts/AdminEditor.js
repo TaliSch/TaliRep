@@ -85,22 +85,14 @@ $().ready(function () {
     //}
     //$("#editor").elrte(opts);
 
-    $("#EditForm").submit(function (event) {
-        event.preventDefault();
-        var content = tinymce.activeEditor.getContent();
-        var title = $("#title").val();
-        var id = $("#id-hidden").val();
-        var url = '/Admin/Edit';
-        postData(id, title, content, url);
-    })
+    
 
-    $("#CreateForm").submit(function (event) {       
+    $('form').submit(function (event) {
         event.preventDefault();
         var content = tinymce.activeEditor.getContent();
         var title = $("#title").val();
-        var id = 0;
-        var url = '/Admin/Create';
-       
+        var id = $("#id-hidden").val();;
+        var url = '/Admin/'+this.name;
         postData(id, title, content, url);
     })
 })
@@ -127,40 +119,15 @@ function postData(id, title, content, url) {
             }
         });
     }
-    //$("#CreateForm").submit(function (event) {
-    //    event.preventDefault();
-    //    var data = $("#editor").val();
-    //    var name = $("#name").val();
-        
-    //    var compressedData = LZString.compress(data);        
-
-    //    $.ajax({
-    //        url: '/Posts/Create',
-    //        type: 'POST',
-    //        dataType: 'Json',
-    //        //contentType: 'Json',
-    //        data: { ID: "0", Data: compressedData, Name: name },
-    //        timeout: 5000,
-
-    //        success: function (data, textStatus, jqXHR) {
-    //            if (data) {
-    //                location.href = "/Posts/Index";
-    //            }
-    //            else
-    //                alert("Failed To Save");
-    //        },
-    //        error: function (jqXHR, textStatus, errorThrown) {
-    //            alert("Failed To Send");
-    //        }
-    //    });
-    //})
+    
 
 
 function invalidName() {
-    if ($('#title').val() == '') {       
+    if ($('#title').val() == '') {
         //$(this).css("background-color", "red");
-        $('#title').css("border", "3px solid red");
+        $('#title').addClass("bad");
     }
-    else
-        $('#title').css("border", "3px solid gray");
+    else {
+        $('#title').addClass("normal");
+    }
 }

@@ -89,7 +89,7 @@ namespace MyBlogEmpty.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string password)
+        public ActionResult SignIn(string password)
         {
             var tali = db.UserCredentials.Find("Tali");
             bool correct = (tali.Password == password);
@@ -97,6 +97,13 @@ namespace MyBlogEmpty.Controllers
             return Json(correct);
         }
 
+        [HttpPost]
+        public ActionResult SignOut()
+        {
+            AdminSession = false;
+
+            return Json(true);
+        }
        
         IEnumerable<Post> GetNextItems(int count)
         {

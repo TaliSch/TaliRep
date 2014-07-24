@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin.css" />
+    <Content Include="Content\AdminEditor.css" />
     <Content Include="Content\home1.css" />
     <Content Include="Content\home2.css" />
     <Content Include="Content\home3.css" />
@@ -195,6 +196,7 @@
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\AdminEditor.js" />
     <Content Include="Scripts\AdminIndex.js" />
@@ -316,6 +318,7 @@
     <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.svg" />
     <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Views\Shared\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

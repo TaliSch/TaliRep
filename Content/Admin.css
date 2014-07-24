@@ -9,20 +9,44 @@
 a .disabled {
         background-color: #808080;
     }*/
-
-table .enabled, h3 .enabled {
-    color:#003333;
+body {
+    font-family: 'Courier New'
 }
 
-    table .disabled, h3 .disabled {
-        color:#808080;
-    }
+.disabled {
+    color:#808080  !important;
+}
+
+
+header {
+    font-size:8em;
+    font-weight:300;
+}
+
+td, th , header  {
+    color: 	#006699;
+
+}
+
+td , td{
+   padding: 0px 3em 0px 0px;
+}
+
+th {
+    text-align: left;
+    font-size: 2em;
+}
+
+    /*td .disabled, h3 .disabled {
+        color:#808080  !important;
+    }*/
 
 button {
     border-radius: 2px;
 }
     button:disabled {
         background-color: #808080;
+        border: 1px solid #808080;
     }
     button:disabled:hover {
         background-color: #808080;
@@ -40,53 +64,55 @@ button {
         /*#home:disabled {
         background-color: #808080;*/
     
-
-#signOut {
-        border: 1px solid #BC2EBC;         
-        background-color: #BC2EBC;
+.login button{
+        border: 1px solid #0033FF;         
+        background-color: #0033FF;
         color: white;
     }
-    #signOut:hover {
-        background-color: #872187;
-    }
-    #signOut:disabled {
-        background-color: #808080;
-    }
+    .login button:hover {
+        background-color: #003399;
+    }    
 
 .delete {
-        border: 1px solid #669933;         
-        background-color: #669933;
+        border: 1px solid #009999;         
+        background-color: #009999;
         color: white;
     }
-    .delete:before {
-        content: "Delete";
+    .delete:hover {
+        background-color: #006699;
     }
+    
     /*.delete:disabled {
         background-color: #808080;
     }*/
 
-.deleteSure{
+.sure{
         border: 1px solid red;         
         background-color: red;
         color: white;
     }
-    .deleteSure:hover {
+    .sure:hover {
         background-color: #990033;
-    }
-    .deleteSure:before {
-        content: " Sure? ";
-    }
+    }   
     /*.deleteSure:disabled {
         background-color: #808080;
     }*/
+.cancel {
+    border: 1px solid #009999;
+    background-color: #009999;
+    color: white;
+}
+    .cancel:hover {
+        background-color: #006699;
+    }
 
 #createNew {
-    border: 1px solid #8678E9;
+    border: 1px solid #009999;
     color:white;
-    background : #8678E9;
+    background : #009999;
 }
     #createNew:hover {
-        background-color: #6755E3;
+        background-color: #006699;
     }
 
     #createNew:disabled {
@@ -94,13 +120,13 @@ button {
     }
 
 .edit {
-    border: 1px solid #6CA870;
+    border: 1px solid #009999;
     color:white;
-    background : #6CA870;
+    background : #009999;
     /*border-radius:2px;*/
 }
     .edit:hover {
-        background-color: #59955C;
+        background-color: #006699;
     }
     /*#edit .disabled {
         background-color: #808080;

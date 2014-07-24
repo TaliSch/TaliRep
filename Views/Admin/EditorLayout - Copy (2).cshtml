@@ -14,8 +14,8 @@
     <form method ="post" name="@viewname">   
         
         <p>
-            @{var title = Model == null ? "" : Model.Title;}
-            <label>Name</label><input id="title" name="Title" oninput="invalidName()" oninvalid="invalidName()" type="text" value="@title" class="normal"/>
+            <label>Name</label>@Html.TextBoxFor(model => model.Title,  new { id = "title", oninvalid="invalidName()", oninput ="invalidName()"})
+            <label>Name</label><input id="title" name="Title" oninput="invalidName()" oninvalid="invalidName()" type="text" value="@Model.Title" />
         </p>
         
         @Html.TextAreaFor(model=>model.Content, new { id = "editor", name = "content"})

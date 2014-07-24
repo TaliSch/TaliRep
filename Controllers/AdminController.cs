@@ -46,7 +46,7 @@ namespace MyBlogEmpty.Controllers
             else
                 rv = false;
 
-            return Json(rv ? true : false);
+            return Json(rv);
         }
 
       
@@ -85,7 +85,7 @@ namespace MyBlogEmpty.Controllers
             }
             else
                 rv = false;
-            return Json(rv ? true : false);
+            return Json(rv);
         }
 
         //public ActionResult Delete(int id = 0)
@@ -111,8 +111,9 @@ namespace MyBlogEmpty.Controllers
             {                
                 db.Posts.Remove(post);
             }
-            rv = db.SaveChanges() == 2;
-            return Json(rv ? true : false);
+            rv = db.SaveChanges() == 1;
+
+            return Json(rv);
         }
 
         [HttpPost]
@@ -121,6 +122,15 @@ namespace MyBlogEmpty.Controllers
             AdminSession = false;
             
             return Json(true);
+        }
+
+        [HttpPost]
+        public ActionResult SignIn(string password)
+        {
+            var tali = db.UserCredentials.Find("Tali");
+            bool correct = (tali.Password == password);
+            AdminSession = correct;
+            return Json(correct);
         }
     }
 }

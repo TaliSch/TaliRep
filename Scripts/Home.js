@@ -11,8 +11,7 @@ $().ready(function () {
     var $olderPosts = $("#olderPosts");
     var $olderPostsBtn = $($olderPosts.find('button'));
     
-    $olderPostsBtn.click(function () {
-       
+    $olderPostsBtn.click(function () {    
         loadNextItems();
     })
 
@@ -21,27 +20,37 @@ $().ready(function () {
         var value = $("input[name=style]:checked").val();
         setStyle(value);
     });
-    $("#loginButton").click(function () {
-        var $loginButton = $("#loginButton");
-        $loginButton.hide();
-        $(".hiddenLogin").show();
+
+    LoginInit();
+    $(".login").on("signOutCompleted", function () {
+        $(".adminSection").hide();
     })
 
-    var $password = $(".hiddenLogin").find("input:password");
-
-    $("#passwordButton").click(function () {    
-        login($password.val());
+    $(".login").on("signInCompleted", function () {
+        $(".adminSection").show();
     })
 
-    $("#signOutButton").click(function () {
-        changeAdminState(false);
-    })
+    //$("#loginButton").click(function () {
+    //    var $loginButton = $("#loginButton");
+    //    $loginButton.hide();
+    //    $(".hiddenLogin").show();
+    //})
+
+    //var $password = $(".hiddenLogin").find("input:password");
+
+    //$("#passwordButton").click(function () {    
+    //    login($password.val());
+    //})
+
+    //$("#signOutButton").click(function () {
+    //    changeAdminState(false);
+    //})
 
     var $adminState = $("#AdminState");
     changeAdminState($adminState.attr('checked'));
-    $("#AdminState").change(function () {       
-        changeAdminState($adminState.attr('checked'));
-    })
+    //$("#AdminState").change(function () {       
+    //    changeAdminState($adminState.attr('checked'));
+    //})
     //$olderPostsBtn.trigger("click");
 })
 
