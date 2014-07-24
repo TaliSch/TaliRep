@@ -16,19 +16,21 @@ namespace MyBlogEmpty.Controllers
         //
         // GET: /Editor/
 
-        bool AdminSession
-        {
-            get
-            {
-                if (Session["admin"] == null)
-                    Session["admin"] = false;
-                return (bool)Session["admin"];
-            }
-            set { Session["admin"] = value; }
-        }
+        //bool AdminSession
+        //{
+        //    get
+        //    {
+        //        if (Session["admin"] == null)
+        //            Session["admin"] = false;
+        //        return (bool)Session["admin"];
+        //    }
+        //    set { Session["admin"] = value; }
+        //}
 
+       
         public ActionResult Index()
         {
+            ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
             var postDatas = db.Posts.Select(i=>new PostData() { ID = i.ID, Date = i.Date, Title = i.Title});
             var userPreferences = db.UserPreferences.Find("Tali");
             return View(new AdminViewModel() { Preferences = userPreferences, PostDatas = postDatas });
@@ -38,7 +40,7 @@ namespace MyBlogEmpty.Controllers
         {
             bool rv;
             if (ModelState.IsValid)
-            {
+            {              
                 post.Date = DateTime.Now;
                 db.Posts.Add(post);
                 rv = db.SaveChanges() == 1;
@@ -52,6 +54,7 @@ namespace MyBlogEmpty.Controllers
       
         public ActionResult Create()
         {
+            ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
             return View();
         }
 
@@ -118,8 +121,8 @@ namespace MyBlogEmpty.Controllers
 
         [HttpPost]
         public ActionResult SignOut()
-        {            
-            AdminSession = false;
+        {
+            new Shared.ConrollerSession(Session).Admin = false;
             
             return Json(true);
         }
@@ -129,7 +132,8 @@ namespace MyBlogEmpty.Controllers
         {
             var tali = db.UserCredentials.Find("Tali");
             bool correct = (tali.Password == password);
-            AdminSession = correct;
+            if (correct)
+                new Shared.ConrollerSession(Session).Admin = true;            
             return Json(correct);
         }
     }

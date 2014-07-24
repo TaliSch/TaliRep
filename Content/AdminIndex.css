@@ -52,26 +52,26 @@ button {
         background-color: #808080;
     }
  
-#home {
+/*#home {
         border: 1px solid #DD75DD;         
         background-color: #DD75DD;
         color: white;
     }
         #home:hover {
             background-color: #D54FD5;
-        }
+        }*/
 
         /*#home:disabled {
         background-color: #808080;*/
     
-.login button{
+/*.login button{
         border: 1px solid #0033FF;         
         background-color: #0033FF;
         color: white;
     }
     .login button:hover {
         background-color: #003399;
-    }    
+    }*/    
 
 .delete {
         border: 1px solid #009999;         

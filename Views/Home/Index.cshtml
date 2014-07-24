@@ -63,13 +63,13 @@ update database*@
     @foreach (var item in Model.Posts) {
         { postId = "postId" + postIndex.ToString(); postIndex++; } 
         <div class="post" id="@postId">
-            <input class="postTitle" value= "@item.Title" type="text" />
+            <textarea class="postTitle">"@item.Title"</textarea>
                  @{var dateStr = item.Date.ToString("m")+", "+item.Date.Year.ToString();}
             <input class="postDate" value= "@dateStr" type="text" />
             <input class ="postContent" value="@item.Content" type="text" />
         </div>
     }
-    End
+    
     <div id="olderPosts"><button>Older Posts</button></div>
 </div>
 

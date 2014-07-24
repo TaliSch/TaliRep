@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Shared\ConrollerSession.cs" />
     <Compile Include="CustomConfigs\GeneralSettings.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -125,8 +126,8 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Admin.css" />
-    <Content Include="Content\AdminEditor.css" />
+    <Content Include="Content\AdminIndex.css" />
+    <Content Include="Content\EditorLayout.css" />
     <Content Include="Content\home1.css" />
     <Content Include="Content\home2.css" />
     <Content Include="Content\home3.css" />
@@ -198,7 +199,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\login.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Scripts\AdminEditor.js" />
+    <Content Include="Scripts\EditorLayout.js" />
     <Content Include="Scripts\AdminIndex.js" />
     <Content Include="Scripts\tinymce\changelog.txt" />
     <Content Include="Scripts\tinymce\js\tinymce\jquery.tinymce.min.js" />
@@ -319,6 +320,7 @@
     <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Views\Shared\Login.cshtml" />
+    <Content Include="Views\Admin\AdminLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -327,7 +329,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201407171259560_Initial.resx">

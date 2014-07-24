@@ -13,16 +13,16 @@ namespace MyBlogEmpty.Controllers
     {
         private BlogDBContext db = new BlogDBContext();
         // GET: /Home/
-        bool AdminSession
-        {
-            get
-            {
-                if (Session["admin"] == null)
-                    Session["admin"] = false;
-                return (bool)Session["admin"];
-            }
-            set { Session["admin"] = value; }
-        }
+        //bool AdminSession
+        //{
+        //    get
+        //    {
+        //        if (Session["admin"] == null)
+        //            Session["admin"] = false;
+        //        return (bool)Session["admin"];
+        //    }
+        //    set { Session["admin"] = value; }
+        //}
 
         int NextPosSession
         {
@@ -32,9 +32,10 @@ namespace MyBlogEmpty.Controllers
         
         public ActionResult Index()
         {
+            
             NextPosSession = db.Posts.Count() - 1;
            // var admin = (bool)Session["admin"];
-            ViewBag.Admin = AdminSession;
+            ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
            
             var taliP = db.UserPreferences.Find("Tali");
             if (taliP == null)
@@ -52,8 +53,8 @@ namespace MyBlogEmpty.Controllers
                 db.SaveChanges();
             }
 
-            var count = Math.Min(db.Posts.Count(), 10);
-            var from = db.Posts.Count() - count;
+            //var count = Math.Min(db.Posts.Count(), 10);
+            //var from = db.Posts.Count() - count;
             //SetNextPos(from);
             var posts = GetNextItems(10);
            
@@ -93,14 +94,15 @@ namespace MyBlogEmpty.Controllers
         {
             var tali = db.UserCredentials.Find("Tali");
             bool correct = (tali.Password == password);
-            AdminSession = correct;
+            if (correct)
+                new Shared.ConrollerSession(Session).Admin = correct;            
             return Json(correct);
         }
 
         [HttpPost]
         public ActionResult SignOut()
         {
-            AdminSession = false;
+            new Shared.ConrollerSession(Session).Admin = false;
 
             return Json(true);
         }
@@ -113,7 +115,12 @@ namespace MyBlogEmpty.Controllers
             int to = Math.Min(NextPosSession, postsLen-1);// including
             int from = Math.Max(0, to - count + 1); // including
 
-            rv = db.Posts.OrderByDescending(item => item.Date).Skip(from).Take(to - from + 1);
+            if (to > 0 && to - from + 1 > 0)
+            {
+                rv = db.Posts.OrderByDescending(item => item.Date).Skip(from).Take(to - from + 1);
+
+                NextPosSession -= (to - from + 1);
+            }
 
             return (rv);
         }

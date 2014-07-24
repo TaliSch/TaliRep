@@ -1,11 +1,13 @@
 ﻿
 $().ready(function () {
     $("#editor").addClass("tinymce");
+    invalidName();
+    //$("#editor").addClass("tinymce");
     tinymce.init({
-        selector: "textarea",
+        selector: "#editor",
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen"
+            "searchreplace visualblocks code fullscreen textcolor"
             
         ],//"insertdatetime media table contextmenu paste moxiemanager"
         toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
@@ -32,42 +34,17 @@ $().ready(function () {
 
     });
 
+    LoginInit();
 
-    //$('textarea.tinymce').tinymce({
-    //    // Location of TinyMCE script
-    //    script_url:  '/Scripts/tinymce/js/tinymce/jscripts/tiny_mce/tiny_mce.js',
+    $(".login").on("signOutCompleted", function () {
+        $("#submit").prop("disabled", true);
+        $("header").addClass("disabledHeader")
+    })
 
-    //    // General options
-    //    theme: "advanced",
-    //    plugins: "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-
-    //    // Theme options
-    //    theme_advanced_buttons1: "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
-    //    theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-    //    theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-    //    theme_advanced_buttons4: "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
-    //    theme_advanced_toolbar_location: "top",
-    //    theme_advanced_toolbar_align: "left",
-    //    theme_advanced_statusbar_location: "bottom",
-    //    theme_advanced_resizing: true,
-
-    //    // Example content CSS (should be your site CSS)
-    //    content_css: "css/content.css",
-
-    //    // Drop lists for link/image/media/template dialogs
-    //    //template_external_list_url: "lists/template_list.js",
-    //    //external_link_list_url: "lists/link_list.js",
-    //    //external_image_list_url: "lists/image_list.js",
-    //    //media_external_list_url: "lists/media_list.js",
-
-    //    // Replace values for the template plugin
-    //    template_replace_values: {
-    //        username: "Some User",
-    //        staffid: "991234"
-    //    }
-    //});
-    
-
+    $(".login").on("signInCompleted", function () {
+        $("#submit").prop("disabled", false);
+        $("header").removeClass("disabledHeader");
+    })    
 
     var compressed = $("#editor").val();
     var decompressed = LZString.decompressFromBase64(compressed);
@@ -87,13 +64,17 @@ $().ready(function () {
 
     
 
-    $('form').submit(function (event) {
+    $("#submit").click(function (event) {
         event.preventDefault();
         var content = tinymce.activeEditor.getContent();
-        var title = $("#title").val();
+        var title = $("#title").val();        
         var id = $("#id-hidden").val();;
         var url = '/Admin/'+this.name;
         postData(id, title, content, url);
+    })
+
+    $("#postsManager").click(function () {
+        location.href = "/Admin";
     })
 })
 
@@ -125,9 +106,11 @@ function postData(id, title, content, url) {
 function invalidName() {
     if ($('#title').val() == '') {
         //$(this).css("background-color", "red");
-        $('#title').addClass("bad");
+        $('#headerLabel').removeClass("normalLabel").addClass("badLabel");
+        $('#title').removeClass("normalTitle").addClass("badTitle");        
     }
     else {
-        $('#title').addClass("normal");
+        $('#headerLabel').removeClass("badLabel").addClass("normalLabel");
+        $('#title').removeClass("badTitle").addClass("normalTitle");
     }
 }

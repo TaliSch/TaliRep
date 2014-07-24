@@ -30,28 +30,9 @@ $().ready(function () {
         $(".adminSection").show();
     })
 
-    //$("#loginButton").click(function () {
-    //    var $loginButton = $("#loginButton");
-    //    $loginButton.hide();
-    //    $(".hiddenLogin").show();
-    //})
-
-    //var $password = $(".hiddenLogin").find("input:password");
-
-    //$("#passwordButton").click(function () {    
-    //    login($password.val());
-    //})
-
-    //$("#signOutButton").click(function () {
-    //    changeAdminState(false);
-    //})
-
     var $adminState = $("#AdminState");
     changeAdminState($adminState.attr('checked'));
-    //$("#AdminState").change(function () {       
-    //    changeAdminState($adminState.attr('checked'));
-    //})
-    //$olderPostsBtn.trigger("click");
+  
 })
 
 function loadPosts(items) {
@@ -66,7 +47,7 @@ function loadPosts(items) {
         var content = LZString.decompressFromBase64($content.val());
        
         var postId = $value.attr("id");//"post" + index.toString();
-   
+       
         displayPost(postId, title, date, content, contentMaxHeight);
         
     })
@@ -98,7 +79,9 @@ function loadNextItems() {
 
 // todo; change height if too short
 function displayPost(postId, title, date, content, contentMaxHeight) {
-    //var headerHtml = "<p><label class='postHeader' id='postTitle'>" + title + "</label></p><p><label class='postHeader' id='postDate'>" + date + "</label></p>";
+    
+    title = FixTitle(title);
+
     var headerHtml = "<p class='postHeader'><label id='postTitle'>" + title + "</label></p><p class='postHeader'><label id='postDate'>" + date + "</label></p>";
     
     //var re='/<p>|<h>|<h\d>/'
@@ -262,4 +245,18 @@ function changeAdminState(state) {
         $(".adminSection").hide();
 
     }
+}
+
+function FixTitle(title) {
+    title = title.replace("\n", "<br>");
+    var startIndex = 0, endIndex = title.length - 1;
+    if (title.charAt(0) == '"') {
+        startIndex = 1;
+    }
+    if (title.charAt(title.length - 1) == '"') {
+        endIndex--;
+    }
+    title = title.substring(startIndex, endIndex);
+
+    return title;
 }

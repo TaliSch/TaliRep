@@ -1,0 +1,91 @@
+﻿body {
+}
+
+#postsManager {
+    background-color:#006699; 
+    border: 1px solid #006699;  
+    border-radius: 2px;
+    color:white;
+}
+    #postsManager:hover {
+        background-color : #003399;
+    }
+
+#submit {
+    background-color:#00CCCC;
+    border: 1px solid #00CCCC;
+    border-radius: 2px;
+    color:white;
+}
+
+    #submit:hover {
+        background-color:#0099CC;
+    }
+    #submit:disabled {
+        background-color:dimgray;
+    }
+
+
+header {
+    font-size : 8em;
+    font-family: 'Courier New';
+    font-weight:700;
+    color : #00CCCC;
+    width:100%;
+    text-align:center;
+    background:#006699;
+}
+    .disabledHeader {
+        background:dimgray;
+        color:lightgray;
+    }
+
+.userHeader {
+    text-align:center;
+}
+
+#title {
+    height:2em;
+    min-height:2em;
+    width:15em;
+    min-width:15em;
+    background-color:white;   
+}
+
+/*#headerLabel {
+    font-size:2em;    
+    font-weight:500;
+}*/
+
+.normalTitle {
+    border: 3px solid gray;
+}
+.badTitle {
+    border: 3px solid red;
+}
+
+.normalLabel {
+    color:dimgray;    
+}
+
+.badLabel {
+    color:red;    
+}
+
+#contentLabel {
+    color:dimgray;
+}
+
+#editor {
+    height:20em;
+    min-height:28em;
+    background: #000066;
+    border: 2px solid navy;
+}
+    #editor button {
+        background: #000066;
+    }
+
+
+
+

@@ -1,32 +1,29 @@
 ﻿@model MyBlogEmpty.ViewModels.AdminViewModel
 @{
     ViewBag.Title = "Posts Manager";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.LoginStarter = "signOut";
-    ViewBag.LoginViewname = "Admin";
+    Layout = "~/Views/Admin/AdminLayout.cshtml";    
 }
 
 <script src="@Url.Content("~/Scripts/AdminIndex.js")" type="text/javascript"></script>
-<link href="@Url.Content("~/Content/Admin.css")" rel="stylesheet" type="text/css" />
-<script src="@Url.Content("~/Scripts/login.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/AdminIndex.css")" rel="stylesheet" type="text/css" />
 
-<button  id="home">Home</button> @Html.Partial("login")
+@{ var className = ViewBag.Admin ? "enabled" : "disabled";
+   var disabledStr = ViewBag.Admin ? "" : "disabled";
+}
 
-<header class="enabled">Posts Manager</header>
+<header class="@className">Posts Manager</header>
 
- @*<a id="createNew" href="/Admin/Create" class="button">Create New</a>*@
 <p>
-<button id="createNew">CreateNew</button>
+<button id="createNew" @disabledStr>CreateNew</button>
 </p>
-@*<button id="createNew">Create New</button>*@
 
 
-<table class ="enabled">
+<table class="@className">
     <tr>
-        <th>
+        <th class="@className">
             Name
         </th>
-        <th>
+        <th class="@className">
             Last Saved
         </th>
         <th></th>
@@ -36,17 +33,17 @@
 @foreach (var item in Model.PostDatas)
 {
     <tr>
-        <td>
+        <td class="@className">
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        <td>
+        <td class="@className">
             @{var dateStr = item.Date.ToString("g");} 
             @dateStr
         </td>
-        <td>
+        <td class="@className">
             @{var id = item.ID; var title = item.Title; }
             <div id="@id">
-            <button name="@id" class ="edit">Edit</button> | <button name ="@id" class="delete">Delete</button> <span hidden class="deleteSure"><button class="sure">Sure?</button><button name ="@id" class="cancel">Cancel</button></span>
+            <button name="@id" class ="edit" @disabledStr>Edit</button> | <button name ="@id" class="delete" @disabledStr>Delete</button> <span hidden class="deleteSure"><button class="sure" @disabledStr>Sure?</button><button name ="@id" class="cancel" @disabledStr>Cancel</button></span>
            </div>     
         </td>
     </tr>

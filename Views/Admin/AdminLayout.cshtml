@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.LoginStarter = ViewBag.Admin ? "logout" : "login";
+    ViewBag.LoginViewname = "Admin";
+}
+
+<script src="@Url.Content("~/Scripts/login.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    $().ready(function () {
+        $("#home").click(function () {
+            location.href = '/';
+        })
+    })
+</script>
+
+<style>
+    .adminTop {
+        position:fixed;       
+        top:0.5em;   
+        left:0.5em; 
+        z-index:900;
+    }
+    .login button{
+        border: 1px solid #0033FF;         
+        background-color: #0033FF;
+        color: white;
+     }
+
+    .login button:hover {
+        background-color: #003399;
+    }    
+
+    #home {
+        border: 1px solid #DD75DD;         
+        background-color: #DD75DD;
+        color: white;
+    }
+        #home:hover {
+            background-color: #D54FD5;
+        }
+
+</style>
+<div class="adminTop">
+    <button  id="home">Home</button> @Html.Partial("login") @RenderSection("adminTop",false)
+</div>
+ <p></p>
+@RenderBody()
+

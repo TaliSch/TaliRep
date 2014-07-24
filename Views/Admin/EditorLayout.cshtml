@@ -1,26 +1,37 @@
 ﻿@model MyBlogEmpty.Models.Post
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Admin/AdminLayout.cshtml";
     
 }
     <script type="text/javascript" src="@Url.Content("~/Scripts/tinymce/js/tinymce/tinymce.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/AdminEditor.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/EditorLayout.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/lz-string-1.3.3.js")"></script>   
-    <link href="@Url.Content("~/Content/AdminEditor.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/EditorLayout.css")" rel="stylesheet" type="text/css" />
+  
+@{var viewname = @Html.ViewContext.RouteData.GetRequiredString("action");
+  var className = ViewBag.Admin ? "" : "disabledHeader";
+  var disabledStr = ViewBag.Admin ? "" : "disabled";
+  }
 
+@section adminTop {<button type="button" id="postsManager">Posts Manager</button> <button type="button" name="@viewname" id="submit" @disabledStr>Submit</button>}
 
-    @{var viewname = @Html.ViewContext.RouteData.GetRequiredString("action");}
+    
+<br />
+<header class="@className">@ViewBag.Title</header>
      
-    <form method ="post" name="@viewname">   
+    <form method ="post">   
         
-        <p>
+        <div class="userHeader">            
+            <label id="headerLabel" class="normalLabel">Header</label>
+            <br />
             @{var title = Model == null ? "" : Model.Title;}
-            <label>Name</label><input id="title" name="Title" oninput="invalidName()" oninvalid="invalidName()" type="text" value="@title" class="normal"/>
-        </p>
-        
+            <textarea id="title" name="Title" oninput="invalidName()" oninvalid="invalidName()" class="normalTitle">@title</textarea>
+            
+        </div>
+        <label id="contentLabel">Content </label>
         @Html.TextAreaFor(model=>model.Content, new { id = "editor", name = "content"})
         
-        <button type="submit">Submit</button>
+        
 
        
         @{var id = Model == null ? 0 : Model.ID; }
