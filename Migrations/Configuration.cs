@@ -10,6 +10,7 @@ namespace MyBlogEmpty.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(MyBlogEmpty.Models.BlogDBContext context)
