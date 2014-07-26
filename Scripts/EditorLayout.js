@@ -1,10 +1,12 @@
 ﻿
 $().ready(function () {
+    
     $("#editor").addClass("tinymce");
     invalidName();
     //$("#editor").addClass("tinymce");
     tinymce.init({
         selector: "#editor",
+        oninit : "postInitWork",
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen textcolor"
@@ -30,9 +32,16 @@ $().ready(function () {
         templates: [
                 { title: 'Test template 1', content: 'Test 1' },
                 { title: 'Test template 2', content: 'Test 2' }
-        ]
+        ],
+
+        content_css: "../../Content/EditorLayout.css"// ?" + new Date().getTime(),
 
     });
+
+    function postInitWork() {
+        $("#editor").css("background-color", "navi");
+    }
+   
 
     LoginInit();
 
@@ -106,11 +115,11 @@ function postData(id, title, content, url) {
 function invalidName() {
     if ($('#title').val() == '') {
         //$(this).css("background-color", "red");
-        $('#headerLabel').removeClass("normalLabel").addClass("badLabel");
-        $('#title').removeClass("normalTitle").addClass("badTitle");        
+        $('#headerLabel').removeClass("goodInput").addClass("badInput");
+        $('#title').removeClass("goodInput").addClass("badInput");
     }
     else {
-        $('#headerLabel').removeClass("badLabel").addClass("normalLabel");
-        $('#title').removeClass("badTitle").addClass("normalTitle");
+        $('#headerLabel').removeClass("badInput").addClass("goodInput");
+        $('#title').removeClass("badInput").addClass("goodInput");
     }
 }

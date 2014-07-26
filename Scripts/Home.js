@@ -43,7 +43,7 @@ function loadPosts(items) {
         var $content = $($value.find(".postContent"));        
                
         var title = $title.val();
-        var date = $date.val();
+        var date = new Date($date.val()).toDateString();
         var content = LZString.decompressFromBase64($content.val());
        
         var postId = $value.attr("id");//"post" + index.toString();

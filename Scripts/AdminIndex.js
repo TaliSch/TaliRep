@@ -28,20 +28,21 @@
     $(".delete").click(function () {        
         var $this = $(this);
         var parent = $this.parent();
-        var id = parent.get(0).id;
-
+     
         $this.hide();
 
-        parent.find('.deleteSure').prop("hidden", false);        
+        $(parent.find('.deleteSure')).show();    
         
     })
 
     $(".cancel").click(function () {
         var $this = $(this);
         var parent = $this.parent().parent();
-        var id = parent.get(0).id;
+     
+        $(parent.find('.deleteSure')).hide();
 
-        parent.find('.deleteSure').prop("hidden", true);        
+        var $deleteBtn = $(parent.find('.delete'));
+        $deleteBtn.show();
     })
 
     $(".sure").click(function () {
@@ -50,7 +51,6 @@
         var parent = $this.parent().parent();        
         var id = parent.get(0).id;
 
-        alert(id);
         $.ajax({
             url: '/Admin/Delete',
             type: 'POST',
@@ -60,7 +60,6 @@
             timeout: 5000,
 
             success: function (data, textStatus, jqXHR) {
-                alert(data);
                 if (data) {
                     parent.find('.deleteSure').prop("hidden", true);
                     location.href = "/Admin/Index";

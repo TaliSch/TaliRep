@@ -22,13 +22,13 @@
     <form method ="post">   
         
         <div class="userHeader">            
-            <label id="headerLabel" class="normalLabel">Header</label>
+            <label id="headerLabel" class="goodinput">Header</label>
             <br />
             @{var title = Model == null ? "" : Model.Title;}
-            <textarea id="title" name="Title" oninput="invalidName()" oninvalid="invalidName()" class="normalTitle">@title</textarea>
+            <textarea id="title" name="Title" oninput="invalidName()" oninvalid="invalidName()" class="goodInput">@title</textarea>
             
         </div>
-        <label id="contentLabel">Content </label>
+        <label id="contentLabel">Content </label>        
         @Html.TextAreaFor(model=>model.Content, new { id = "editor", name = "content"})
         
         

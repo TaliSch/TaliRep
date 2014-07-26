@@ -65,7 +65,8 @@ update database*@
         <div class="post" id="@postId">
             <textarea class="postTitle">"@item.Title"</textarea>
                  @{var dateStr = item.Date.ToString("m")+", "+item.Date.Year.ToString();}
-            <input class="postDate" value= "@dateStr" type="text" />
+            @*<input class="postDate" value= "@dateStr" type="text" />*@
+            <input class="postDate" value= "@item.Date" type="text" />
             <input class ="postContent" value="@item.Content" type="text" />
         </div>
     }

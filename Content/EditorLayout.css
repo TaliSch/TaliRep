@@ -57,18 +57,18 @@ header {
     font-weight:500;
 }*/
 
-.normalTitle {
+textarea.goodInput {
     border: 3px solid gray;
 }
-.badTitle {
+textarea.badInput {
     border: 3px solid red;
 }
 
-.normalLabel {
+label.good {
     color:dimgray;    
 }
 
-.badLabel {
+label.badInput {
     color:red;    
 }
 
@@ -76,16 +76,23 @@ header {
     color:dimgray;
 }
 
-#editor {
+textarea#editor {
     height:20em;
     min-height:28em;
-    background: #000066;
+    background-color: #000066;
     border: 2px solid navy;
 }
-    #editor button {
+    textarea#editor body{
+        background-color: red;
+    }
+
+button {
         background: #000066;
     }
 
 
 
-
+/*body.mceContentBody { 
+   background: red; 
+   color:#000;
+}*/
