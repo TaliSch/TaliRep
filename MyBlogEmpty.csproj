@@ -131,6 +131,8 @@
     <Content Include="Content\home1.css" />
     <Content Include="Content\home2.css" />
     <Content Include="Content\home3.css" />
+    <Content Include="Content\me.png" />
+    <Content Include="Content\meBck.jpg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -190,6 +192,8 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\Editor.js" />
     <Content Include="Scripts\Home.js" />
+    <Content Include="Scripts\home1.js" />
+    <Content Include="Scripts\home2.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -357,7 +361,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>18708</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:44702/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

@@ -1,7 +1,5 @@
 ﻿var contentMaxHeight = 0;
 var postsCount = 0;
-$.fn.placePost = null;
-
 //var password = "";
 $().ready(function () {
     contentMaxHeight = calculateContentHeight("<p>22</p>","");
@@ -9,7 +7,6 @@ $().ready(function () {
     
     var $items = $("#posts").find('.post');
     loadPosts($items);
-    $("#posts").show();
 
     var $olderPosts = $("#olderPosts");
     var $olderPostsBtn = $($olderPosts.find('button'));
@@ -90,19 +87,21 @@ function loadNextItems() {
     });
 }
 
+// todo; change height if too short
 function displayPost(postId, title, date, content, contentMaxHeight) {
+    
     title = FixTitle(title);
 
     var headerHtml = "<p class='postHeader'><label id='postTitle'>" + title + "</label></p><p class='postHeader'><label id='postDate'>" + date + "</label></p>";
-
+    
     //var re='/<p>|<h>|<h\d>/'
     var lines = content.split("</p>", 1000);
-
+    
     var parts = splitPost(headerHtml, lines, contentMaxHeight);
-
+    
     var partsHtml = "";
     var links = "";
-    var newPostId = "new" + postId;
+    var newPostId = "new"+postId;
     $.each(parts, function (index, value) {
         var divId = "divId" + index.toString();
         var div = '<div class="part" id="' + divId + '">' + value + '</div>';
@@ -112,14 +111,23 @@ function displayPost(postId, title, date, content, contentMaxHeight) {
             links = links.concat('<a class="pageLink" href="#" onclick="choosePage(' + '\'' + divId + '\'' + ',\'' + newPostId + '\',' + index + ');return false;">' + index + '</a> ');
         }
     });
+   
+    var $post = $("#" + postId);
 
     var $newPost = $('<div class="post" id="' + newPostId + '">' + headerHtml + partsHtml + links + '</div>');
-    
-    $newPost.placePost($newPost, postId);
 
+    if ($post.get(0) == undefined) {
+        $("#olderPosts").before($newPost);       
+    }
+
+    else {
+        $post.replaceWith($newPost);        
+    }
+
+    $newPost.append('<hr>');
     choosePage('divId0', newPostId, 0);
-}
 
+}
 
 function splitPost(headerHtml, lines, contentMaxHeight) {
     var parts = [];
