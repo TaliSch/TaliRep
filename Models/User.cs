@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Drawing;
+using System.IO;
 
 
 namespace MyBlogEmpty.Models
@@ -25,9 +27,13 @@ namespace MyBlogEmpty.Models
         public string ID { get; set; }
         [Required]
         public string Style { get; set; }
-        //[Required]
-        public string Name { get; set; }
+        
         //[Required]
         public string Title { get; set; }
+
+        public string Face { get; set; }
+
+        public string Backgrownd { get; set; }
+
     }
 }

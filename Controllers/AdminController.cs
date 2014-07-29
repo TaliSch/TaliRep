@@ -92,6 +92,36 @@ namespace MyBlogEmpty.Controllers
             return Json(rv);
         }
 
+        [HttpPost]
+        public ActionResult UploadFaceImage(string data) 
+        {
+            if (data == null)
+                return Json(false);
+
+            var userPreferences = db.UserPreferences.Find("Tali");
+            userPreferences.Face = data;
+            db.Entry(userPreferences).State = EntityState.Modified;
+
+            bool rv = db.SaveChanges() == 1;
+
+            return Json(rv);
+        }
+
+        [HttpPost]
+        public ActionResult UploadBackgroundImage(string data)
+        {
+            if (data == null)
+                return Json(false);
+
+            var userPreferences = db.UserPreferences.Find("Tali");
+            userPreferences.Backgrownd = data;
+            db.Entry(userPreferences).State = EntityState.Modified;
+
+            bool rv = db.SaveChanges() == 1;
+
+            return Json(rv);
+        }
+
         //public ActionResult Delete(int id = 0)
         //{
         //    PostData postData = db.PostDatas.Find(id);

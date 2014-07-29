@@ -19,11 +19,11 @@ $().ready(function () {
     })
 
     //$olderPostsBtn.trigger("click");
-    $("input[name=style]:radio").on("click", function () {
-        var value = $("input[name=style]:checked").val();
-        setStyle(value);
-    });
-
+    //$("input[name=style]:radio").on("click", function () {
+    //    var value = $("input[name=style]:checked").val();
+    //    setStyle(value);
+    //});
+    SetStyleInit();
     LoginInit();
     $(".login").on("signOutCompleted", function () {
         $(".adminSection").hide();
@@ -31,6 +31,10 @@ $().ready(function () {
 
     $(".login").on("signInCompleted", function () {
         $(".adminSection").show();
+    })
+
+    $(".adminSection").on("setStyleCompleted", function () {
+        location.reload();
     })
 
     var $adminState = $("#AdminState");
@@ -196,51 +200,51 @@ function choosePage(divId, postId, index) {
     })    
 }
 
-function setStyle(index) {
-    var success = false;
-    $.ajax({
-        url: 'Home/Style',
-        type: 'POST',
-        dataType: 'Json',
-        //contentType: 'Json',
-        data: { styleIndex: index },
-        timeout: 5000,
-        success: function (data, textStatus, jqXHR) {
-            success = data;
-        }
-    }).done(function (html) {
-        if (success) {
-            location.reload();
-        }
-    });
-    //var url = '@Url.Content("' + "~/Content/home"+index+".css" + ')"';
-    //$("link").attr("href", url);
+//function setStyle(index) {
+//    var success = false;
+//    $.ajax({
+//        url: 'Home/Style',
+//        type: 'POST',
+//        dataType: 'Json',
+//        //contentType: 'Json',
+//        data: { styleIndex: index },
+//        timeout: 5000,
+//        success: function (data, textStatus, jqXHR) {
+//            success = data;
+//        }
+//    }).done(function (html) {
+//        if (success) {
+//            location.reload();
+//        }
+//    });
+//    //var url = '@Url.Content("' + "~/Content/home"+index+".css" + ')"';
+//    //$("link").attr("href", url);
    
-}
+//}
 
-function login(password) {
+//function login(password) {
     
-    $.ajax({
-        url: 'Home/Login',
-        type: 'POST',
-        dataType: 'Json',
-        //contentType: 'Json',
-        data: { password: password },
-        timeout: 5000,
+//    $.ajax({
+//        url: 'Home/Login',
+//        type: 'POST',
+//        dataType: 'Json',
+//        //contentType: 'Json',
+//        data: { password: password },
+//        timeout: 5000,
 
-        success: function (data, textStatus, jqXHR) {
-            if (data) {
-                $(".hiddenLogin").hide();
-                $("#loginButton").hide();
-                $(".adminSection").show();
-            }
+//        success: function (data, textStatus, jqXHR) {
+//            if (data) {
+//                $(".hiddenLogin").hide();
+//                $("#loginButton").hide();
+//                $(".adminSection").show();
+//            }
 
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Failed To connect " + textStatus + ' ' + errorThrown);
-        }
-    });
-}
+//        },
+//        error: function (jqXHR, textStatus, errorThrown) {
+//            alert("Failed To connect " + textStatus + ' ' + errorThrown);
+//        }
+//    });
+//}
 
 function changeAdminState(state) {
     if (state) {

@@ -117,6 +117,14 @@
     <Compile Include="Migrations\201407190721089_Initial2.Designer.cs">
       <DependentUpon>201407190721089_Initial2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201407280938417_Initial3.cs" />
+    <Compile Include="Migrations\201407280938417_Initial3.Designer.cs">
+      <DependentUpon>201407280938417_Initial3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407281931256_Initial4.cs" />
+    <Compile Include="Migrations\201407281931256_Initial4.Designer.cs">
+      <DependentUpon>201407281931256_Initial4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\BlogDBContext.cs" />
@@ -194,6 +202,7 @@
     <Content Include="Scripts\Home.js" />
     <Content Include="Scripts\home1.js" />
     <Content Include="Scripts\home2.js" />
+    <Content Include="Scripts\home3.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -201,7 +210,7 @@
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\login.js" />
+    <Content Include="Scripts\AdminOperations.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\EditorLayout.js" />
     <Content Include="Scripts\AdminIndex.js" />
@@ -325,6 +334,7 @@
     <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Views\Shared\Login.cshtml" />
     <Content Include="Views\Admin\AdminLayout.cshtml" />
+    <Content Include="Views\Shared\SetStyle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -343,6 +353,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407190721089_Initial2.resx">
       <DependentUpon>201407190721089_Initial2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407280938417_Initial3.resx">
+      <DependentUpon>201407280938417_Initial3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407281931256_Initial4.resx">
+      <DependentUpon>201407281931256_Initial4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,7 @@
 ﻿using MyBlogEmpty.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -10,7 +11,7 @@ namespace MyBlogEmpty.ViewModels
     {
         public int ID { get; set; }
         public string Title { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; }        
     }
     public class AdminViewModel
     {

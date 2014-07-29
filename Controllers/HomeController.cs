@@ -3,6 +3,7 @@ using MyBlogEmpty.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -41,21 +42,18 @@ namespace MyBlogEmpty.Controllers
             if (taliP == null)
             {
                 var taliC = new Models.UserCredentials() { ID = "Tali", Password = "ykhBlog"};
-                taliP = new Models.UserPreferences() { ID = "Tali", Style = "2", Name = "Tali's Blog", Title = "Tali's Blog" };
+                taliP = new Models.UserPreferences() { ID = "Tali", Style = "2", Title = "Tali's Blog" };
                 db.UserCredentials.Add(taliC);
                 db.UserPreferences.Add(taliP);
                 db.SaveChanges();
             }
             else if (string.IsNullOrEmpty(taliP.Title))
             {
-                taliP.Title = taliP.Name = "Tali's Blog";
+                taliP.Title = "Tali's Blog";
                 db.Entry(taliP).State = EntityState.Modified;
                 db.SaveChanges();
             }
-
-            //var count = Math.Min(db.Posts.Count(), 10);
-            //var from = db.Posts.Count() - count;
-            //SetNextPos(from);
+                        
             var posts = GetNextItems(10);
            
             return View(new HomeViewModel() { Posts = posts, Preferences = (UserPreferences)taliP });
@@ -71,6 +69,7 @@ namespace MyBlogEmpty.Controllers
             catch (Exception)
             {
             }
+            
             return Json(new List<Post>());
         }
 

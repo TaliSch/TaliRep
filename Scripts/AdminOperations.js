@@ -47,3 +47,34 @@ function LoginInit() {
         $("#password").val("");
     })
 }
+
+function SetStyleInit() {
+    viewname = $(".adminSection").get(0).id;
+    $("input[name=style]:radio").on("click", function () {
+        var value = $("input[name=style]:checked").val();
+        setStyle(value);
+    });
+
+    function setStyle(index) {
+        var success = false;
+        $.ajax({
+            url: 'Home/Style',
+            type: 'POST',
+            dataType: 'Json',
+            //contentType: 'Json',
+            data: { styleIndex: index },
+            timeout: 5000,
+            success: function (data, textStatus, jqXHR) {
+                success = data;
+            }
+        }).done(function (html) {
+            if (success) {
+                $('.adminSection').trigger("setStyleCompleted", index);                
+            }
+        });
+        //var url = '@Url.Content("' + "~/Content/home"+index+".css" + ')"';
+        //$("link").attr("href", url);
+
+    }
+}
+

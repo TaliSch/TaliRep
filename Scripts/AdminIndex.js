@@ -1,5 +1,7 @@
 ﻿$().ready(function () {
+
     LoginInit();
+    SetStyleInit();
 
     $("#home").click(function () {
         location.href = '/';
@@ -13,10 +15,63 @@
         enabbeDisable(false);
     })
 
+    $(".adminSection").on("setStyleCompleted", function (event, index) {
+        if (index != "1") {
+            $(".style1Params").hide();
+        }
+        else {
+            $(".style1Params").show();
+        }
+    })
+
     $("#createNew").click(function () {
         location.href = "/Admin/Create/" + this.name;
     })
 
+    $("input[type=file]").change(function (event) {
+        
+        var files = event.target.files;
+        var file = files[0];
+        var url = 'Admin/' + (this.id == 'face' ? 'UploadFaceImage' : 'UploadBackgroundImage');
+        UpdatePersonalImage(file, url);
+    })
+
+    function UpdatePersonalImage(file, url) {
+       
+        var reader = new FileReader();
+        
+        // Closure to capture the file information.
+        reader.onload = function (e) {
+
+            //alert("result:" + e.target.result.toString());
+            //alert(e.target.result.byteLength);
+
+
+            // alert(btoa(e.target.result));
+
+            // alert(LZString.compressToBase64(e.target.result));
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: 'Json',
+                data: { data: LZString.compressToBase64(e.target.result) },
+                //data: { data: utf8_to_b64(e.target.result) },
+                success: function (data) {
+                    if (data)
+                        alert("success");
+                    else
+                        alert("error");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Failed To Send " + textStatus + " " + errorThrown);
+                }
+            });
+        };
+
+        //Read in the image file as a data URL.
+        reader.readAsDataURL(file);       
+    }
+        
     $(".edit").click(function () {
         var $this = $(this);
         var parent = $this.parent();
