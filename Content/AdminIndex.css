@@ -1,4 +1,21 @@
-﻿
+﻿button {
+    border-radius: 2px;
+}
+    button:disabled {
+        background-color: #808080;
+        border: 1px solid #808080;
+    }
+    button:disabled:hover {
+        background-color: #808080;
+    }
+
+label {
+    color: #006699;
+}
+
+    label:disabled {
+        color: #808080;
+    }
 /*border: 4px outset;*/
 /*a {
     
@@ -9,6 +26,90 @@
 a .disabled {
         background-color: #808080;
     }*/
+
+#personal {
+    color: 	#006699;
+    font-size:1.4em;
+    width:20em;
+    font-weight:500;
+    padding:0.3em;
+}
+#personal:disabled {
+        color: #808080;        
+    }
+
+    #personal button{        
+        border: 1px solid #009999;
+        background-color: #009999;
+        color: white;
+    }
+    #personal button:hover {
+        background-color: #006699;
+    }
+    #personal button:disabled {
+        background-color: #808080;
+        border: 1px solid #808080;
+    }
+    #personal button:disabled:hover{
+        background-color: #808080;
+    }
+
+    #personal td {
+         padding: 0.05em 0.8em 0.05em 0em;
+    }
+
+    #personal tr {
+         vertical-align:central;
+    }
+
+    #personal input {
+        color: #009999;        
+    }
+
+    #personal input:disabled {
+        color: #808080;        
+    }
+
+#submit {
+    position: relative;
+    top: 103%;
+    left: 78%;
+    overflow:visible;
+}
+    /*#submit:disabled {
+        background-color: #808080;
+        border: 1px solid #808080;
+    }*/
+
+#title {
+    min-height: 2em;
+    height: 2em;
+    resize: both;
+    min-width:20em;
+    /*border:3px solid red;*/
+    color: #006699;
+    font-size: 1.2em;
+    vertical-align: central;
+    font-weight:500;
+}
+    #title:disabled {
+        color: #808080;
+    }
+
+.changed#personal {
+    border:1px dashed #006699;
+}
+.changed#personal:disabled {
+    border:1px dashed #808080;
+}
+
+.saved#personal {
+    border:1px solid #006699;
+}
+.saved#personal:disabled {
+    border:1px solid #808080;
+}
+
 body {
     font-family: 'Courier New'
 }
@@ -41,38 +142,8 @@ th {
         color:#808080  !important;
     }*/
 
-button {
-    border-radius: 2px;
-}
-    button:disabled {
-        background-color: #808080;
-        border: 1px solid #808080;
-    }
-    button:disabled:hover {
-        background-color: #808080;
-    }
+
  
-/*#home {
-        border: 1px solid #DD75DD;         
-        background-color: #DD75DD;
-        color: white;
-    }
-        #home:hover {
-            background-color: #D54FD5;
-        }*/
-
-        /*#home:disabled {
-        background-color: #808080;*/
-    
-/*.login button{
-        border: 1px solid #0033FF;         
-        background-color: #0033FF;
-        color: white;
-    }
-    .login button:hover {
-        background-color: #003399;
-    }*/    
-
 .delete {
         border: 1px solid #009999;         
         background-color: #009999;
@@ -81,10 +152,6 @@ button {
     .delete:hover {
         background-color: #006699;
     }
-    
-    /*.delete:disabled {
-        background-color: #808080;
-    }*/
 
 .sure{
         border: 1px solid red;         
@@ -94,9 +161,7 @@ button {
     .sure:hover {
         background-color: #990033;
     }   
-    /*.deleteSure:disabled {
-        background-color: #808080;
-    }*/
+    
 .cancel {
     border: 1px solid #009999;
     background-color: #009999;
@@ -128,7 +193,5 @@ button {
     .edit:hover {
         background-color: #006699;
     }
-    /*#edit .disabled {
-        background-color: #808080;
-    }*/
+   
 

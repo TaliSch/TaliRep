@@ -22,8 +22,23 @@
             margin: 1em 0em 0em 0em;
         }
 
-        .adminFixed #loginButton {
-        margin : 1em 0em 0em 0em;
+        .adminFixed .adminSection label {
+            color: #1F88A7;
+            font-weight:600;
+        }
+
+    .adminFixed button {
+        border: 1px solid #1F88A7; /*//#96d1f8;*/
+        background-color: #1F88A7;
+        color: white;
+    }
+
+    .adminFixed button:hover {
+            background-color: #2966B8;
+        }
+
+    .adminFixed #loginButton {
+        margin: 1em 0em 0em 0em;
     }
 
     .hiddenLogin {

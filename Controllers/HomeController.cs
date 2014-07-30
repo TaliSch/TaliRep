@@ -73,16 +73,7 @@ namespace MyBlogEmpty.Controllers
             return Json(new List<Post>());
         }
 
-        [HttpPost]
-        public ActionResult Style(string styleIndex)
-        {
-            var user = db.UserPreferences.Find("Tali");
-            user.Style = styleIndex;
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-
-            return Json(true);
-        }
+        
 
         [HttpPost]
         public ActionResult SignIn(string password)

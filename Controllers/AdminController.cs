@@ -122,6 +122,37 @@ namespace MyBlogEmpty.Controllers
             return Json(rv);
         }
 
+        [HttpPost]
+        public ActionResult Style(string styleIndex)
+        {
+            var user = db.UserPreferences.Find("Tali");
+            user.Style = styleIndex;
+            db.Entry(user).State = EntityState.Modified;
+            bool rv = db.SaveChanges() == 1;
+
+            return Json(rv);
+        }
+
+        [HttpPost]
+        public ActionResult Preferences(string title, string style, string faceImage, string backgroundImage)
+        {
+            var userPreferences = db.UserPreferences.Find("Tali");
+            if (!string.IsNullOrEmpty(title))
+                userPreferences.Title = title;
+            if (!string.IsNullOrEmpty(style))
+                userPreferences.Style = style;
+            if (faceImage != null)
+                userPreferences.Face = faceImage;
+            if (backgroundImage != null)
+                userPreferences.Backgrownd = backgroundImage;
+
+            db.Entry(userPreferences).State = EntityState.Modified;
+            
+            bool rv = db.SaveChanges() == 1;
+
+            return Json(rv);
+
+        }
         //public ActionResult Delete(int id = 0)
         //{
         //    PostData postData = db.PostDatas.Find(id);
