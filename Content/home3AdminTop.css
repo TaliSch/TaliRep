@@ -1,2 +1,7 @@
-﻿body {
+﻿.hiddenLogin {
+    display: none;
 }
+
+    .hiddenLogin * {
+        margin: 1em 0em 0em 0em;
+    }

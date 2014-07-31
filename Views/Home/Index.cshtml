@@ -20,13 +20,19 @@
 <script src="@absoluteUrlJS" type="text/javascript"></script>
 
 @if (Model.Preferences.Style == "1") {
-    <link rel="stylesheet" type="text/css" href="@Url.Content( "~/Content/home1.css")"/>
-    
+    <link rel="stylesheet" type="text/css" href="@Url.Content( "~/Content/home1.css")" media="screen and (min-width:750px)"/>
+    @*<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/home1small1.css")" media="screen and (min-width:700px) and (max-width:1000px)"/>*@
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/home1small2.css")" media="screen and (max-width:750px)"/>
 }
 @if (Model.Preferences.Style == "2") {
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/home2.css")" media="screen and (min-width:1000px)"/>
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/home2small1.css")" media="screen and (min-width:700px) and (max-width:1000px)"/>
-     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/home2small2.css")" media="screen and (max-width:700px)"/>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/home2small2.css")" media="screen and (max-width:700px)"/>
+}
+
+@if (Model.Preferences.Style == "3") {
+    <link rel="stylesheet" type="text/css" href="@Url.Content( "~/Content/home3.css")"/>
+    
 }
 
 
