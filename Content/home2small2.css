@@ -8,7 +8,7 @@
     border: thick solid #4A9586;
     width:100%;
     position:relative;
-    top:2em;
+    top:3.5em;
     margin: 0em;
 }
 
@@ -83,7 +83,7 @@
         font-family: Aharoni;/*Tahoma, Arial, "Verdana", "Sans-serif";*/
         font-size: 2.4em;
         font-weight:400;
-        text-align: center;
+        text-align: center;        
     }
 
     .postHeader #postDate {
