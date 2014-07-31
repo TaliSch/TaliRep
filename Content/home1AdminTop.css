@@ -1,0 +1,54 @@
+﻿.adminFixed {
+    position:fixed;
+    top:0em;
+    left:0em;
+    background-color: white;
+    text-align:center;
+    vertical-align:central;
+    width:100%;
+    z-index: 999;
+    /*height:4em;*/
+}
+
+.adminFixed .adminSection {
+        display:none;
+    }
+
+        .adminFixed .adminSection * {
+            margin: 1em 0em 0em 0em;
+        }
+
+        .adminFixed .adminSection label {
+            color: #1F88A7;
+            font-weight:600;
+        }
+
+    .adminFixed button {
+        border: 1px solid #1F88A7; /*//#96d1f8;*/
+        background-color: #1F88A7;
+        color: white;
+    }
+
+    .adminFixed button:hover {
+            background-color: #2966B8;
+        }
+
+    .adminFixed #loginButton {
+        margin: 1em 0em 0em 0em;
+    }
+
+    .hiddenLogin {
+        display:none;
+    }
+
+    .hiddenLogin *{
+        margin : 1em 0em 0em 0em;
+    }
+
+.adminFixed hr {
+        color:#DBEADC;
+        background-color:#DBEADC;
+        height:3px;
+        margin:1em 0em 0em 0em;
+        display:normal;
+    }

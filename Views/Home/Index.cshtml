@@ -5,7 +5,7 @@
     ViewBag.LoginStarter = ViewBag.Admin ? "logout" : "login";
     ViewBag.LoginViewname = "Home";
 
-    var url = "~/Content/me.png"; var absoluteUrl = Url.Content(url);
+    
 }
 
 @*<script type="text/javascript" charset="utf-8">
@@ -19,9 +19,22 @@
 @{var urlJS = "~/Scripts/Home/home" + Model.Preferences.Style + ".js"; var absoluteUrlJS = Url.Content(urlJS); }
 <script src="@absoluteUrlJS" type="text/javascript"></script>
 
+@if (Model.Preferences.Style == "1") {
+    <link rel="stylesheet" type="text/css" href="@Url.Content( "~/Content/home1.css")"/>
+    
+}
+@if (Model.Preferences.Style == "2") {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/home2.css")" media="screen and (min-width:1000px)"/>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/home2small1.css")" media="screen and (min-width:700px) and (max-width:1000px)"/>
+     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/home2small2.css")" media="screen and (max-width:700px)"/>
+}
 
-@{var urlCSS = "~/Content/home" + Model.Preferences.Style + ".css"; var absoluteUrlCSS = Url.Content(urlCSS); }
-<link rel="stylesheet" type="text/css" href="@absoluteUrlCSS"/>
+
+@*@{var urlCSS = "~/Content/home" + Model.Preferences.Style + ".css"; var absoluteUrlCSS = Url.Content(urlCSS); }
+<link rel="stylesheet" type="text/css" href="@absoluteUrlCSS"/>*@
+
+@{var urlAdminCSS = "~/Content/home" + Model.Preferences.Style + "AdminTop.css"; var absoluteUrlAdminCSS = Url.Content(urlAdminCSS); }
+<link rel="stylesheet" type="text/css" href="@absoluteUrlAdminCSS"/>
 
 <header class="adminFixed">
     <p></p>    

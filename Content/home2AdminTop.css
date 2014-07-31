@@ -1,0 +1,56 @@
+﻿.adminFixed {
+    position:fixed;
+    top:0em;
+    left:0em;
+    background-color: white;
+    text-align:center;
+    vertical-align:central;
+    width:100%;
+    z-index: 999;
+    /*height:4em;*/
+}
+
+    .adminFixed hr {
+        color:#DBEADC;
+        background-color:#DBEADC;
+        height:3px;
+        margin:1em 0em 0em 0em;
+    }
+
+    .adminFixed .adminSection {
+        display:none;
+    }
+
+        .adminFixed .adminSection * {
+            margin: 1em 0em 0em 0em;
+        }
+
+        .adminFixed .adminSection label {
+            color: #009999;
+            font-weight:600;
+        }
+
+    .adminFixed button {
+        /*float:left;*/
+        border: 1px solid #009999;/*//#96d1f8;*/
+        /*ackground-color:#68c9e8;*/
+        background-color:#009999;
+        color:white;
+        /*border-radius: 0.3em;*/
+       
+    }
+        .adminFixed button:hover {
+            background-color: #006666;
+        }
+
+    .adminFixed #loginButton {
+        margin : 1em 0em 0em 0em;
+    }
+
+    .hiddenLogin {
+        display:none;
+    }
+
+    .hiddenLogin *{
+        margin : 1em 0em 0em 0em;
+    }

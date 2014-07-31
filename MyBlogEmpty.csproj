@@ -137,8 +137,13 @@
     <Content Include="Content\AdminIndex.css" />
     <Content Include="Content\EditorLayout.css" />
     <Content Include="Content\home1.css" />
+    <Content Include="Content\home1AdminTop.css" />
     <Content Include="Content\home2.css" />
+    <Content Include="Content\home2AdminTop.css" />
+    <Content Include="Content\home2small1.css" />
+    <Content Include="Content\home2small2.css" />
     <Content Include="Content\home3.css" />
+    <Content Include="Content\home3AdminTop.css" />
     <Content Include="Content\me.png" />
     <Content Include="Content\meBck.jpg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

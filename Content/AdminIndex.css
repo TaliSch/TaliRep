@@ -76,11 +76,7 @@ a .disabled {
     left: 78%;
     overflow:visible;
 }
-    /*#submit:disabled {
-        background-color: #808080;
-        border: 1px solid #808080;
-    }*/
-
+    
 #title {
     min-height: 2em;
     height: 2em;

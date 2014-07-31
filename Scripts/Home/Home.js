@@ -4,6 +4,7 @@ $.fn.placePost = null;
 
 //var password = "";
 $().ready(function () {
+    
     contentMaxHeight = calculateContentHeight("<p>22</p>","");
     //alert("contentMaxHeight="+contentMaxHeight);
     
