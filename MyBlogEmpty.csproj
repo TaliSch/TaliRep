@@ -138,6 +138,8 @@
     <Content Include="Content\EditorLayout.css" />
     <Content Include="Content\home1.css" />
     <Content Include="Content\home1AdminTop.css" />
+    <Content Include="Content\home1small1.css" />
+    <Content Include="Content\home1small2.css" />
     <Content Include="Content\home2.css" />
     <Content Include="Content\home2AdminTop.css" />
     <Content Include="Content\home2small1.css" />
