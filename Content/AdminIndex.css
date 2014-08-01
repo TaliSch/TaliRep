@@ -114,6 +114,10 @@ body {
     color:#808080  !important;
 }
 
+/*header .disabled , td .disabled , th .disabled  {
+    color:#808080;
+}*/
+
 
 header {
     font-size:8em;

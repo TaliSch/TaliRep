@@ -1,12 +1,6 @@
 ﻿
 
-    .hiddenLogin {
-        display:none;
-    }
-
-    .hiddenLogin *{
-        margin : 1em 0em 0em 0em;
-    }
+   
 
 .blogHeader {
     background-color:#5EAE9E;/*#68c9e8; login*/
@@ -15,7 +9,7 @@
     border: thick solid #4A9586;
     width:100%;
     position:relative;
-    top:4em;
+    top:3.5em;
     margin: 0em;
 }
 

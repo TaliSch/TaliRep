@@ -19,24 +19,32 @@ $().ready(function () {
         loadNextItems();
     })
 
-    //$olderPostsBtn.trigger("click");
-    //$("input[name=style]:radio").on("click", function () {
-    //    var value = $("input[name=style]:checked").val();
-    //    setStyle(value);
-    //});
-    SetStyleInit();
-    LoginInit();
-    $(".login").on("signOutCompleted", function () {
-        $(".adminSection").hide();
-    })
-
-    $(".login").on("signInCompleted", function () {
-        $(".adminSection").show();
-    })
-
-    $(".adminSection").on("setStyleCompleted", function () {
+    var styleSetter = new StyleSetterClass();
+    var setStyleCompleted = function () {
         location.reload();
-    })
+    };
+    styleSetter.init(setStyleCompleted);   
+    
+    var login = new LoginClass();
+    var signoutCompleted = function () {
+        $(".adminSection").hide();
+    };
+
+    var signInCompleted = function () {
+        $(".adminSection").show();
+    };
+
+    login.init(signoutCompleted, signInCompleted);
+    
+    //$(login).on("signOutCompleted", function () {
+    //    $(".adminSection").hide();
+    //})
+
+    var setStyleCompleted = function () {
+        location.reload();
+    };
+
+   
 
     var $adminState = $("#AdminState");
     changeAdminState($adminState.attr('checked'));

@@ -3,23 +3,37 @@ var backgroundFile = null;
 
 $().ready(function () {
 
-    LoginInit();
-    SetStyleInitNoOperation();
+    var login = new LoginClass();
+    var signoutCompleted = function () {
+        disableAll(true);
+    };
+
+    var signInCompleted = function () {
+        disableAll(false);
+    };
+    login.init(signoutCompleted, signInCompleted);
+
+    var styleSetter = new StyleSetterClass();
+    var setStyleChanged = function (value) {
+        $("#personal").removeClass("saved").addClass("changed");
+        if (value != "1") {
+            $(".style1Params").hide();
+        }
+        else {
+            $(".style1Params").show();
+        }
+    };
+
+    styleSetter.initNoOperations(setStyleChanged);
+   
     var disabled = $("#submit").prop("disabled");
     var className = disabled ? "disabled" : "enabled";
-    SetStyleDisabled(disabled, className);
+    styleSetter.SetStyleDisabled(disabled, className);
 
     $("#home").click(function () {
         location.href = '/';
     })//unbinf
     
-    $(".login").on("signOutCompleted",function () {       
-        disableAll(true);
-    })
-
-    $(".login").on("signInCompleted", function () {
-        disableAll(false);
-    })
     
     $("#createNew").click(function () {
         location.href = "/Admin/Create/" + this.name;
@@ -33,15 +47,7 @@ $().ready(function () {
         $("#background").click();
     })
 
-    $(".setStyle").on("setStyleChanged", function (event, value) {        
-        $("#personal").removeClass("saved").addClass("changed");
-        if (value != "1") {
-            $(".style1Params").hide();
-        }
-        else {
-            $(".style1Params").show();
-        }        
-    })
+
 
     $("#title").change(function () {
         $("#personal").removeClass("saved").addClass("changed");
@@ -92,7 +98,7 @@ $().ready(function () {
             }            
         }
         var title = $("#title").val();
-        var style = GetStyleChosen();
+        var style = styleSetter.getChosenStyle();
         var data = { title: title, style: style };
 
         postAjaxSync('Admin/Preferences', data);        
@@ -192,11 +198,11 @@ $().ready(function () {
         $("#backgroundFake").prop("disabled", disabled);
         $("#faceFakeFilename").prop("disabled", disabled);
         $("#backgroundFakeFilename").prop("disabled", disabled);
-        SetStyleDisabled(disabled, className);
+        styleSetter.SetStyleDisabled(disabled, className);
     }
 
     function disableAll(disabled) {
-        
+        var className = disabled ? "disabled" : "enabled";
 
         disablePreferences(disabled);
 
