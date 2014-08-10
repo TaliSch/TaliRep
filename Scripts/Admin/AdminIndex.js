@@ -4,14 +4,14 @@ var backgroundFile = null;
 $().ready(function () {
 
     var login = new LoginClass();
-    var signoutCompleted = function () {
+    var signOutCompleted = function () {
         disableAll(true);
     };
 
     var signInCompleted = function () {
         disableAll(false);
     };
-    login.init(signoutCompleted, signInCompleted);
+    login.init(signOutCompleted, signInCompleted);
 
     var styleSetter = new StyleSetterClass();
     var setStyleChanged = function (value) {
@@ -85,7 +85,8 @@ $().ready(function () {
         event.preventDefault();
 
         $("personal").prop("disabled", true);
-        $($("#personal").find('button')).prop("disabled", true);
+        //$($("#personal").find('button')).prop("disabled", true);
+        $("#personal button").prop("disabled", true);
         
         if (faceFile != null) {
             if (!postAjaxSync('Admin/UploadFaceImage', { data: faceFile })) {
@@ -104,7 +105,8 @@ $().ready(function () {
         postAjaxSync('Admin/Preferences', data);        
 
         $("#personal").prop("disabled", false);
-       $( $("#personal").find('button') ) .prop("disabled", false);
+        //$( $("#personal").find('button') ) .prop("disabled", false);
+        $("#personal button").prop("disabled", false);
 
         $("#personal").removeClass("changed");
         $("#personal").addClass("saved");       
@@ -145,18 +147,20 @@ $().ready(function () {
      
         $this.hide();
 
-        $(parent.find('.deleteSure')).show();    
-        
+        //$(parent.find('.deleteSure')).show();    
+        $('.deleteSure', parent).show();        
     })
 
     $(".cancel").click(function () {
         var $this = $(this);
         var parent = $this.parent().parent();
      
-        $(parent.find('.deleteSure')).hide();
+        //$(parent.find('.deleteSure')).hide();
+        $('.deleteSure', parent).hide();
 
-        var $deleteBtn = $(parent.find('.delete'));
-        $deleteBtn.show();
+        //var $deleteBtn = $(parent.find('.delete'));
+        //$deleteBtn.show();
+        $('.delete', parent).show();
     })
 
     $(".sure").click(function () {
@@ -175,7 +179,8 @@ $().ready(function () {
 
             success: function (data, textStatus, jqXHR) {
                 if (data) {
-                    parent.find('.deleteSure').prop("hidden", true);
+                    //parent.find('.deleteSure').prop("hidden", true);
+                    $('.deleteSure', parent).prop("hidden", true);
                     location.href = "/Admin/Index";
                 }
                 else {

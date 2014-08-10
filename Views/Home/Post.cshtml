@@ -1,0 +1,36 @@
+﻿@model MyBlogEmpty.Models.Post
+
+@{
+    ViewBag.Title = "Post";
+}
+
+@functions{
+    public string FixTitle(string title) {
+        title = title.Replace("\n", "<br>");
+        int startIndex = 0, endIndex = title.Length;
+        if (title[0] == '"') {
+            startIndex = 1;
+        }
+        if (title[title.Length - 1] == '"') {
+            endIndex--;
+        }
+        title = title.Substring(startIndex, endIndex-startIndex);
+
+        return title;
+    }
+    }
+
+ 
+
+@{ var postId = "postId" + Model.ID; } 
+<div class="post" id="@postId">
+
+@{var title = FixTitle(Model.Title); }
+@{var dateStr = Model.Date.ToString("m") + ", " + Model.Date.Year.ToString();}
+<p class='postHeader'><label id='postTitle'>title</label></p><p class='postHeader'><label id='postDate'>dateStr</label></p>
+
+<div class="part" id="divId0">@Model.Content</div>
+
+<a class="pageLink" href="#" onclick="choosePage('divId','postId' ,0);return false;"> 0</a>
+</div>
+    

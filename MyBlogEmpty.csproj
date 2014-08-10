@@ -205,11 +205,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
-    <Content Include="Scripts\Admin\Editor.js" />
     <Content Include="Scripts\Home\Home.js" />
     <Content Include="Scripts\Home\home1.js" />
     <Content Include="Scripts\Home\home2.js" />
     <Content Include="Scripts\Home\home3.js" />
+    <Content Include="Scripts\Home\Post.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -342,6 +342,7 @@
     <Content Include="Views\Shared\Login.cshtml" />
     <Content Include="Views\Admin\AdminLayout.cshtml" />
     <Content Include="Views\Shared\SetStyle.cshtml" />
+    <Content Include="Views\Home\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -350,6 +351,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Home\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201407171259560_Initial.resx">

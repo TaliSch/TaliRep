@@ -43,17 +43,28 @@ $().ready(function () {
     }
    
 
-    LoginInit();
-
-    $(".login").on("signOutCompleted", function () {
+    var login = new LoginClass();
+    function signOutCompleted() {
         $("#submit").prop("disabled", true);
         $("header").addClass("disabledHeader")
-    })
+    };
 
-    $(".login").on("signInCompleted", function () {
+    function signInCompleted() {
         $("#submit").prop("disabled", false);
         $("header").removeClass("disabledHeader");
-    })    
+    }
+
+    login.init(signOutCompleted, signInCompleted);
+
+    //$(".login").on("signOutCompleted", function () {
+    //    $("#submit").prop("disabled", true);
+    //    $("header").addClass("disabledHeader")
+    //})
+
+    //$(".login").on("signInCompleted", function () {
+    //    $("#submit").prop("disabled", false);
+    //    $("header").removeClass("disabledHeader");
+    //})    
 
     var compressed = $("#editor").val();
     var decompressed = LZString.decompressFromBase64(compressed);

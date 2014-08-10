@@ -1,6 +1,4 @@
-﻿
-
-   
+﻿  
 
 .blogHeader {
     background-color:#5EAE9E;/*#68c9e8; login*/
@@ -55,22 +53,33 @@
     padding:0px;
     width:100%;
     max-width:100%;
-    height:25em;
-    max-height:25em;
+    height:35em;
+    max-height:35em;
     font-size:1.5em;
     font-family: Tahoma, Arial, "Verdana", "Sans-serif";
     color: #808080;
     background-color:white;
 }
 
-#posts hr {
+
+.postButtom {
     color:lightgray;
     background-color:lightgray /*#DBEADC*/;
     height:1.5px;
     margin: 1em -4em 1em -4em;
+    border:none;/*0.6px solid lightgray;*/
+    width:110%;
+    vertical-align:bottom;
+    overflow:visible;    
+}
+/*#posts hr {
+    color:lightgray;
+    background-color:lightgray ;
+    height:1.5px;
+    margin: 1em -4em 1em -4em;
     border:none;
     vertical-align:bottom;
-}
+}*/
 
 .postHeader {
     /*height:4em;

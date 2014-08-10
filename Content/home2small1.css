@@ -62,13 +62,15 @@
     background-color:white;
 }
 
-#posts hr {
+.postButtom {
     color:lightgray;
     background-color:lightgray /*#DBEADC*/;
     height:1.5px;
     margin: 1em -4em 1em -4em;
-    border:none;
+    border:none;/*0.6px solid lightgray;*/
+    width:115%;
     vertical-align:bottom;
+    overflow:visible;
 }
 
 .postHeader {

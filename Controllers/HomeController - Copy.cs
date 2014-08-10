@@ -10,14 +10,32 @@ using System.Web.Mvc;
 
 namespace MyBlogEmpty.Controllers
 {
-    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class HomeController : Controller
     {
         private BlogDBContext db = new BlogDBContext();
+        // GET: /Home/
+        //bool AdminSession
+        //{
+        //    get
+        //    {
+        //        if (Session["admin"] == null)
+        //            Session["admin"] = false;
+        //        return (bool)Session["admin"];
+        //    }
+        //    set { Session["admin"] = value; }
+        //}
+
+        int NextPosSession
+        {
+            get { return (int)Session["nextPos"]; }
+            set { Session["nextPos"] = value; }
+        }
         
-        
-        public ActionResult Index(int from = 0, int to = 9)
-        {          
+        public ActionResult Index()
+        {
+            
+            NextPosSession = 0;
+           // var admin = (bool)Session["admin"];
             ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
            
             var taliP = db.UserPreferences.Find("Tali");
@@ -35,25 +53,27 @@ namespace MyBlogEmpty.Controllers
                 db.Entry(taliP).State = EntityState.Modified;
                 db.SaveChanges();
             }
-
-            var posts = GetNextItems(from, to);
+                        
+            var posts = GetNextItems(10);
            
             return View(new HomeViewModel() { Posts = posts, Preferences = (UserPreferences)taliP });
         }
-     
-        public ActionResult NextIndex(int from, int to)
+
+        [HttpPost]
+        public ActionResult NextIndex()
         {
             try
             {
-                return Json(GetNextItems(from, to), JsonRequestBehavior.AllowGet);               
+                return Json(GetNextItems(10));               
             }
             catch (Exception)
             {
             }
             
-            return Json(new List<Post>(), JsonRequestBehavior.AllowGet);
+            return Json(new List<Post>());
         }
 
+        
 
         [HttpPost]
         public ActionResult SignIn(string password)
@@ -65,24 +85,28 @@ namespace MyBlogEmpty.Controllers
             return Json(correct);
         }
 
+        [HttpPost]
         public ActionResult SignOut()
         {
             new Shared.ConrollerSession(Session).Admin = false;
 
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(true);
         }
        
-        IEnumerable<Post> GetNextItems(int from, int to)
+        IEnumerable<Post> GetNextItems(int count)
         {
             IEnumerable<Post> rv = new List<Post>();
             var postsLen = db.Posts.Count();
-            
-            to = Math.Min(postsLen-1, to); // including
+
+            int from = NextPosSession;// including
+            int to = Math.Min(postsLen-1, from+count-1); // including
 
             if (from < postsLen && from <=  to)
             {
                 var posts = db.Posts.OrderByDescending(item => item.Date);
                 rv = posts.Skip(from).Take(to - from + 1);
+
+                NextPosSession += (to - from + 1);
             }
 
             return (rv);

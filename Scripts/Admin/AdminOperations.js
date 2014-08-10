@@ -1,23 +1,16 @@
 ﻿
-var LoginClass = function() {
-    this.viewname = "";
-    this.signoutCompleted = null;
+function LoginClass() {
+    
     this.init = function (signoutCompleted, signinCompleted) {
-        viewname = $(".login").get(0).id;
-
+        var viewname = $(".login").get(0).id;
+        var url = viewname + '/SignOut';
+        
         $("#signOutBtn").click(function () {
-            $.ajax({
-                url: '/' + viewname + '/SignOut',
-                type: 'POST',
-                timeout: 5000,
-                success: function () {
-                    $("#loginBtn").show();
-                    $("#signOutBtn").hide();
-                    if (signoutCompleted) signoutCompleted();
-                    //$('.login').trigger("signOutCompleted");
-                }
+            $.getJSON(url, function () {
+                $("#loginBtn").show();
+                $("#signOutBtn").hide();
+                if (signoutCompleted) signoutCompleted();
             });
-
         })
 
         $("#loginBtn").click(function () {
@@ -26,33 +19,25 @@ var LoginClass = function() {
         })
 
         $("#signInBtn").click(function () {
-            $.ajax({
-                url: '/' + viewname + '/SignIn',
-                type: 'POST',
-                dataType: 'Json',
-                //contentType: 'Json',
-                data: { password: $("#password").val() },
-                timeout: 5000,
+            var url = '/' + viewname + '/SignIn';
+            var data = { password: $("#password").val() };
 
-                success: function (data, textStatus, jqXHR) {
-                    if (data) {
-                        $(".insertPassword").hide();
-                        $("#signOutBtn").show();
-                        if (signinCompleted) signinCompleted();
-                        //$('.login').trigger("signInCompleted");
-                    }
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Failed To connect " + textStatus + ' ' + errorThrown);
+            $.post(url, data, function (data) {
+                if (data) {
+                    $(".insertPassword").hide();
+                    $("#signOutBtn").show();
+                    if (signinCompleted) signinCompleted();                    
                 }
+            }, 'json').fail(function () {
+                alert("Failed To connect ");
             });
+           
             $("#password").val("");
         })
     }
 };
 
-var StyleSetterClass = function () {
+function StyleSetterClass() {
     this.init = function (setStyleCompleted) {
         $("input[name=style]:radio").on("click", function () {
             var value = $("input[name=style]:checked").val();
@@ -71,30 +56,16 @@ var StyleSetterClass = function () {
         $("input[name=style]:radio").prop("disabled", disabled);
         $('label').attr("class", className);
     }
+
     this.getChosenStyle = function () {
         var value = $("input[name=style]:checked").val();
         return value;
     }
-}
 
-function setStyle(index, setStyleCompleted) {
-    var success = false;
-    $.ajax({
-        url: 'Admin/Style',
-        type: 'POST',
-        dataType: 'Json',
-        //contentType: 'Json',
-        data: { styleIndex: index },
-        timeout: 5000,
-        success: function (data, textStatus, jqXHR) {
-            success = data;
-        }
-    }).done(function (html) {
-        if (success) {
-            if (setStyleCompleted) setStyleCompleted(index);            
-        }
-    });
-    //var url = '@Url.Content("' + "~/Content/home"+index+".css" + ')"';
-    //$("link").attr("href", url);
+    var setStyle = function (index, setStyleCompleted) {
+        var success = false;
+        $.post('Admin/Style', { styleIndex: index }, function (data) {
+            if (setStyleCompleted) setStyleCompleted(index);
+        });
+    }
 }
-

@@ -10,24 +10,11 @@ using MyBlogEmpty.ViewModels;
 
 namespace MyBlogEmpty.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class AdminController : Controller
     {
         private BlogDBContext db = new BlogDBContext();
-        //
-        // GET: /Editor/
-
-        //bool AdminSession
-        //{
-        //    get
-        //    {
-        //        if (Session["admin"] == null)
-        //            Session["admin"] = false;
-        //        return (bool)Session["admin"];
-        //    }
-        //    set { Session["admin"] = value; }
-        //}
-
-       
+        
         public ActionResult Index()
         {
             ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
