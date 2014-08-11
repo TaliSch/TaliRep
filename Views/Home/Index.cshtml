@@ -93,7 +93,7 @@ update database*@
         @{ postId = "postId" + postIndex.ToString(); postIndex++; } 
         <div class="post" id="@postId">       
         @{var dateStr = item.Date.ToString("m") + ", " + item.Date.Year.ToString();}
-        <p class='postHeader'><label id='postTitle'>@item.Title</label></p><p class='postHeader'><label id='postDate'>@dateStr</label></p>
+        <p class='postHeader'><label class='postTitle'>@item.Title</label></p><p class='postHeader'><label class='postDate'>@dateStr</label></p>
         <input class ="postContent" value="@item.Content" type="text" hidden/>
         <div class="part" id="divId0"></div>
 
@@ -112,7 +112,7 @@ update database*@
             <div class = "postBox">
                 <div class="postTop"></div>
                 <div class="post">
-                <p class='postHeader'><label id='postTitle'><span>title</span></label></p><p class='postHeader'><label id='postDate'>date</label></p>
+                <p class='postHeader'><label class='postTitle'><span>title</span></label></p><p class='postHeader'><label class='postDate'>date</label></p>
         
                 <div class="part" id="divId0"></div>
 

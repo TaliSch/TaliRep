@@ -50,7 +50,7 @@ function loadPosts(items) {
         
         //var date = new Date($date.val()).toDateString();
         
-        var $title = $("#postTitle", $value);
+        var $title = $(".postTitle", $value);
         var title = $title.html();
         $title.html(FixTitle(title));
 
@@ -77,8 +77,8 @@ function loadNextItems() {
             var date = new Date(Number(value.Date.substring(6, value.Date.length - 2)));
             var strDate = date.toDateString();            
             strDate = strDate.substring(4, strDate.length);
-            $("#postDate", $newPost).html(strDate);
-            $("#postTitle", $newPost).html(FixTitle(value.Title));
+            $(".postDate", $newPost).html(strDate);
+            $(".postTitle", $newPost).html(FixTitle(value.Title));
             
             displayPost($newPost, content, contentMaxHeight);
            

@@ -88,7 +88,7 @@
     text-align:center;
 }
 
-    .postHeader #postTitle {
+    .postHeader .postTitle {
         color: #FF4848;
         font-family: Aharoni;/*Tahoma, Arial, "Verdana", "Sans-serif";*/
         font-size: 2.9em;
@@ -96,13 +96,13 @@
         text-align: center;
     }
 
-    .postHeader #postDate {
+    .postHeader .postDate {
         color: #009999;
         font-family: Tahoma, Arial, "Verdana", "Sans-serif";
         font-size: 1em;
         text-align: center;
     }
-     .postHeader #postDate:before {
+     .postHeader .postDate:before {
          content:"Posted On ";
          color:lightgray;
         }
