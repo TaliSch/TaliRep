@@ -160,11 +160,11 @@ function createPostBoxSinglePart(title, date, part) {
 
 function calculateContentHeight(part) {
     var $cntnr = $("#parts1");
-    var $fakePost = $(".fakePost", $cntnr);
+    var $templatePost = $(".templatePost", $cntnr);
    
     var $postBox = createPostBoxSinglePart("tttt", "dddd", part);
    
-    $postBox.appendTo($("td", $fakePost));
+    $postBox.appendTo($("td", $templatePost));
     $cntnr.show();
     console.log($cntnr.html());
     var currHeight = $cntnr.height();
