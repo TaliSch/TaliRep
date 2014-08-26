@@ -1,16 +1,12 @@
 ﻿var contentMaxHeight = 0;
-var itemsInPage = 10;
+var itemsInPage = 1;
 var postsCount = 0;
 $.fn.placePost = null;
-var postBoxNanoString;
-var partNanoString;
-var linkNanoString;
+var nanoString;
 //var password = "";
 $().ready(function () {
-    postBoxNanoString = $("#postBoxTemplate .postBox")[0].outerHTML;
-    partNanoString = $("#postBoxTemplate .part")[0].outerHTML.replace('hidden="hidden"', "");
-    linkNanoString = $("#postBoxTemplate .pageLink")[0].outerHTML.replace('hidden="hidden"', "");
-
+    nanoString = $("#parts1 .fakePost").html();
+    
     contentMaxHeight = calculateContentHeight("<p>22</p>");
    // alert("contentMaxHeight="+contentMaxHeight);
     
@@ -39,38 +35,99 @@ $().ready(function () {
 
     var $adminState = $("#AdminState");
     changeAdminState($adminState.attr('checked'));
-    
+
     loadNextItems();
 })
 
 function loadNextItems() {
     var url= 'Home/NextIndex';
     var data = { from: postsCount, to: postsCount + itemsInPage };
-    
+    var $fakePost = $("#parts .fakePost");
+    var $postBox = $(".postBox", $fakePost);
     $.getJSON(url, data, function (data) {
         $.each(data, function (index, value) {
-           // var postId = "postId" + String(postsCount + index);
-
-            var date = new Date(Number(value.Date.substring(6, value.Date.length - 2)));
-            var strDate = date.toDateString();
-            strDate = strDate.substring(4, strDate.length);
-            var title = FixTitle(value.Title);
-            
+            //var $newPostBox = $(".fakePost .postBox").clone();
+            var $newPostBox = $postBox.clone();
+            $("#olderPosts").before($newPostBox);
+            var $newPost = $(".post", $newPostBox);
+            var postId = "postId" + String(postsCount + index);
+            $newPost.attr("id", postId);
             var content = LZString.decompressFromBase64(value.Content);
-            var lines = content.split("</p>", 1000);
-            var parts = splitPost(lines, contentMaxHeight);
+            // todo: the same in index get
+            var date = new Date(Number(value.Date.substring(6, value.Date.length - 2)));
+            var strDate = date.toDateString();            
+            strDate = strDate.substring(4, strDate.length);
+            $(".postDate", $newPost).html(strDate);
+            $(".postTitle", $newPost).html(FixTitle(value.Title));
             
-            var $newPostBox = createPostBox(title, strDate, parts);
-
-            //$newPost.attr("id", postId);
-
-            $("#olderPosts").before($newPostBox);          
+            displayPost($newPost, content, contentMaxHeight);
         })
         postsCount += data.length;
     }).fail(function(){
         alert("Failed To Load");
     });
 }
+
+
+function displayPost(post, content, contentMaxHeight) {    
+    var $post = $(post);    
+    var $part = $(".part", $post);
+    var $pageLink = $(".pageLink", $post);
+
+    var lines = content.split("</p>", 1000);
+    var parts = splitPost(lines, contentMaxHeight);
+   
+    if (parts.length == 0) {
+        $part.html("");
+        $pageLink.hide();
+    }
+
+    else {
+        $.each(parts, function (index, value) {
+            if (index == 0) {
+                $part.html(value);               
+            }
+            else {
+                var divId = "divId" + index.toString();
+
+                var $nextPart = $part.clone();
+                var $nextPageLink = $pageLink.clone();
+
+                $nextPart.attr("id", divId);
+                $nextPart.html(value);                
+
+                $nextPageLink.html(" " + index.toString());
+
+                $part.after($nextPart);
+                $pageLink.after($nextPageLink);
+
+                $part = $nextPart;
+                $pageLink = $nextPageLink;               
+            }
+        });
+
+        if (parts.length == 1) {
+            $pageLink.hide();
+        }
+        else {
+            $(".pageLink", $post).click(function (event) {
+                event.preventDefault();
+                var $this = $(this);
+                var parent = $this.parent();
+                var index = parseInt($this.html().trim(), "10");
+
+                choosePage(parent.get(0), index);
+
+            });
+            choosePage(post, 0);
+        }
+   
+        //$newPost.placePost($newPost, postId);
+
+        
+    }
+}
+
 
 function splitPost(lines, contentMaxHeight) {
     //alert("splitPost");
@@ -104,6 +161,33 @@ function splitPost(lines, contentMaxHeight) {
     return parts;
 }
 
+//function calculateContentHeight(part) {
+//    var $cntnr = $("#parts");
+//    $cntnr.show();
+
+//    var $fakePost = $(".fakePost", $cntnr);
+//    var $part = $(".part", $fakePost);
+//    $part.html(part);       
+//    var currHeight = $cntnr.height();
+    
+//    $cntnr.hide();
+//    return currHeight;
+//}
+
+//function calculateContentHeight(part) {
+//    var $cntnr = $("#parts1");
+//    $cntnr.show();
+//    var data = { post: { title: "tttt", date: "dddd", content: part } };
+//    var $fakePost = $(".fakePost", $cntnr);
+//    $cntnr.remove(".fakePost");
+//    var template = Tempo.prepare($fakePost);
+//    template.render(data).append($cntnr);
+//    console.log($cntnr.html());
+//    var currHeight = $cntnr.height();
+//    $cntnr.remove(".fakePost");
+//    $cntnr.hide();
+//    return currHeight;
+//}
 function nano(template, data) {
     return template.replace(/\{([\w\.]*)\}/g, function(str, key) {
         var keys = key.split("."), v = data[keys.shift()];
@@ -112,63 +196,16 @@ function nano(template, data) {
     });
 }
 
-function createPostBox(title, date, parts) {
-    var partsHtml = "";
-    for (i = 0; i < parts.length ; i++) {
-        var partData = { post: { content: parts[i], id: "divId" + i.toString() } };
-        partsHtml = partsHtml.concat(nano(partNanoString, partData));
-        //var $part = $(nano(partNanoString, partData));
-        //$part.attr("id", "divId" + i.toString());
-        //partsHtml = partsHtml.concat($part[0].outerHTML);
-    }
-    //console.log(partsHtml);
-    var linksHtml = "";
-    console.log(linkNanoString);
-    if (parts.length > 1) {        
-        for (i = 0; i < parts.length ; i++) {
-            var linkData = { post: { link: i.toString() } };
-            linksHtml = linksHtml.concat(nano(linkNanoString, linkData));
-        }
-    }
-    //console.log(linksHtml);
-    var data = { post: { title: title, date: date, parts: partsHtml, links: linksHtml } };
-    // var htmlString = nano(postNanoString, data);
-    var postBox = $(nano(postBoxNanoString, data));
-    createlinkFunction($(".post", postBox));
-    return postBox;
-}
-
-function createlinkFunction(post) {
-    var $post = $(post);
-    $(".pageLink", $post).click(function (event) {
-        event.preventDefault();
-        var $this = $(this);
-        var parent = $this.parent();
-        var index = parseInt($this.html().trim(), "10");
-
-        choosePage(parent.get(0), index);
-
-    });
-    choosePage(post, 0);
-}
-
-function createPostBoxSinglePart(title, date, part) {
-    var parts = [];
-    parts.push(part);
-    return createPostBox(title, date, part);
-}
-
 function calculateContentHeight(part) {
     var $cntnr = $("#parts1");
+    $cntnr.show();
+    var data = { post: { title: "tttt", date: "dddd", content: part } };
     var $fakePost = $(".fakePost", $cntnr);
    
-    var $postBox = createPostBoxSinglePart("tttt", "dddd", part);
-   
-    $postBox.appendTo($("td", $fakePost));
-    $cntnr.show();
+    var after = nano(nanoString, data);
+    $fakePost.html(after);
     console.log($cntnr.html());
     var currHeight = $cntnr.height();
-    console.log("currHeight=" + currHeight);
     $cntnr.hide();
     return currHeight;
 }

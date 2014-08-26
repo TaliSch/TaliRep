@@ -137,15 +137,25 @@
 }
 
 .fakePost {
-    border:1px solid lightgray;
+    /*border:1px solid lightgray;
     position:relative;
     left: 0.3%;
-    width: 99%;/*???*/    
+    width: 99%;    
     margin: 0em 0em 6em 0em;
     background-color:white;
     color:gray;
-    font-weight:200;
-    padding:10px;
+    font-weight:200;    
+    padding:10px;*/
+
+    position:relative;
+    width: 48%;
+    left:25%;
+    height: 98em;
+    max-height:98em;
+    /*padding: 10px;*/
+    border: 1px solid gray;
+    /*margin: 0px;*/
+    margin: 0em 0em 6em 0em;
 }
 
 /*#posts hr{

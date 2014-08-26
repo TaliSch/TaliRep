@@ -4,9 +4,9 @@
 
 
 <span class ="setStyle"  id="@viewname">
-        @{var checkedStr1= (Model.Preferences.Style=="1") ? "checked=checked" : "";
-          var checkedStr2 = (Model.Preferences.Style == "2") ? "checked=checked" : "";
-          var checkedStr3 = (Model.Preferences.Style == "3") ? "checked=checked" : ""; 
+        @{var checkedStr1= (Model.Style=="1") ? "checked=checked" : "";
+          var checkedStr2 = (Model.Style == "2") ? "checked=checked" : "";
+          var checkedStr3 = (Model.Style == "3") ? "checked=checked" : ""; 
           }
         <label id="changeStyle">Change Style</label>
         <label>1</label><input id="style1" type="radio" name="style" value="1" @checkedStr1/>

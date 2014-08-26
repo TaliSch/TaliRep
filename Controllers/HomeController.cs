@@ -14,16 +14,15 @@ namespace MyBlogEmpty.Controllers
     public class HomeController : Controller
     {
         private BlogDBContext db = new BlogDBContext();
-        
-        
-        public ActionResult Index(int from = 0, int to = 9)
-        {          
+
+        public ActionResult Index()
+        {
             ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
-           
+
             var taliP = db.UserPreferences.Find("Tali");
             if (taliP == null)
             {
-                var taliC = new Models.UserCredentials() { ID = "Tali", Password = "ykhBlog"};
+                var taliC = new Models.UserCredentials() { ID = "Tali", Password = "ykhBlog" };
                 taliP = new Models.UserPreferences() { ID = "Tali", Style = "2", Title = "Tali's Blog" };
                 db.UserCredentials.Add(taliC);
                 db.UserPreferences.Add(taliP);
@@ -36,10 +35,34 @@ namespace MyBlogEmpty.Controllers
                 db.SaveChanges();
             }
 
-            var posts = GetNextItems(from, to);
-           
-            return View(new HomeViewModel() { Posts = posts, Preferences = (UserPreferences)taliP });
+          
+            return View((UserPreferences)taliP);
         }
+        
+        //public ActionResult Index(int from = 0, int to = 9)
+        //{          
+        //    ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
+           
+        //    var taliP = db.UserPreferences.Find("Tali");
+        //    if (taliP == null)
+        //    {
+        //        var taliC = new Models.UserCredentials() { ID = "Tali", Password = "ykhBlog"};
+        //        taliP = new Models.UserPreferences() { ID = "Tali", Style = "2", Title = "Tali's Blog" };
+        //        db.UserCredentials.Add(taliC);
+        //        db.UserPreferences.Add(taliP);
+        //        db.SaveChanges();
+        //    }
+        //    else if (string.IsNullOrEmpty(taliP.Title))
+        //    {
+        //        taliP.Title = "Tali's Blog";
+        //        db.Entry(taliP).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //    }
+
+        //    var posts = GetNextItems(from, to);
+           
+        //    return View(new HomeViewModel() { Posts = posts, Preferences = (UserPreferences)taliP });
+        //}
      
         public ActionResult NextIndex(int from, int to)
         {
