@@ -1,7 +1,7 @@
 ﻿var contentMaxHeight = 0;
 var itemsInPage = 10;
 var postsCount = 0;
-$.fn.placePost = null;
+//$.fn.placePost = null;
 var postBoxNanoString;
 var partNanoString;
 var linkNanoString;
@@ -166,9 +166,9 @@ function calculateContentHeight(part) {
    
     $postBox.appendTo($("td", $templatePost));
     $cntnr.show();
-    console.log($cntnr.html());
+   // console.log($cntnr.html());
     var currHeight = $cntnr.height();
-    console.log("currHeight=" + currHeight);
+  //  console.log("currHeight=" + currHeight);
     $cntnr.hide();
     return currHeight;
 }

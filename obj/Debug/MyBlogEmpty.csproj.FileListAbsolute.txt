@@ -46,3 +46,4 @@ C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlog
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.Migrations.Initial2.resources
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.Migrations.Initial3.resources
 C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.Migrations.Initial4.resources
+C:\Users\Tali\Documents\Visual Studio 2012\Projects\MyBlogEmpty\obj\Debug\MyBlogEmpty.csprojResolveAssemblyReference.cache

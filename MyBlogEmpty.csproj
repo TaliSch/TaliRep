@@ -209,7 +209,6 @@
     <Content Include="Scripts\Home\home1.js" />
     <Content Include="Scripts\Home\home2.js" />
     <Content Include="Scripts\Home\home3.js" />
-    <Content Include="Scripts\Home\Post.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -219,10 +218,10 @@
     <Content Include="Scripts\jquery.loadTemplate-1.4.4.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\Admin\AdminOperations.js" />
+    <Content Include="Scripts\Admin\adminOperations.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Scripts\Admin\EditorLayout.js" />
-    <Content Include="Scripts\Admin\AdminIndex.js" />
+    <Content Include="Scripts\Admin\editorLayout.js" />
+    <Content Include="Scripts\Admin\adminIndex.js" />
     <Content Include="Scripts\tempo.js" />
     <Content Include="Scripts\tempo.min.js" />
     <Content Include="Scripts\tinymce\changelog.txt" />

@@ -1,13 +1,19 @@
 ﻿button {
-    border-radius: 2px;
+    /*border-radius: 2px;*/
+    border: 1px solid #009999;
+    color:white;
+    background : #009999;
 }
+    button:hover {
+        background-color: #808080;
+    }
     button:disabled {
         background-color: #808080;
         border: 1px solid #808080;
     }
     button:disabled:hover {
         background-color: #808080;
-    }
+    }        
 
 label {
     color: #006699;
@@ -144,14 +150,14 @@ th {
 
 
  
-.delete {
+/*.delete {
         border: 1px solid #009999;         
         background-color: #009999;
         color: white;
     }
     .delete:hover {
         background-color: #006699;
-    }
+    }*/
 
 .sure{
         border: 1px solid red;         
@@ -162,16 +168,16 @@ th {
         background-color: #990033;
     }   
     
-.cancel {
+/*.cancel {
     border: 1px solid #009999;
     background-color: #009999;
     color: white;
 }
     .cancel:hover {
         background-color: #006699;
-    }
+    }*/
 
-#createNew {
+/*#createNew {
     border: 1px solid #009999;
     color:white;
     background : #009999;
@@ -188,10 +194,23 @@ th {
     border: 1px solid #009999;
     color:white;
     background : #009999;
-    /*border-radius:2px;*/
+    
 }
     .edit:hover {
         background-color: #006699;
+    }*/
+
+/*#more {
+    border: 1px solid #009999;
+    color:white;
+    background : #009999;
+    
+}
+    #more:hover {
+        background-color: #006699;
     }
+    #more:disabled {
+        background-color: #808080;
+    }*/
    
 

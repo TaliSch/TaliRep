@@ -18,10 +18,19 @@ namespace MyBlogEmpty.Controllers
         public ActionResult Index()
         {
             ViewBag.Admin = new Shared.ConrollerSession(Session).Admin;
-            var postDatas = db.Posts.OrderByDescending(item=>item.Date).Select(i=>new PostData() { ID = i.ID, Date = i.Date, Title = i.Title});
             var userPreferences = db.UserPreferences.Find("Tali");
-            return View(new AdminViewModel() { Preferences = userPreferences, PostDatas = postDatas });
+            return View(userPreferences);
         }
+
+        public ActionResult NextItems(int from, int to)
+        {
+            var userPreferences = db.UserPreferences.Find("Tali");
+
+            var postDatas = GetNextItems(from, to);
+
+            return Json(new AdminViewModel() { AdminEnabled = new Shared.ConrollerSession(Session).Admin, PostDatas = postDatas }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult Create(Post post)
         {
@@ -167,13 +176,12 @@ namespace MyBlogEmpty.Controllers
 
             return Json(rv);
         }
-
-        [HttpPost]
+       
         public ActionResult SignOut()
         {
             new Shared.ConrollerSession(Session).Admin = false;
             
-            return Json(true);
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -184,6 +192,22 @@ namespace MyBlogEmpty.Controllers
             if (correct)
                 new Shared.ConrollerSession(Session).Admin = true;            
             return Json(correct);
+        }
+
+        IEnumerable<PostData> GetNextItems(int from, int to)
+        {
+            IEnumerable<PostData> rv = new List<PostData>();
+            var postsLen = db.Posts.Count();
+
+            to = Math.Min(postsLen - 1, to); // including
+
+            if (from < postsLen && from <= to)
+            {
+                var posts = db.Posts.OrderByDescending(item => item.Date);
+                rv = posts.Skip(from).Take(to - from + 1).Select(x => new PostData() { Date = x.Date, ID = x.ID, Title = x.Title }); ;
+            }
+
+            return (rv);
         }
     }
 }

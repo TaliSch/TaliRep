@@ -140,8 +140,21 @@ $().ready(function () {
             
             $.each(items, function (index, value) {
                 var date = new Date(Number(value.Date.substring(6, value.Date.length - 2)));
+                //var strDate = date.toDateString();
+                //strDate = strDate.substring(4, strDate.length);
+
+                //var templateItemStr = "{" +
+                //    "\"id\":" + "\"" + value.ID + "\"" + "," +
+                //    "\"title\":" + "\"" + value.Title + "\"" + "," +
+                //    "\"date\":" + "\"" + date + "\"" +
+                //    "}";
+
                 var templateItem = { 'id':  value.ID , title: value.Title , date: date };
-                 templateData.push(templateItem);
+                //alert(templateItemStr);
+                //var templateItem = jQuery.parseJSON(templateItemStr);
+
+                //var templateItem = { id: value.ID, title: value.Title, date: date };
+                templateData.push(templateItem);
             });
         });
         $.ajaxSetup({
@@ -152,6 +165,8 @@ $().ready(function () {
         postsCount += templateData.length;
 
         var $templateElement = $("#itemsTemplate");
+        //console.log($templateElement.html());
+        //var $containier = $("#items");
         if (firstItems) {
             postsTable = postsTemplate.render(templateData);
         }
@@ -167,6 +182,15 @@ $().ready(function () {
             $(":enabled").prop("enabled", false);
             $(".enabled").removeClass("enabled").addClass("disabled");            
         }
+
+       
+        //var instance = Tempo.prepare('itemsTemplate').render(templateData).append($templateElement);
+        //var instance = Tempo.prepare('itemsTemplate').render(templateData).append($containier);
+        //console.log(instance.html());
+        
+        //console.log($containier.html());
+
+
     }
 
     function postAjaxSync(url, data) {

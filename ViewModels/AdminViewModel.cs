@@ -16,6 +16,6 @@ namespace MyBlogEmpty.ViewModels
     public class AdminViewModel
     {
         public IEnumerable<PostData> PostDatas { get; set; }
-        public UserPreferences Preferences { get; set; }
+        public bool AdminEnabled { get; set; }
     }
 }
