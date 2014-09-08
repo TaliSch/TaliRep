@@ -9,6 +9,7 @@ var linkNanoString;
 $().ready(function () {
     $.get('Templates/Post.htm', function (template) {
         var postTemplate = document.createElement('div');
+        var $postTemplate = $(postTemplate);
         $postTemplate.append(template);
         
         postBoxNanoString = $(".postBox", $postTemplate).get(0).outerHTML;
