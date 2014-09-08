@@ -35,8 +35,15 @@ $().ready(function () {
     styleSetter.SetStyleDisabled(disabled, className);
 
     postsCount = 0;
-    postsTemplate = Tempo.prepare('itemsTemplate');
-    GetNextItems();
+
+    $.get('Templates/AdminTable.htm', function (template) {
+       
+        $("#postsTable").html(template);
+        
+        //alert($("#postsTable").html());
+        postsTemplate = Tempo.prepare('itemsTemplate');
+        GetNextItems();
+    });
 
     $("#home").click(function () {
         location.href = '/';
@@ -128,7 +135,7 @@ $().ready(function () {
 
         var url = 'Admin/NextItems';
         var data = { from: postsCount, to: postsCount + itemsInPage };
-        
+                
         var adminEnabled;
         var templateData = [];
         $.ajaxSetup({
@@ -150,8 +157,7 @@ $().ready(function () {
         console.log(templateData);
         console.log("items.length=" + templateData.length);
         postsCount += templateData.length;
-
-        var $templateElement = $("#itemsTemplate");
+       
         if (firstItems) {
             postsTable = postsTemplate.render(templateData);
         }
@@ -161,11 +167,11 @@ $().ready(function () {
         console.log("now");
         if (adminEnabled) {
             $(":disabled").prop("disabled", false);
-            $(".disabled").removeClass("disabled").addClass("enabled");                   
+            $(".disabled").removeClass("disabled").addClass("enabled");
         }
         else {
             $(":enabled").prop("enabled", false);
-            $(".enabled").removeClass("enabled").addClass("disabled");            
+            $(".enabled").removeClass("enabled").addClass("disabled");
         }
     }
 

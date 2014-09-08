@@ -7,11 +7,19 @@ var partNanoString;
 var linkNanoString;
 //var password = "";
 $().ready(function () {
-    postBoxNanoString = $("#postBoxTemplate .postBox")[0].outerHTML;
-    partNanoString = $("#postBoxTemplate .part")[0].outerHTML.replace('hidden="hidden"', "");
-    linkNanoString = $("#postBoxTemplate .pageLink")[0].outerHTML.replace('hidden="hidden"', "");
+    $.get('Templates/Post.htm', function (template) {
+        var postTemplate = document.createElement('div');
+        $postTemplate.append(template);
+        
+        postBoxNanoString = $(".postBox", $postTemplate).get(0).outerHTML;
+        partNanoString = $(".part", $postTemplate).get(0).outerHTML.replace('hidden="hidden"', "");
+        linkNanoString = $(".pageLink", $postTemplate).get(0).outerHTML.replace('hidden="hidden"', "");
 
-    contentMaxHeight = calculateContentHeight("<p>22</p>");
+        contentMaxHeight = calculateContentHeight("<p>22</p>");
+        loadNextItems();
+    });
+
+    
    // alert("contentMaxHeight="+contentMaxHeight);
     
     var $olderPostsBtn = $("#olderPosts button");
@@ -38,9 +46,7 @@ $().ready(function () {
     login.init(signoutCompleted, signInCompleted);    
 
     var $adminState = $("#AdminState");
-    changeAdminState($adminState.attr('checked'));
-    
-    loadNextItems();
+    changeAdminState($adminState.attr('checked'));    
 })
 
 function loadNextItems() {
@@ -117,9 +123,6 @@ function createPostBox(title, date, parts) {
     for (i = 0; i < parts.length ; i++) {
         var partData = { post: { content: parts[i], id: "divId" + i.toString() } };
         partsHtml = partsHtml.concat(nano(partNanoString, partData));
-        //var $part = $(nano(partNanoString, partData));
-        //$part.attr("id", "divId" + i.toString());
-        //partsHtml = partsHtml.concat($part[0].outerHTML);
     }
     //console.log(partsHtml);
     var linksHtml = "";
@@ -152,17 +155,11 @@ function createlinkFunction(post) {
     choosePage(post, 0);
 }
 
-function createPostBoxSinglePart(title, date, part) {
-    var parts = [];
-    parts.push(part);
-    return createPostBox(title, date, part);
-}
-
 function calculateContentHeight(part) {
     var $cntnr = $("#parts1");
     var $templatePost = $(".templatePost", $cntnr);
-   
-    var $postBox = createPostBoxSinglePart("tttt", "dddd", part);
+      
+    var $postBox = createPostBox("tttt", "dddd", part);
    
     $postBox.appendTo($("td", $templatePost));
     $cntnr.show();
