@@ -1,0 +1,22 @@
+﻿<table id="posts">
+        <tr><td>
+    <div class = "postBox">
+        <div class="postTop"></div>
+        <div class="post">
+            <p class='postHeader'><label class='postTitle'>{post.title}</label></p><p class='postHeader'><label class='postDate'>{post.date}</label></p>
+        <table><tr><td>
+            <div class="part" hidden="hidden" id="{post.id}">{post.content}</div>
+            {post.parts}
+            </td></tr> 
+        </table>
+         <table><tr><td>
+            <a class="pageLink" hidden="hidden" href="#"> {post.link}</a>
+            {post.links}
+            </td></tr> 
+        </table>
+        </div>
+        <div class="postButtom"></div>
+    </div>
+            </td></tr> 
+    <div id="olderPosts"><button>Older Posts</button></div>
+</table>

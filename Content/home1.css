@@ -94,6 +94,9 @@
     /*border: 1px solid gray;*/
 }
 
+#posts table {
+    width:100%;
+}
 
 .postHeader {
     /*height:4em;
@@ -138,15 +141,17 @@
 
 .templatePost {
     position:relative;
-    width: 48%;
+    /*width: 48%;*/
     left:25%;
-    height: 98em;
-    max-height:98em;
+    height: 29em;
+    max-height:29em;
     /*padding: 10px;*/
     border: 1px solid gray;
     /*margin: 0px;*/
     margin: 0em 0em 6em 0em;
 }
+
+
 
 /*#posts hr{
     display:none;
@@ -173,6 +178,6 @@
         color: white;
     }
         #olderPosts button:hover {
-            background-color: #990033;
+            background-color: #663333;
         }
 

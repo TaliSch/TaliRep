@@ -1,13 +1,17 @@
-﻿     <div class = "postBox">
+﻿<table id="postsTemplate" > 
+    <tr></tr>    
+<tr class = "postBox" data-template> <td>
         <div class="postTop"></div>
-        <div class="post">
-            <p class='postHeader'><label class='postTitle'>{post.title}</label></p><p class='postHeader'><label class='postDate'>{post.date}</label></p>
-        
-            <div class="part" hidden="hidden" id="{post.id}">{post.content}</div>
-            {post.parts}
-
-            <a class="pageLink" hidden="hidden" href="#"> {post.link}</a>
-            {post.links}
+        <div class="post" >
+            <p class='postHeader'><label class='postTitle'>{{title}}</label></p><p class='postHeader'><label class='postDate'>{{date|date 'MMM DD YYYY'}}</label></p>
+            <table><tr><td>
+            <div class="part" data-template-for="parts" id={{id}}>{{content}}</div>            
+            </td></tr></table>
+            <table><tr><td>
+            <a class="pageLink" href="#" data-template-for="links">{{.}} </a>
+            </td></tr></table>
         </div>
         <div class="postButtom"></div>
-    </div>
+</td></tr>
+
+</table>

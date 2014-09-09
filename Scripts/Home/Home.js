@@ -2,27 +2,24 @@
 var itemsInPage = 10;
 var postsCount = 0;
 //$.fn.placePost = null;
-var postBoxNanoString;
-var partNanoString;
-var linkNanoString;
-//var password = "";
+
+var postsTemplate;
+var postsTable = null;
+//var fakeTemplate;
+
 $().ready(function () {
     $.get('Templates/Post.htm', function (template) {
-        var postTemplate = document.createElement('div');
-        var $postTemplate = $(postTemplate);
-        $postTemplate.append(template);
-        
-        postBoxNanoString = $(".postBox", $postTemplate).get(0).outerHTML;
-        partNanoString = $(".part", $postTemplate).get(0).outerHTML.replace('hidden="hidden"', "");
-        linkNanoString = $(".pageLink", $postTemplate).get(0).outerHTML.replace('hidden="hidden"', "");
+       
+        $("#posts").html(template);
 
-        contentMaxHeight = calculateContentHeight("<p>22</p>");
+        var $postsTemplate = $("#posts #postsTemplate");
+        postsTemplate = Tempo.prepare($postsTemplate, { 'escape': false });
+      
+        contentMaxHeight = calculateContentHeight("<p>22</p>", true);
+
         loadNextItems();
     });
 
-    
-   // alert("contentMaxHeight="+contentMaxHeight);
-    
     var $olderPostsBtn = $("#olderPosts button");
     
     $olderPostsBtn.click(function () {    
@@ -52,31 +49,59 @@ $().ready(function () {
 
 function loadNextItems() {
     var url= 'Home/NextIndex';
-    var data = { from: postsCount, to: postsCount + itemsInPage };
-    
+    var data = { from: postsCount, to: postsCount + itemsInPage - 1 };
+    console.log(data);
     $.getJSON(url, data, function (data) {
+        var templateData = [];
         $.each(data, function (index, value) {
-           // var postId = "postId" + String(postsCount + index);
-
+           
             var date = new Date(Number(value.Date.substring(6, value.Date.length - 2)));
-            var strDate = date.toDateString();
-            strDate = strDate.substring(4, strDate.length);
+      
             var title = FixTitle(value.Title);
             
             var content = LZString.decompressFromBase64(value.Content);
             var lines = content.split("</p>", 1000);
             var parts = splitPost(lines, contentMaxHeight);
             
-            var $newPostBox = createPostBox(title, strDate, parts);
-
-            //$newPost.attr("id", postId);
-
-            $("#olderPosts").before($newPostBox);          
+            templateData.push(createPostBoxTemplateData(title, date, parts));            
         })
+        
+        addTemplateData(templateData);
+       
+        $.each($("#posts .post"), function (index, value) {
+            if (index >= postsCount) {
+                createlinkFunction(value);
+            }
+        });
+
         postsCount += data.length;
+     
     }).fail(function(){
         alert("Failed To Load");
     });
+}
+
+function addTemplateData(templateData) {
+    if (postsTable == null){    
+        postsTable = postsTemplate.render(templateData);
+    }
+    else {
+        postsTable = postsTable.append(templateData);
+    }
+}
+
+function createPostBoxTemplateData(title, date, parts) {
+    var partsData = [];
+    var linksData = [];
+    for (i = 0; i < parts.length ; i++) {
+        var partData = { content: parts[i], id: "divId" + i.toString() };
+        partsData.push(partData);
+        linksData.push(i.toString());
+    }
+
+    var postTemplateData = { title: title, date: date, parts: partsData, links: linksData };
+    
+    return postTemplateData;
 }
 
 function splitPost(lines, contentMaxHeight) {
@@ -111,63 +136,52 @@ function splitPost(lines, contentMaxHeight) {
     return parts;
 }
 
-function nano(template, data) {
-    return template.replace(/\{([\w\.]*)\}/g, function(str, key) {
-        var keys = key.split("."), v = data[keys.shift()];
-        for (var i = 0, l = keys.length; i < l; i++) v = v[keys[i]];
-        return (typeof v !== "undefined" && v !== null) ? v : "";
-    });
-}
+//function nano(template, data) {
+//    return template.replace(/\{([\w\.]*)\}/g, function(str, key) {
+//        var keys = key.split("."), v = data[keys.shift()];
+//        for (var i = 0, l = keys.length; i < l; i++) v = v[keys[i]];
+//        return (typeof v !== "undefined" && v !== null) ? v : "";
+//    });
+//}
 
-function createPostBox(title, date, parts) {
-    var partsHtml = "";
-    for (i = 0; i < parts.length ; i++) {
-        var partData = { post: { content: parts[i], id: "divId" + i.toString() } };
-        partsHtml = partsHtml.concat(nano(partNanoString, partData));
-    }
-    //console.log(partsHtml);
-    var linksHtml = "";
-    console.log(linkNanoString);
-    if (parts.length > 1) {        
-        for (i = 0; i < parts.length ; i++) {
-            var linkData = { post: { link: i.toString() } };
-            linksHtml = linksHtml.concat(nano(linkNanoString, linkData));
-        }
-    }
-    //console.log(linksHtml);
-    var data = { post: { title: title, date: date, parts: partsHtml, links: linksHtml } };
-    // var htmlString = nano(postNanoString, data);
-    var postBox = $(nano(postBoxNanoString, data));
-    createlinkFunction($(".post", postBox));
-    return postBox;
-}
 
 function createlinkFunction(post) {
     var $post = $(post);
-    $(".pageLink", $post).click(function (event) {
-        event.preventDefault();
-        var $this = $(this);
-        var parent = $this.parent();
-        var index = parseInt($this.html().trim(), "10");
+    var $pageLinks = $(".pageLink", $post);
+    if ($pageLinks.length == 1) {
+        $pageLinks.prop("hidden", true);
+    }
+    else {
+        $(".pageLink", $post).click(function (event) {
+            event.preventDefault();
+            var $this = $(this);
+            var parent = $this.parents(".post");//$this.parent();
+            var index = parseInt($this.html().trim(), "10");
 
-        choosePage(parent.get(0), index);
+            choosePage(parent.get(0), index);
 
-    });
-    choosePage(post, 0);
+        });
+        choosePage(post, 0);
+    }
 }
 
-function calculateContentHeight(part) {
-    var $cntnr = $("#parts1");
-    var $templatePost = $(".templatePost", $cntnr);
-      
-    var $postBox = createPostBox("tttt", "dddd", part);
-   
-    $postBox.appendTo($("td", $templatePost));
-    $cntnr.show();
-   // console.log($cntnr.html());
-    var currHeight = $cntnr.height();
-  //  console.log("currHeight=" + currHeight);
-    $cntnr.hide();
+function calculateContentHeight(part, max) {
+    var parts = [];
+    parts.push(part);
+    var data = createPostBoxTemplateData("tttt", Date(), parts);
+
+    addTemplateData(data);
+
+    var fakePost = $("#posts .postBox").get(postsCount);
+    //console.log("fake="+fakePost.outerHTML);
+    var $fakePost = $(fakePost);
+    if (max != null) {
+        if (max) $fakePost.addClass("templatePost");
+    }
+    var currHeight = $fakePost.height();
+    //console.log("currHeight=" + currHeight);
+    fakePost.remove();
+  
     return currHeight;
 }
 
