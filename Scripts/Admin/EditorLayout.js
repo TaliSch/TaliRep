@@ -83,11 +83,23 @@ $().ready(function () {
 
     $("#submit").click(function (event) {
         event.preventDefault();
-        var content = tinymce.activeEditor.getContent();
-        var title = $("#title").val();        
-        var id = $("#id-hidden").val();;
-        var url = '/Admin/'+this.name;
-        postData(id, title, content, url);
+        if ($(".badInput") != null) {
+            $("#title").hide();
+            $("#submitErrorMessage").show();
+            $('form').click(function (event) {
+                $("form").unbind("click");
+                $("#submitErrorMessage").hide();
+                $("#title").show();
+                $("#title").focus();             
+            })
+        }
+        else {
+            var content = tinymce.activeEditor.getContent();
+            var title = $("#title").val();
+            var id = $("#id-hidden").val();;
+            var url = '/Admin/' + this.name;
+            postData(id, title, content, url);
+        }
     })
 
     $("#postsManager").click(function () {
@@ -125,6 +137,7 @@ function invalidName() {
         //$(this).css("background-color", "red");
         $('#headerLabel').removeClass("goodInput").addClass("badInput");
         $('#title').removeClass("goodInput").addClass("badInput");
+        rv = false;
     }
     else {
         $('#headerLabel').removeClass("badInput").addClass("goodInput");

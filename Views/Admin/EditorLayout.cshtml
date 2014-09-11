@@ -26,7 +26,7 @@
             <br />
             @{var title = Model == null ? "" : Model.Title;}
             @*<textarea id="title" name="Title" oninput="invalidName()" oninvalid="invalidName()" class="goodInput">@title</textarea>*@
-            <textarea id="title" name="Title" class="goodInput">@title</textarea>
+            <textarea id="title" name="Title" class="goodInput">@title</textarea><span id ="submitErrorMessage" hidden="hidden">Please Insert Title Before Submitting Your Post: Click To Begin</span>
             
         </div>
         <label id="contentLabel">Content </label>        

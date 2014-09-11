@@ -51,6 +51,24 @@ header {
     min-width:15em;
     background-color:white;   
 }
+    /*#title:before {
+        content:"error message";
+        overflow:visible;
+        position:relative;
+        left:-5em;
+        top:1em;
+         font-size : 3em;
+    font-family: 'Courier New';
+    font-weight:700;
+    color:red;
+    }*/
+
+#submitErrorMessage {
+    font-size: 3em;
+    font-family: 'Courier New';
+    font-weight: 700;
+    color: red;
+}
 
 /*#headerLabel {
     font-size:2em;    
