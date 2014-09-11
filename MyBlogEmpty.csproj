@@ -302,7 +302,6 @@
     <Content Include="Scripts\util.js" />
     <Content Include="Templates\AdminTable.htm" />
     <Content Include="Templates\Post.htm" />
-    <Content Include="Templates\PostsTable.htm" />
     <Content Include="Views\Home\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -349,6 +348,7 @@
     <Content Include="Views\Admin\AdminLayout.cshtml" />
     <Content Include="Views\Shared\SetStyle.cshtml" />
     <Content Include="Views\Home\_Post.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

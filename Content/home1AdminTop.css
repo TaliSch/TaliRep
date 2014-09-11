@@ -11,7 +11,7 @@
 }
 
 .adminFixed .adminSection {
-        display:none;
+        /*display:none;*/
     }
 
         .adminFixed .adminSection * {
@@ -35,14 +35,6 @@
 
     .adminFixed #loginButton {
         margin: 1em 0em 0em 0em;
-    }
-
-    .hiddenLogin {
-        display:none;
-    }
-
-    .hiddenLogin *{
-        margin : 1em 0em 0em 0em;
     }
 
 .adminFixed hr {

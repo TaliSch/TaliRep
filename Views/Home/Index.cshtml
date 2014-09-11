@@ -47,7 +47,8 @@
 
 <header class="adminFixed">
     <p></p>    
-    <span class="adminSection">
+    @{var showStr = (ViewBag.Admin) ? "" : "hidden";}
+    <span class="adminSection" @showStr >
         <a href="/Admin">Admin</a> | 
         @Html.Partial("SetStyle")        
     </span>    
@@ -78,8 +79,8 @@ AutomaticMigrationDataLossAllowed = true;
 update database*@
 
 
-@{var checkedStr = (ViewBag.Admin) ? "checked=checked" : "";}
-<input type="checkbox" id="AdminState" hidden @checkedStr/>
+@*@{var checkedStr = (ViewBag.Admin) ? "checked=checked" : "";}
+<input type="checkbox" id="AdminState" hidden @checkedStr/>*@
 
 <div id="posts">
 

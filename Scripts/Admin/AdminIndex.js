@@ -35,20 +35,14 @@ $().ready(function () {
     styleSetter.SetStyleDisabled(disabled, className);
 
     postsCount = 0;
-
+    
     $.get('Templates/AdminTable.htm', function (template) {
        
         $("#postsTable").html(template);
-        
-        //alert($("#postsTable").html());
+             
         postsTemplate = Tempo.prepare('itemsTemplate');
-        GetNextItems();
-    });
-
-    $("#home").click(function () {
-        location.href = '/';
-    })//unbinf
-    
+        GetNextItems();        
+    }); 
     
     $("#createNew").click(function () {
         location.href = "/Admin/Create/" + this.name;
@@ -106,21 +100,24 @@ $().ready(function () {
         $("#personal button").prop("disabled", true);
         
         if (faceFile != null) {
-            if (!postAjaxSync('Admin/UploadFaceImage', { data: faceFile })) {
-                //todo
-            }            
+            $.post('Admin/UploadFaceImage', { data: faceFile }, function (data) {                
+            }, 'json').fail(function () {
+                alert("Failed To upload face ");
+            });                       
         }
         if (backgroundFile != null) {
-            if (!postAjaxSync('Admin/UploadBackgroundImage', { data: backgroundFile })) {
-                //todo
-            }            
+            $.post('Admin/UploadBackgroundImage', { data: backgroundFile }, function (data) {
+            }, 'json').fail(function () {
+                alert("Failed To upload background ");
+            });                       
         }
         var title = $("#title").val();
         var style = styleSetter.getChosenStyle();
         var data = { title: title, style: style };
 
-        postAjaxSync('Admin/Preferences', data);        
-
+        $.post('Admin/Preferences', data, function (data) {
+        }, 'json');
+      
         $("#personal").prop("disabled", false);
         //$( $("#personal").find('button') ) .prop("disabled", false);
         $("#personal button").prop("disabled", false);
@@ -129,109 +126,36 @@ $().ready(function () {
         $("#personal").addClass("saved");       
     });
 
-    function GetNextItems() {
-        console.log("postsCount=" + postsCount);
-        var firstItems = (postsCount == 0);
-
-        var url = 'Admin/NextItems';
-        var data = { from: postsCount, to: postsCount + itemsInPage };
-                
-        var adminEnabled;
-        var templateData = [];
-        $.ajaxSetup({
-            async: false
-        });
-        $.getJSON(url, data, function (data) {
-            var items = data.PostDatas;
-            adminEnabled = data.AdminEnabled;
-            
-            $.each(items, function (index, value) {
-                var date = new Date(Number(value.Date.substring(6, value.Date.length - 2)));
-                var templateItem = { 'id':  value.ID , title: value.Title , date: date };
-                 templateData.push(templateItem);
-            });
-        });
-        $.ajaxSetup({
-            async: true
-        });
-        console.log(templateData);
-        console.log("items.length=" + templateData.length);
-        postsCount += templateData.length;
-       
-        if (firstItems) {
-            postsTable = postsTemplate.render(templateData);
-        }
-        else {
-            postsTable.append(templateData);
-        }
-        console.log("now");
-        if (adminEnabled) {
-            $(":disabled").prop("disabled", false);
-            $(".disabled").removeClass("disabled").addClass("enabled");
-        }
-        else {
-            $(":enabled").prop("enabled", false);
-            $(".enabled").removeClass("enabled").addClass("disabled");
-        }
-    }
-
-    function postAjaxSync(url, data) {
-        var rv;
-        
-        $.ajax({
-            type: "POST",
-            url: url,
-            async:false,
-            dataType: 'Json',
-            data: data,           
-            success: function (data) {               
-                rv = data;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("Failed To Send " + textStatus + " " + errorThrown);                                
-                rv = false;
-            }
-        });
-
-        return rv;
-    }
-        
-    $(".edit").click(function () {
-        var $this = $(this);
-        var parent = $this.parent();
-        var id = parent.get(0).id;
-       
-        location.href = "/Admin/Edit/" + id;
+    $(".edit").live('click', function (event) {
+        event.preventDefault();        
+        location.href = "/Admin/Edit/" + this.name;
     })
 
-    $(".delete").click(function () {        
+    $(".delete").live('click', function (event) {
+        event.preventDefault();
         var $this = $(this);
-        var parent = $this.parent();
-     
         $this.hide();
-
-        //$(parent.find('.deleteSure')).show();    
-        $('.deleteSure', parent).show();        
+        $('.deleteSure', $this.parent()).show();        
     })
 
-    $(".cancel").click(function () {
+    $(".cancel").live('click', function (event) {
+        event.preventDefault();
         var $this = $(this);
         var parent = $this.parent().parent();
-     
-        //$(parent.find('.deleteSure')).hide();
+
         $('.deleteSure', parent).hide();
 
-        //var $deleteBtn = $(parent.find('.delete'));
-        //$deleteBtn.show();
         $('.delete', parent).show();
     })
 
-    $(".sure").click(function () {
-        
+    $(".sure").live('click', function (event) {
+        event.preventDefault();
         var $this = $(this);
-        var parent = $this.parent().parent();        
-        var id = parent.get(0).id;
-
+        var parent = $this.parent().parent();
+        var id = this.name;//parent.get(0).id;
+        var row = $this.parents("tr");
+        console.log(row.html());
+        console.log(id);
         $.ajax({
             url: '/Admin/Delete',
             type: 'POST',
@@ -242,18 +166,17 @@ $().ready(function () {
 
             success: function (data, textStatus, jqXHR) {
                 if (data) {
-                    //parent.find('.deleteSure').prop("hidden", true);
                     $('.deleteSure', parent).prop("hidden", true);
-                    location.href = "/Admin/Index";
+                    row.remove();
                 }
                 else {
                     alert("Failed To Delete");
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert("Failed To Send Delete," + textStatus + ","+errorThrown);
+                alert("Failed To Send Delete," + textStatus + "," + errorThrown);
             }
-        });        
+        });
     })
 
     function disablePreferences(disabled) {
@@ -280,12 +203,64 @@ $().ready(function () {
         $('.sure').prop("disabled", disabled);
         $('#createNew').prop("disabled", disabled);
         $('#more').prop("disabled", disabled);
-                
+
         $('table').attr("class", className);
         $('header').attr("class", className);
         $('td').attr("class", className);
         $('th').attr("class", className);
 
-        $("#home").prop("disabled", false);        
+        //$("#home").prop("disabled", false);
     }
+   
 })
+
+
+function GetNextItems() {
+    console.log("postsCount=" + postsCount);
+    var firstItems = (postsCount == 0);
+
+    var url = 'Admin/NextItems';
+    var data = { from: postsCount, to: postsCount + itemsInPage };
+
+    var adminEnabled;
+    var templateData = [];
+    //$.ajaxSetup({
+    //    async: false
+    //});
+    $.getJSON(url, data, function (data) {
+      
+        var items = data.PostDatas;
+        adminEnabled = data.AdminEnabled;
+
+        $.each(items, function (index, value) {
+            var date = new Date(Number(value.Date.substring(6, value.Date.length - 2)));
+            var templateItem = { 'id': value.ID, title: value.Title, date: date };
+            templateData.push(templateItem);
+        });
+        console.log(templateData);
+        console.log("items.length=" + templateData.length);
+        postsCount += templateData.length;
+
+        if (firstItems) {
+            postsTable = postsTemplate.render(templateData);
+        }
+        else {
+            postsTable.append(templateData);
+        }
+        console.log("now");
+        if (adminEnabled) {
+            $(":disabled").prop("disabled", false);
+            $(".disabled").removeClass("disabled").addClass("enabled");
+        }
+        else {
+            $(":enabled").prop("enabled", false);
+            $(".enabled").removeClass("enabled").addClass("disabled");
+        }
+        
+    });
+    //$.ajaxSetup({
+    //    async: true
+    //});
+
+}
+

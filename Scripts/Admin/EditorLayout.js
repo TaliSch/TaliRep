@@ -1,9 +1,16 @@
 ﻿
 $().ready(function () {
     
-    $("#editor").addClass("tinymce");
+    $("#title").on('input', function () {
+        invalidName();
+    });
+
+    $("#title").on('invalid', function () {
+        invalidName();
+    });
+
     invalidName();
-    //$("#editor").addClass("tinymce");
+  
     tinymce.init({
         selector: "#editor",
         oninit : "postInitWork",
@@ -56,22 +63,12 @@ $().ready(function () {
 
     login.init(signOutCompleted, signInCompleted);
 
-    //$(".login").on("signOutCompleted", function () {
-    //    $("#submit").prop("disabled", true);
-    //    $("header").addClass("disabledHeader")
-    //})
-
-    //$(".login").on("signInCompleted", function () {
-    //    $("#submit").prop("disabled", false);
-    //    $("header").removeClass("disabledHeader");
-    //})    
-
     var compressed = $("#editor").val();
     var decompressed = LZString.decompressFromBase64(compressed);
     if (decompressed)
         $("#editor").val(decompressed);
 
-    $("#title").trigger("oninvalid");
+   // $("#title").trigger("oninvalid");
     //var opts = {
     //    absoluteURLs: false,
     //    cssClass: 'el-rte',
@@ -98,7 +95,7 @@ $().ready(function () {
     })
 })
 
-function postData(id, title, content, url) {
+function postData(id, title, content, url) {    
         var compressedData = LZString.compressToBase64(content);
         $.ajax({
             url: url,
@@ -110,7 +107,7 @@ function postData(id, title, content, url) {
 
             success: function (data, textStatus, jqXHR) {
                 if (data) {
-                    location.href = "/Admin/Index";
+                    location.href = "/Admin";
                 }
                 else
                     alert("Failed To Save");

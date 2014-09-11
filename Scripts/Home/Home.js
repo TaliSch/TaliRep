@@ -41,10 +41,7 @@ $().ready(function () {
         $(".adminSection").show();
     };
 
-    login.init(signoutCompleted, signInCompleted);    
-
-    var $adminState = $("#AdminState");
-    changeAdminState($adminState.attr('checked'));    
+    login.init(signoutCompleted, signInCompleted);        
 })
 
 function loadNextItems() {
@@ -204,20 +201,6 @@ function choosePage(post, index) {
             $(value).addClass("linkOff");
         }
     })    
-}
-
-function changeAdminState(state) {
-    if (state) {
-        $(".hiddenLogin").hide();
-        $("#loginButton").hide();
-        $(".adminSection").show();
-    }
-    else {
-        $(".hiddenLogin").hide();
-        $("#loginButton").show();
-        $(".adminSection").hide();
-
-    }
 }
 
 function FixTitle(title) {

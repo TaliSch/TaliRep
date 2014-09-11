@@ -17,9 +17,9 @@
         margin:1em 0em 0em 0em;
     }
 
-    .adminFixed .adminSection {
+    /*.adminFixed .adminSection {
         display:none;
-    }
+    }*/
 
         .adminFixed .adminSection * {
             margin: 1em 0em 0em 0em;
@@ -44,13 +44,5 @@
         }
 
     .adminFixed #loginButton {
-        margin : 1em 0em 0em 0em;
-    }
-
-    .hiddenLogin {
-        display:none;
-    }
-
-    .hiddenLogin *{
         margin : 1em 0em 0em 0em;
     }
