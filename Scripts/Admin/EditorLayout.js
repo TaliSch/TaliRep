@@ -83,7 +83,7 @@ $().ready(function () {
 
     $("#submit").click(function (event) {
         event.preventDefault();
-        if ($(".badInput") != null) {
+        if ($(".badInput") != null && $(".badInput").length > 0) {
             $("#title").hide();
             $("#submitErrorMessage").show();
             $('form').click(function (event) {
